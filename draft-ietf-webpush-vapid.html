@@ -572,10 +572,10 @@ ul.toc a:first-child {
 <h1 id="rfc.section.2.1.1"><a href="#rfc.section.2.1.1">2.1.1.</a> <a href="#token" id="token">Application Tokens</a></h1>
 <p id="rfc.section.2.1.1.p.1">In this model, the push service vends a token to each application server that requests it.  That token is kept secret and used as the basis for authentication.</p>
 <p id="rfc.section.2.1.1.p.2">This doesn&#8217;t address the need for contact information, but it addresses the need for a consistent application server identifier.</p>
-<p id="rfc.section.2.1.1.p.3">A Cookie <a href="#RFC6265">[RFC6265]</a> is a token of this nature.  All the considerations regarding the use (and misuse) of HTTP cookies apply should this option be chosen.  A mechanism that makes token theft more difficult, such as [I-D.ietf-tokbind-https] might be needed.  However that suggests a separate option (see <a href="#tokbind">Section 2.1.4</a>).</p>
-<p id="rfc.section.2.1.1.p.4">This information would be repeated with each request, but that overhead is greatly reduced by header compression <a href="#RFC7541">[RFC7541]</a> in HTTP/2 [RFC7450].</p>
+<p id="rfc.section.2.1.1.p.3">A Cookie <a href="#RFC6265">[RFC6265]</a> is a token of this nature.  All the considerations regarding the use (and misuse) of HTTP cookies apply should this option be chosen.  A mechanism that makes token theft more difficult, such as <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> might be needed.  However that suggests a separate option (see <a href="#tokbind">Section 2.1.4</a>).</p>
+<p id="rfc.section.2.1.1.p.4">This information would be repeated with each request, but that overhead is greatly reduced by header compression <a href="#RFC7541">[RFC7541]</a> in HTTP/2 <a href="#RFC7540">[RFC7540]</a>.</p>
 <h1 id="rfc.section.2.1.2"><a href="#rfc.section.2.1.2">2.1.2.</a> <a href="#contact-information-header-field" id="contact-information-header-field">Contact Information Header Field</a></h1>
-<p id="rfc.section.2.1.2.p.1">Contact information for an application server could be included in a header field, either directly (e.g., a From header field, Section 5.5.1 of [RFC7231]), or by reference (e.g., a new &#8220;contact&#8221; link relation <a href="#RFC5988">[RFC5988]</a> that identified a vCard <a href="#RFC6350">[RFC6350]</a>).  Note that a From header field is limited to email addresses.</p>
+<p id="rfc.section.2.1.2.p.1">Contact information for an application server could be included in a header field, either directly (e.g., a From header field, Section 5.5.1 of <a href="#RFC7231">[RFC7231]</a>), or by reference (e.g., a new &#8220;contact&#8221; link relation <a href="#RFC5988">[RFC5988]</a> that identified a vCard <a href="#RFC6350">[RFC6350]</a>).  Note that a From header field is limited to email addresses.</p>
 <p id="rfc.section.2.1.2.p.2">Like an application token <a href="#token">Section 2.1.1</a>, contact information would need to be repeated, though that cost is reduced with HTTP/2.</p>
 <h1 id="rfc.section.2.1.3"><a href="#rfc.section.2.1.3">2.1.3.</a> <a href="#request-signing" id="request-signing">Request Signing</a></h1>
 <p id="rfc.section.2.1.3.p.1">Signing of push message requests would allow the push service to attribute requests to an application server based on an asymmetric key.  This could be done in any number of ways JWS <a href="#RFC7515">[RFC7515]</a> and HTTP signatures <a href="#I-D.cavage-http-signatures">[I-D.cavage-http-signatures]</a> being the most likely options.  Note that the latter does not provide a means of conveying the signing key, which would be necessary for this application.</p>
@@ -587,7 +587,7 @@ ul.toc a:first-child {
   <li>Every message contains a signature, which can increase the load on a server signficantly.  This is especially bad if a signature validation result is input to denial of service mitigation decision making.</li>
 </ul>
 <h1 id="rfc.section.2.1.4"><a href="#rfc.section.2.1.4">2.1.4.</a> <a href="#tokbind" id="tokbind">Token Binding</a></h1>
-<p id="rfc.section.2.1.4.p.1">The mechanism proposed in [I-D.ietf-tokbind-https] can be used to provide a stable identifier for application servers.  This includes a signature over material that is exported from the underlying TLS connection.  Importantly, this does not require a new signature for each request: the same signature is repeated for every request, HTTP/2 is again used to reduce the cost of the repeated information.</p>
+<p id="rfc.section.2.1.4.p.1">The mechanism proposed in <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> can be used to provide a stable identifier for application servers.  This includes a signature over material that is exported from the underlying TLS connection.  Importantly, this does not require a new signature for each request: the same signature is repeated for every request, HTTP/2 is again used to reduce the cost of the repeated information.</p>
 <p id="rfc.section.2.1.4.p.2">Token binding could be used independently of cookies.  Consequently, an application server would not be required to accept and store cookies, though the push service would not be able to offload any state as a result.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.3.p.1">This document has no IANA actions (yet).</p>
@@ -653,6 +653,12 @@ ul.toc a:first-child {
     </tr>
     <tr>
       <td class="reference">
+        <b id="I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</b>
+      </td>
+      <td class="top"><a>Popov, A.</a>, <a>Nystrom, M.</a>, <a>Balfanz, D.</a> and <a>A. Langley</a>, "<a href="http://tools.ietf.org/html/draft-ietf-tokbind-https-02">Token Binding over HTTP</a>", Internet-Draft draft-ietf-tokbind-https-02, October 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC5988">[RFC5988]</b>
       </td>
       <td class="top"><a>Nottingham, M.</a>, "<a href="http://tools.ietf.org/html/rfc5988">Web Linking</a>", RFC 5988, DOI 10.17487/RFC5988, October 2010.</td>
@@ -668,6 +674,12 @@ ul.toc a:first-child {
         <b id="RFC6350">[RFC6350]</b>
       </td>
       <td class="top"><a>Perreault, S.</a>, "<a href="http://tools.ietf.org/html/rfc6350">vCard Format Specification</a>", RFC 6350, DOI 10.17487/RFC6350, August 2011.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7231">[RFC7231]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>", RFC 7231, DOI 10.17487/RFC7231, June 2014.</td>
     </tr>
     <tr>
       <td class="reference">
