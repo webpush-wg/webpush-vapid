@@ -26,7 +26,7 @@ normative:
   RFC7230:
 
 informative:
-  I-D.ietf-tls-tls13:
+  RFC7231:
   RFC7515:
   RFC7540:
   RFC7541:
@@ -34,6 +34,8 @@ informative:
   RFC5988:
   RFC6265:
   I-D.cavage-http-signatures:
+  I-D.ietf-tls-tls13:
+  I-D.ietf-tokbind-https:
 
 
 --- abstract
@@ -153,7 +155,7 @@ mechanism that makes token theft more difficult, such as
 option (see {{tokbind}}).
 
 This information would be repeated with each request, but that overhead is
-greatly reduced by header compression [RFC7541] in HTTP/2 [RFC7450].
+greatly reduced by header compression [RFC7541] in HTTP/2 [RFC7540].
 
 
 ### Contact Information Header Field
