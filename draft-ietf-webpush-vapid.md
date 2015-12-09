@@ -26,6 +26,7 @@ normative:
   RFC7230:
 
 informative:
+  RFC4648:
   RFC7231:
   RFC7515:
   RFC7540:
@@ -36,6 +37,12 @@ informative:
   I-D.cavage-http-signatures:
   I-D.ietf-tls-tls13:
   I-D.ietf-tokbind-https:
+  API:
+     title: "Web Push API"
+     author:
+       - ins: M. van Ouwerkerk
+     target: "https://w3c.github.io/push-api/"
+     date: 2015
 
 
 --- abstract
@@ -43,9 +50,10 @@ informative:
 An application server can voluntarily identify itself to a push service using
 the described technique.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
-to a single entity.  An application server is further able include additional
-information the operator of a push service can use to contact the operator of
-the application server.
+to a single entity, and reduce the need for endpoint secrecy by being able to
+associate subscriptions with an application server.  An application server is
+further able include additional information the operator of a push service can
+use to contact the operator of the application server.
 
 
 --- middle
@@ -73,6 +81,12 @@ servers can be indirectly attributed to user agents, this is not always
 efficient or even sufficient.  Providing more information about the application
 server more directly to a push service allows the push service to better
 distinguish between legitimate and bogus requests.
+
+Additionally, this design also relies on endpoint secrecy as any application
+server in possession of the endpoint is able to send messages, albeit without
+payloads.  In situations where usage of a subscription can be limited to a
+single application server, the ability to associate said subscription with the
+application server provides could reduce the impact of a data leak.
 
 This document describes a system whereby an application server can volunteer
 information about itself to a push service.  At a minimum, this provides a
@@ -200,6 +214,46 @@ repeated information.
 Token binding could be used independently of cookies.  Consequently, an
 application server would not be required to accept and store cookies, though the
 push service would not be able to offload any state as a result.
+
+
+## Subscription Association
+
+The public key or otherwise public token offered by the application service to
+the push service may also be used to associate a subscription with the
+application server that can prove possession of the private counterpart.
+
+Subscription association reduces the reliance on endpoint secrecy by requiring
+this proof to be presented when requesting delivery of a push message.  This can
+provide an additional level of security in a situation where the application
+server may suffer a data leak.
+
+### Amendments to Subscribing for Push Messages
+
+The user agent may include the public token of the application server to
+associate the subscription with when creating a subscription, when developer has
+made the association token available.  For example, the Web Push API [API] could
+enable the public token of the application server to associate the
+subscription with in the "association" field of the PushSubscriptionOptions
+dictionary.
+
+The URL-safe base-64 encoded [RFC4648] representation of the token may be
+included by the user agent by including a Crypto-Key header in the request to
+create a new subscription.
+
+As an extension, accepting multiple keys to be specified in the Crypto-Key
+header when creating a subscription would allow a subscription to be associated
+with multiple application servers.  This would require more state to be
+maintained by the push service for each subscription.
+
+
+### Amendments to Requesting Push Message Delivery
+
+When a subscription has been associated with an application server, the request
+for push message delivery must include proof of possession of the private
+counterpart of the token that was used when creating the subscription.
+
+If the application server cannot satisfy this requirement, the application
+server must reject the delivery and generate a 401 (Unauthorized) status code.
 
 
 # IANA Considerations
