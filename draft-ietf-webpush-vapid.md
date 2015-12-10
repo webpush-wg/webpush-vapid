@@ -24,19 +24,29 @@ normative:
   RFC5280:
   RFC2818:
   RFC7230:
+  FIPS186:
+    title: "Digital Signature Standard (DSS)"
+    author:
+      - org: National Institute of Standards and Technology (NIST)
+    date: July 2013
+    seriesinfo: NIST PUB 186-4
 
 informative:
   RFC7231:
   RFC7515:
+  RFC7517:
+  RFC7519:
   RFC7540:
   RFC7541:
   RFC6350:
   RFC5988:
   RFC6265:
+  RFC6750:
   I-D.cavage-http-signatures:
   I-D.ietf-tls-tls13:
   I-D.ietf-tokbind-https:
-
+  I-D.thomson-http-encryption:
+  I-D.thomson-http-content-signature:
 
 --- abstract
 
@@ -105,7 +115,12 @@ The terms "push message", "push service", "application server", and "user agent"
 are used as defined in [I-D.ietf-webpush-protocol]
 
 
-# Self-Identification
+# Self-Identification Alternatives
+
+Several options have been proposed, here are some of the more concrete options.
+
+
+## Certificates
 
 A push service that supports application server self-identification requests a
 client certificate from application servers.  The client certificate is
@@ -134,12 +149,7 @@ serve requests from user agents and requests from application servers on
 different hostnames or port numbers.
 
 
-## Alternatives
-
-Several options have been proposed, here are some of the more concrete options.
-Some options might even be better than the certificate-based option.
-
-### Application Tokens {#token}
+## Server-Vended Tokens {#server-token}
 
 In this model, the push service vends a token to each application server that
 requests it.  That token is kept secret and used as the basis for
@@ -158,18 +168,54 @@ This information would be repeated with each request, but that overhead is
 greatly reduced by header compression [RFC7541] in HTTP/2 [RFC7540].
 
 
-### Contact Information Header Field
+## Client-Vended Tokens {#client-token}
+
+In this model, clients generates a token that it uses to prove ownership over a
+private key.  Use of the same key over time establishes a continuous identity.
+
+Push message requests can be accompanied by a JSON Web Token (JWT) [RFC7519].
+This token is not bound to the request.  As a result, the token is reusable over
+a limited time, based on the value of the "exp" (Expiry) claim in the token.  An
+"exp" claim MUST be included; similarly, an "aud" (Audience) claim MUST include
+the string "webpush".
+
+The JWT is included in an Authorization header field, using an auth-scheme of
+"WebPush".
+
+Editor's Note:
+
+: The definition of the "Bearer" auth-scheme in [RFC6750] is almost perfect, but
+  context would seem to indicate that this is only valid for use with OAuth.
+
+The corresponding public key is included in a JSON Web Key (JWK) [RFC7517].
+This would be included in either a newly-defined "jwk" parameter of the
+Crypto-Key header field [I-D.thomson-http-encryption]; alternatively, the
+"p256ecdsa" parameter defined in [I-D.thomson-http-content-signature] could be
+used to transport a raw key.
+
+For including voluntarily-provided contact details, a separate header field
+could be used (as in {{from}}) or the JWT could include claims about identity.
+For the latter, the "sub" (subject) claim could include a contact URI for the
+application server.
+
+The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  Both the JWS and JWK
+MUST use an elliptic curve digital signature (ECDSA) key on the NIST P-256 curve
+[FIPS186].
+
+
+## Contact Information Header Field {#from}
 
 Contact information for an application server could be included in a header
 field, either directly (e.g., a From header field, Section 5.5.1 of [RFC7231]),
 or by reference (e.g., a new "contact" link relation [RFC5988] that identified a
 vCard [RFC6350]).  Note that a From header field is limited to email addresses.
 
-Like an application token {{token}}, contact information would need to be
-repeated, though that cost is reduced with HTTP/2.
+Like an server- or client-vended token ({{server-token}}, {{client-token}}),
+contact information would need to be repeated, though that cost is reduced with
+HTTP/2.
 
 
-### Request Signing
+## Request Signing
 
 Signing of push message requests would allow the push service to attribute
 requests to an application server based on an asymmetric key.  This could be
@@ -178,7 +224,11 @@ done in any number of ways JWS [RFC7515] and HTTP signatures
 latter does not provide a means of conveying the signing key, which would be
 necessary for this application.
 
-Request signing has several limitations:
+Request signing shares much in common with client-vended tokens
+{{client-token}}, but it removes any possibility of token reuse in the interests
+of security.
+
+Request signing has a few shortcomings:
 
 * Deciding what to sign is challenging.  Signing only the body of a message is
   not sufficient to prevent message replay attacks.
@@ -188,7 +238,7 @@ Request signing has several limitations:
   input to denial of service mitigation decision making.
 
 
-### Token Binding {#tokbind}
+## Token Binding {#tokbind}
 
 The mechanism proposed in [I-D.ietf-tokbind-https] can be used to provide a
 stable identifier for application servers.  This includes a signature over
@@ -221,3 +271,14 @@ latency.
 An application server might offer falsified contact information.  A push service
 operator therefore cannot use the presence of unvalidated contact information as
 input to any security-critical decision-making process.
+
+Many of the alternative solutions are vulnerable to replay attacks.  Applying
+narrow limits to the period over which a replayable token can be reused limits
+the potential value of a stolen token to an attacker and can increase the
+difficulty of stealing a token.  The token binding solution, which binds tokens
+to a single TLS connection can make tokens less reusable.
+
+# Acknowledgements
+
+This document would have been much worse than it currently is if not for the
+contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.
