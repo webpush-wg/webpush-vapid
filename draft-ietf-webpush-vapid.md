@@ -193,9 +193,9 @@ Crypto-Key header field [I-D.thomson-http-encryption]; alternatively, the
 "p256ecdsa" parameter defined in [I-D.thomson-http-content-signature] could be
 used to transport a raw key.
 
-For including voluntarily-provided contact details, a separate header field
-could be used (as in {{from}}) or the JWT could include claims about identity.
-For the latter, the "sub" (subject) claim could include a contact URI for the
+For voluntarily-provided contact details, a separate header field could be used
+(as in {{from}}) or the JWT could include claims about identity.  For the
+latter, the "sub" (subject) claim could include a contact URI for the
 application server.
 
 The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  Both the JWS and JWK
