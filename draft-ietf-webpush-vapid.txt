@@ -65,18 +65,20 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
-   2.  Self-Identification . . . . . . . . . . . . . . . . . . . . .   3
-     2.1.  Alternatives  . . . . . . . . . . . . . . . . . . . . . .   4
-       2.1.1.  Application Tokens  . . . . . . . . . . . . . . . . .   4
-       2.1.2.  Contact Information Header Field  . . . . . . . . . .   4
-       2.1.3.  Request Signing . . . . . . . . . . . . . . . . . . .   5
-       2.1.4.  Token Binding . . . . . . . . . . . . . . . . . . . .   5
-   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     5.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
-     5.2.  Informative References  . . . . . . . . . . . . . . . . .   6
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   7
+   2.  Self-Identification Alternatives  . . . . . . . . . . . . . .   3
+     2.1.  Certificates  . . . . . . . . . . . . . . . . . . . . . .   3
+     2.2.  Server-Vended Tokens  . . . . . . . . . . . . . . . . . .   4
+     2.3.  Client-Vended Tokens  . . . . . . . . . . . . . . . . . .   4
+     2.4.  Contact Information Header Field  . . . . . . . . . . . .   5
+     2.5.  Request Signing . . . . . . . . . . . . . . . . . . . . .   5
+     2.6.  Token Binding . . . . . . . . . . . . . . . . . . . . . .   6
+   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
@@ -104,8 +106,6 @@ Table of Contents
    to a push service allows the push service to better distinguish
    between legitimate and bogus requests.
 
-   This document describes a system whereby an application server can
-   volunteer information about itself to a push service.  At a minimum,
 
 
 
@@ -114,6 +114,8 @@ Thomson                   Expires June 16, 2016                 [Page 2]
 Internet-Draft             Self Identification             December 2015
 
 
+   This document describes a system whereby an application server can
+   volunteer information about itself to a push service.  At a minimum,
    this provides a stable identity for the application server, though
    this could also include contact information, such as an email
    address.
@@ -145,7 +147,12 @@ Internet-Draft             Self Identification             December 2015
    The terms "push message", "push service", "application server", and
    "user agent" are used as defined in [I-D.ietf-webpush-protocol]
 
-2.  Self-Identification
+2.  Self-Identification Alternatives
+
+   Several options have been proposed, here are some of the more
+   concrete options.
+
+2.1.  Certificates
 
    A push service that supports application server self-identification
    requests a client certificate from application servers.  The client
@@ -155,13 +162,6 @@ Internet-Draft             Self Identification             December 2015
    no certificate in response; an application server that wishes to
    self-identify includes a certificate.
 
-   The certificate that the application server offers SHOULD be self-
-   signed (see Section 3.2 of [RFC5280]).  The certificate MAY contain
-   an alternative name extension (Section 4.2.1.6 of [RFC5280]) that
-   includes contact information.  Of the available options, an email
-   address using the "rfc822Name" form or an HTTP [RFC7230] (or HTTPS
-   [RFC2818]) "uniformResourceIdentifier" SHOULD be included, though
-   including other options are not prohibited.
 
 
 
@@ -169,6 +169,14 @@ Thomson                   Expires June 16, 2016                 [Page 3]
 
 Internet-Draft             Self Identification             December 2015
 
+
+   The certificate that the application server offers SHOULD be self-
+   signed (see Section 3.2 of [RFC5280]).  The certificate MAY contain
+   an alternative name extension (Section 4.2.1.6 of [RFC5280]) that
+   includes contact information.  Of the available options, an email
+   address using the "rfc822Name" form or an HTTP [RFC7230] (or HTTPS
+   [RFC2818]) "uniformResourceIdentifier" SHOULD be included, though
+   including other options are not prohibited.
 
    The offered end-entity certificate or the public key it contains
    becomes an identifier for the application server.  Push services are
@@ -181,13 +189,7 @@ Internet-Draft             Self Identification             December 2015
    necessary to serve requests from user agents and requests from
    application servers on different hostnames or port numbers.
 
-2.1.  Alternatives
-
-   Several options have been proposed, here are some of the more
-   concrete options.  Some options might even be better than the
-   certificate-based option.
-
-2.1.1.  Application Tokens
+2.2.  Server-Vended Tokens
 
    In this model, the push service vends a token to each application
    server that requests it.  That token is kept secret and used as the
@@ -200,24 +202,22 @@ Internet-Draft             Self Identification             December 2015
    regarding the use (and misuse) of HTTP cookies apply should this
    option be chosen.  A mechanism that makes token theft more difficult,
    such as [I-D.ietf-tokbind-https] might be needed.  However that
-   suggests a separate option (see Section 2.1.4).
+   suggests a separate option (see Section 2.6).
 
    This information would be repeated with each request, but that
    overhead is greatly reduced by header compression [RFC7541] in HTTP/2
    [RFC7540].
 
-2.1.2.  Contact Information Header Field
+2.3.  Client-Vended Tokens
 
-   Contact information for an application server could be included in a
-   header field, either directly (e.g., a From header field,
-   Section 5.5.1 of [RFC7231]), or by reference (e.g., a new "contact"
-   link relation [RFC5988] that identified a vCard [RFC6350]).  Note
-   that a From header field is limited to email addresses.
+   In this model, clients generates a token that it uses to prove
+   ownership over a private key.  Use of the same key over time
+   establishes a continuous identity.
 
-   Like an application token Section 2.1.1, contact information would
-   need to be repeated, though that cost is reduced with HTTP/2.
-
-
+   Push message requests can be accompanied by a JSON Web Token (JWT)
+   [RFC7519].  This token is not bound to the request.  As a result, the
+   token is reusable over a limited time, based on the value of the
+   "exp" (Expiry) claim in the token.  An "exp" claim MUST be included;
 
 
 
@@ -226,7 +226,45 @@ Thomson                   Expires June 16, 2016                 [Page 4]
 Internet-Draft             Self Identification             December 2015
 
 
-2.1.3.  Request Signing
+   similarly, an "aud" (Audience) claim MUST include the string
+   "webpush".
+
+   The JWT is included in an Authorization header field, using an auth-
+   scheme of "WebPush".
+
+   Editor's Note:  The definition of the "Bearer" auth-scheme in
+      [RFC6750] is almost perfect, but context would seem to indicate
+      that this is only valid for use with OAuth.
+
+   The corresponding public key is included in a JSON Web Key (JWK)
+   [RFC7517].  This would be included in either a newly-defined "jwk"
+   parameter of the Crypto-Key header field
+   [I-D.thomson-http-encryption]; alternatively, the "p256ecdsa"
+   parameter defined in [I-D.thomson-http-content-signature] could be
+   used to transport a raw key.
+
+   For voluntarily-provided contact details, a separate header field
+   could be used (as in Section 2.4) or the JWT could include claims
+   about identity.  For the latter, the "sub" (subject) claim could
+   include a contact URI for the application server.
+
+   The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  Both the JWS
+   and JWK MUST use an elliptic curve digital signature (ECDSA) key on
+   the NIST P-256 curve [FIPS186].
+
+2.4.  Contact Information Header Field
+
+   Contact information for an application server could be included in a
+   header field, either directly (e.g., a From header field,
+   Section 5.5.1 of [RFC7231]), or by reference (e.g., a new "contact"
+   link relation [RFC5988] that identified a vCard [RFC6350]).  Note
+   that a From header field is limited to email addresses.
+
+   Like an server- or client-vended token (Section 2.2, Section 2.3),
+   contact information would need to be repeated, though that cost is
+   reduced with HTTP/2.
+
+2.5.  Request Signing
 
    Signing of push message requests would allow the push service to
    attribute requests to an application server based on an asymmetric
@@ -235,7 +273,20 @@ Internet-Draft             Self Identification             December 2015
    options.  Note that the latter does not provide a means of conveying
    the signing key, which would be necessary for this application.
 
-   Request signing has several limitations:
+
+
+
+
+Thomson                   Expires June 16, 2016                 [Page 5]
+
+Internet-Draft             Self Identification             December 2015
+
+
+   Request signing shares much in common with client-vended tokens
+   Section 2.3, but it removes any possibility of token reuse in the
+   interests of security.
+
+   Request signing has a few shortcomings:
 
    o  Deciding what to sign is challenging.  Signing only the body of a
       message is not sufficient to prevent message replay attacks.
@@ -245,7 +296,7 @@ Internet-Draft             Self Identification             December 2015
       validation result is input to denial of service mitigation
       decision making.
 
-2.1.4.  Token Binding
+2.6.  Token Binding
 
    The mechanism proposed in [I-D.ietf-tokbind-https] can be used to
    provide a stable identifier for application servers.  This includes a
@@ -275,21 +326,38 @@ Internet-Draft             Self Identification             December 2015
    [I-D.ietf-tls-tls13] provides confidentiality protection for this
    information without additional latency.
 
-
-
-Thomson                   Expires June 16, 2016                 [Page 5]
-
-Internet-Draft             Self Identification             December 2015
-
-
    An application server might offer falsified contact information.  A
    push service operator therefore cannot use the presence of
    unvalidated contact information as input to any security-critical
    decision-making process.
 
-5.  References
 
-5.1.  Normative References
+
+Thomson                   Expires June 16, 2016                 [Page 6]
+
+Internet-Draft             Self Identification             December 2015
+
+
+   Many of the alternative solutions are vulnerable to replay attacks.
+   Applying narrow limits to the period over which a replayable token
+   can be reused limits the potential value of a stolen token to an
+   attacker and can increase the difficulty of stealing a token.  The
+   token binding solution, which binds tokens to a single TLS connection
+   can make tokens less reusable.
+
+5.  Acknowledgements
+
+   This document would have been much worse than it currently is if not
+   for the contributions of Benjamin Bangert, Chris Karlof, Costin
+   Manolache, and others.
+
+6.  References
+
+6.1.  Normative References
+
+   [FIPS186]  National Institute of Standards and Technology (NIST),
+              "Digital Signature Standard (DSS)", NIST PUB 186-4 , July
+              2013.
 
    [I-D.ietf-webpush-protocol]
               Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
@@ -316,27 +384,27 @@ Internet-Draft             Self Identification             December 2015
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <http://www.rfc-editor.org/info/rfc5280>.
 
+
+
+
+
+
+Thomson                   Expires June 16, 2016                 [Page 7]
+
+Internet-Draft             Self Identification             December 2015
+
+
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <http://www.rfc-editor.org/info/rfc7230>.
 
-5.2.  Informative References
+6.2.  Informative References
 
    [I-D.cavage-http-signatures]
               Cavage, M. and M. Sporny, "Signing HTTP Messages", draft-
               cavage-http-signatures-05 (work in progress), October
               2015.
-
-
-
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 6]
-
-Internet-Draft             Self Identification             December 2015
-
 
    [I-D.ietf-tls-tls13]
               Rescorla, E., "The Transport Layer Security (TLS) Protocol
@@ -347,6 +415,16 @@ Internet-Draft             Self Identification             December 2015
               Popov, A., Nystrom, M., Balfanz, D., and A. Langley,
               "Token Binding over HTTP", draft-ietf-tokbind-https-02
               (work in progress), October 2015.
+
+   [I-D.thomson-http-content-signature]
+              Thomson, M., "Content-Signature Header Field for HTTP",
+              draft-thomson-http-content-signature-00 (work in
+              progress), July 2015.
+
+   [I-D.thomson-http-encryption]
+              Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
+              thomson-http-encryption-02 (work in progress), October
+              2015.
 
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
               DOI 10.17487/RFC5988, October 2010,
@@ -360,6 +438,18 @@ Internet-Draft             Self Identification             December 2015
               DOI 10.17487/RFC6350, August 2011,
               <http://www.rfc-editor.org/info/rfc6350>.
 
+   [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
+              Framework: Bearer Token Usage", RFC 6750,
+              DOI 10.17487/RFC6750, October 2012,
+              <http://www.rfc-editor.org/info/rfc6750>.
+
+
+
+Thomson                   Expires June 16, 2016                 [Page 8]
+
+Internet-Draft             Self Identification             December 2015
+
+
    [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               DOI 10.17487/RFC7231, June 2014,
@@ -368,6 +458,14 @@ Internet-Draft             Self Identification             December 2015
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <http://www.rfc-editor.org/info/rfc7515>.
+
+   [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
+              DOI 10.17487/RFC7517, May 2015,
+              <http://www.rfc-editor.org/info/rfc7517>.
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
+              (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              <http://www.rfc-editor.org/info/rfc7519>.
 
    [RFC7540]  Belshe, M., Peon, R., and M. Thomson, Ed., "Hypertext
               Transfer Protocol Version 2 (HTTP/2)", RFC 7540,
@@ -389,4 +487,18 @@ Author's Address
 
 
 
-Thomson                   Expires June 16, 2016                 [Page 7]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thomson                   Expires June 16, 2016                 [Page 9]

@@ -134,6 +134,9 @@ pre.text, pre.text2 {
   width: 90%;
 }
 
+address {
+  margin: 10px 0 0;
+}
 .vcard {
   font-style: normal;
 }
@@ -216,39 +219,36 @@ ol, ul {
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
     font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    z-index: 2;
     pointer-events: auto;
 
-    top: 40px;
-    right: -41px;
+    top: 38px;
+    right: -45px;
 
     transform: rotate(45deg);
   }
 
-  .github-fork-ribbon a:link,
-  .github-fork-ribbon a:link:hover {
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
     color: #fff;
     background-color: transparent;
     text-decoration: none;
     text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
     text-align: center;
 
-    width: 180px;
+    width: 190px;
     line-height: 18px;
 
     display: inline-block;
     padding: 2px 0;
 
-    border-width: 1px 0;
-    border-style: dotted;
-    border-color: #fff;
-    border-color: rgba(255, 255, 255, 0.7);
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
   }
 
   .github-fork-ribbon-wrapper {
     display: block;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     position: absolute;
     overflow: hidden;
     top: 0; right: 0;
@@ -265,17 +265,19 @@ ol, ul {
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Notational Conventions"/>
-<link href="#rfc.section.2" rel="Chapter" title="2 Self-Identification"/>
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Alternatives"/>
-<link href="#rfc.section.2.1.1" rel="Chapter" title="2.1.1 Application Tokens"/>
-<link href="#rfc.section.2.1.2" rel="Chapter" title="2.1.2 Contact Information Header Field"/>
-<link href="#rfc.section.2.1.3" rel="Chapter" title="2.1.3 Request Signing"/>
-<link href="#rfc.section.2.1.4" rel="Chapter" title="2.1.4 Token Binding"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Self-Identification Alternatives"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Certificates"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Server-Vended Tokens"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Client-Vended Tokens"/>
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Contact Information Header Field"/>
+<link href="#rfc.section.2.5" rel="Chapter" title="2.5 Request Signing"/>
+<link href="#rfc.section.2.6" rel="Chapter" title="2.6 Token Binding"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 IANA Considerations"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Security Considerations"/>
-<link href="#rfc.references" rel="Chapter" title="5 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="5.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="5.2 Informative References"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="6 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="6.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="6.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -343,17 +345,19 @@ ol, ul {
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <ul><li>1.1.   <a href="#rfc.section.1.1">Notational Conventions</a></li>
-</ul><li>2.   <a href="#rfc.section.2">Self-Identification</a></li>
-<ul><li>2.1.   <a href="#rfc.section.2.1">Alternatives</a></li>
-<ul><li>2.1.1.   <a href="#rfc.section.2.1.1">Application Tokens</a></li>
-<li>2.1.2.   <a href="#rfc.section.2.1.2">Contact Information Header Field</a></li>
-<li>2.1.3.   <a href="#rfc.section.2.1.3">Request Signing</a></li>
-<li>2.1.4.   <a href="#rfc.section.2.1.4">Token Binding</a></li>
-</ul></ul><li>3.   <a href="#rfc.section.3">IANA Considerations</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Self-Identification Alternatives</a></li>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Certificates</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Server-Vended Tokens</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Client-Vended Tokens</a></li>
+<li>2.4.   <a href="#rfc.section.2.4">Contact Information Header Field</a></li>
+<li>2.5.   <a href="#rfc.section.2.5">Request Signing</a></li>
+<li>2.6.   <a href="#rfc.section.2.6">Token Binding</a></li>
+</ul><li>3.   <a href="#rfc.section.3">IANA Considerations</a></li>
 <li>4.   <a href="#rfc.section.4">Security Considerations</a></li>
-<li>5.   <a href="#rfc.references">References</a></li>
-<ul><li>5.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>5.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li>5.   <a href="#rfc.section.5">Acknowledgements</a></li>
+<li>6.   <a href="#rfc.references">References</a></li>
+<ul><li>6.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>6.2.   <a href="#rfc.references.2">Informative References</a></li>
 </ul><li><a href="#rfc.authors">Author's Address</a></li>
 
 
@@ -371,43 +375,66 @@ ol, ul {
 <h2 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h2>
 <p id="rfc.section.1.1.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document.  It&#8217;s not shouting, when they are capitalized, they have the special meaning described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <p id="rfc.section.1.1.p.2">The terms &#8220;push message&#8221;, &#8220;push service&#8221;, &#8220;application server&#8221;, and &#8220;user agent&#8221; are used as defined in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a></p>
-<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#self-identification" id="self-identification">Self-Identification</a></h1>
-<p id="rfc.section.2.p.1">A push service that supports application server self-identification requests a client certificate from application servers.  The client certificate is requested during the TLS <a href="#RFC5246">[RFC5246]</a> handshake.</p>
-<p id="rfc.section.2.p.2">An application server that does not have a client certificate offers no certificate in response; an application server that wishes to self-identify includes a certificate.</p>
-<p id="rfc.section.2.p.3">The certificate that the application server offers SHOULD be self-signed (see Section 3.2 of <a href="#RFC5280">[RFC5280]</a>).  The certificate MAY contain an alternative name extension (Section 4.2.1.6 of <a href="#RFC5280">[RFC5280]</a>) that includes contact information.  Of the available options, an email address using the <samp>rfc822Name</samp> form or an HTTP <a href="#RFC7230">[RFC7230]</a> (or HTTPS <a href="#RFC2818">[RFC2818]</a>) <samp>uniformResourceIdentifier</samp> SHOULD be included, though including other options are not prohibited.</p>
-<p id="rfc.section.2.p.4">The offered end-entity certificate or the public key it contains becomes an identifier for the application server.  Push services are able to reduce the data they retain for an application server, either by extracting important information like the subject public key information (SPKI), by hashing, or a combination.  Of course, a push service might choose to ignore the provided information.</p>
-<p id="rfc.section.2.p.5">To avoid requesting certificates from user agents, it might be necessary to serve requests from user agents and requests from application servers on different hostnames or port numbers.</p>
-<h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#alternatives" id="alternatives">Alternatives</a></h2>
-<p id="rfc.section.2.1.p.1">Several options have been proposed, here are some of the more concrete options.  Some options might even be better than the certificate-based option.</p>
-<h3 id="rfc.section.2.1.1"><a href="#rfc.section.2.1.1">2.1.1.</a> <a href="#token" id="token">Application Tokens</a></h3>
-<p id="rfc.section.2.1.1.p.1">In this model, the push service vends a token to each application server that requests it.  That token is kept secret and used as the basis for authentication.</p>
-<p id="rfc.section.2.1.1.p.2">This doesn&#8217;t address the need for contact information, but it addresses the need for a consistent application server identifier.</p>
-<p id="rfc.section.2.1.1.p.3">A Cookie <a href="#RFC6265">[RFC6265]</a> is a token of this nature.  All the considerations regarding the use (and misuse) of HTTP cookies apply should this option be chosen.  A mechanism that makes token theft more difficult, such as <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> might be needed.  However that suggests a separate option (see <a href="#tokbind">Section 2.1.4</a>).</p>
-<p id="rfc.section.2.1.1.p.4">This information would be repeated with each request, but that overhead is greatly reduced by header compression <a href="#RFC7541">[RFC7541]</a> in HTTP/2 <a href="#RFC7540">[RFC7540]</a>.</p>
-<h3 id="rfc.section.2.1.2"><a href="#rfc.section.2.1.2">2.1.2.</a> <a href="#contact-information-header-field" id="contact-information-header-field">Contact Information Header Field</a></h3>
-<p id="rfc.section.2.1.2.p.1">Contact information for an application server could be included in a header field, either directly (e.g., a From header field, Section 5.5.1 of <a href="#RFC7231">[RFC7231]</a>), or by reference (e.g., a new &#8220;contact&#8221; link relation <a href="#RFC5988">[RFC5988]</a> that identified a vCard <a href="#RFC6350">[RFC6350]</a>).  Note that a From header field is limited to email addresses.</p>
-<p id="rfc.section.2.1.2.p.2">Like an application token <a href="#token">Section 2.1.1</a>, contact information would need to be repeated, though that cost is reduced with HTTP/2.</p>
-<h3 id="rfc.section.2.1.3"><a href="#rfc.section.2.1.3">2.1.3.</a> <a href="#request-signing" id="request-signing">Request Signing</a></h3>
-<p id="rfc.section.2.1.3.p.1">Signing of push message requests would allow the push service to attribute requests to an application server based on an asymmetric key.  This could be done in any number of ways JWS <a href="#RFC7515">[RFC7515]</a> and HTTP signatures <a href="#I-D.cavage-http-signatures">[I-D.cavage-http-signatures]</a> being the most likely options.  Note that the latter does not provide a means of conveying the signing key, which would be necessary for this application.</p>
-<p id="rfc.section.2.1.3.p.2">Request signing has several limitations:</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#self-identification-alternatives" id="self-identification-alternatives">Self-Identification Alternatives</a></h1>
+<p id="rfc.section.2.p.1">Several options have been proposed, here are some of the more concrete options.</p>
+<h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#certificates" id="certificates">Certificates</a></h2>
+<p id="rfc.section.2.1.p.1">A push service that supports application server self-identification requests a client certificate from application servers.  The client certificate is requested during the TLS <a href="#RFC5246">[RFC5246]</a> handshake.</p>
+<p id="rfc.section.2.1.p.2">An application server that does not have a client certificate offers no certificate in response; an application server that wishes to self-identify includes a certificate.</p>
+<p id="rfc.section.2.1.p.3">The certificate that the application server offers SHOULD be self-signed (see Section 3.2 of <a href="#RFC5280">[RFC5280]</a>).  The certificate MAY contain an alternative name extension (Section 4.2.1.6 of <a href="#RFC5280">[RFC5280]</a>) that includes contact information.  Of the available options, an email address using the <samp>rfc822Name</samp> form or an HTTP <a href="#RFC7230">[RFC7230]</a> (or HTTPS <a href="#RFC2818">[RFC2818]</a>) <samp>uniformResourceIdentifier</samp> SHOULD be included, though including other options are not prohibited.</p>
+<p id="rfc.section.2.1.p.4">The offered end-entity certificate or the public key it contains becomes an identifier for the application server.  Push services are able to reduce the data they retain for an application server, either by extracting important information like the subject public key information (SPKI), by hashing, or a combination.  Of course, a push service might choose to ignore the provided information.</p>
+<p id="rfc.section.2.1.p.5">To avoid requesting certificates from user agents, it might be necessary to serve requests from user agents and requests from application servers on different hostnames or port numbers.</p>
+<h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#server-token" id="server-token">Server-Vended Tokens</a></h2>
+<p id="rfc.section.2.2.p.1">In this model, the push service vends a token to each application server that requests it.  That token is kept secret and used as the basis for authentication.</p>
+<p id="rfc.section.2.2.p.2">This doesn&#8217;t address the need for contact information, but it addresses the need for a consistent application server identifier.</p>
+<p id="rfc.section.2.2.p.3">A Cookie <a href="#RFC6265">[RFC6265]</a> is a token of this nature.  All the considerations regarding the use (and misuse) of HTTP cookies apply should this option be chosen.  A mechanism that makes token theft more difficult, such as <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> might be needed.  However that suggests a separate option (see <a href="#tokbind">Section 2.6</a>).</p>
+<p id="rfc.section.2.2.p.4">This information would be repeated with each request, but that overhead is greatly reduced by header compression <a href="#RFC7541">[RFC7541]</a> in HTTP/2 <a href="#RFC7540">[RFC7540]</a>.</p>
+<h2 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#client-token" id="client-token">Client-Vended Tokens</a></h2>
+<p id="rfc.section.2.3.p.1">In this model, clients generates a token that it uses to prove ownership over a private key.  Use of the same key over time establishes a continuous identity.</p>
+<p id="rfc.section.2.3.p.2">Push message requests can be accompanied by a JSON Web Token (JWT) <a href="#RFC7519">[RFC7519]</a>.  This token is not bound to the request.  As a result, the token is reusable over a limited time, based on the value of the &#8220;exp&#8221; (Expiry) claim in the token.  An &#8220;exp&#8221; claim MUST be included; similarly, an &#8220;aud&#8221; (Audience) claim MUST include the string &#8220;webpush&#8221;.</p>
+<p id="rfc.section.2.3.p.3">The JWT is included in an Authorization header field, using an auth-scheme of &#8220;WebPush&#8221;.</p>
+<p/>
+
+<dl>
+  <dt>Editor&#8217;s Note:</dt>
+  <dd style="margin-left: 8">The definition of the &#8220;Bearer&#8221; auth-scheme in <a href="#RFC6750">[RFC6750]</a> is almost perfect, but context would seem to indicate that this is only valid for use with OAuth.</dd>
+</dl>
+<p id="rfc.section.2.3.p.5">The corresponding public key is included in a JSON Web Key (JWK) <a href="#RFC7517">[RFC7517]</a>.  This would be included in either a newly-defined &#8220;jwk&#8221; parameter of the Crypto-Key header field <a href="#I-D.thomson-http-encryption">[I-D.thomson-http-encryption]</a>; alternatively, the &#8220;p256ecdsa&#8221; parameter defined in <a href="#I-D.thomson-http-content-signature">[I-D.thomson-http-content-signature]</a> could be used to transport a raw key.</p>
+<p id="rfc.section.2.3.p.6">For voluntarily-provided contact details, a separate header field could be used (as in <a href="#from">Section 2.4</a>) or the JWT could include claims about identity.  For the latter, the &#8220;sub&#8221; (subject) claim could include a contact URI for the application server.</p>
+<p id="rfc.section.2.3.p.7">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515">[RFC7515]</a>.  Both the JWS and JWK MUST use an elliptic curve digital signature (ECDSA) key on the NIST P-256 curve <a href="#FIPS186">[FIPS186]</a>.</p>
+<h2 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#from" id="from">Contact Information Header Field</a></h2>
+<p id="rfc.section.2.4.p.1">Contact information for an application server could be included in a header field, either directly (e.g., a From header field, Section 5.5.1 of <a href="#RFC7231">[RFC7231]</a>), or by reference (e.g., a new &#8220;contact&#8221; link relation <a href="#RFC5988">[RFC5988]</a> that identified a vCard <a href="#RFC6350">[RFC6350]</a>).  Note that a From header field is limited to email addresses.</p>
+<p id="rfc.section.2.4.p.2">Like an server- or client-vended token (<a href="#server-token">Section 2.2</a>, <a href="#client-token">Section 2.3</a>), contact information would need to be repeated, though that cost is reduced with HTTP/2.</p>
+<h2 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#request-signing" id="request-signing">Request Signing</a></h2>
+<p id="rfc.section.2.5.p.1">Signing of push message requests would allow the push service to attribute requests to an application server based on an asymmetric key.  This could be done in any number of ways JWS <a href="#RFC7515">[RFC7515]</a> and HTTP signatures <a href="#I-D.cavage-http-signatures">[I-D.cavage-http-signatures]</a> being the most likely options.  Note that the latter does not provide a means of conveying the signing key, which would be necessary for this application.</p>
+<p id="rfc.section.2.5.p.2">Request signing shares much in common with client-vended tokens <a href="#client-token">Section 2.3</a>, but it removes any possibility of token reuse in the interests of security.</p>
+<p id="rfc.section.2.5.p.3">Request signing has a few shortcomings:</p>
 <p/>
 
 <ul>
   <li>Deciding what to sign is challenging.  Signing only the body of a message is not sufficient to prevent message replay attacks.</li>
   <li>Every message contains a signature, which can increase the load on a server signficantly.  This is especially bad if a signature validation result is input to denial of service mitigation decision making.</li>
 </ul>
-<h3 id="rfc.section.2.1.4"><a href="#rfc.section.2.1.4">2.1.4.</a> <a href="#tokbind" id="tokbind">Token Binding</a></h3>
-<p id="rfc.section.2.1.4.p.1">The mechanism proposed in <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> can be used to provide a stable identifier for application servers.  This includes a signature over material that is exported from the underlying TLS connection.  Importantly, this does not require a new signature for each request: the same signature is repeated for every request, HTTP/2 is again used to reduce the cost of the repeated information.</p>
-<p id="rfc.section.2.1.4.p.2">Token binding could be used independently of cookies.  Consequently, an application server would not be required to accept and store cookies, though the push service would not be able to offload any state as a result.</p>
+<h2 id="rfc.section.2.6"><a href="#rfc.section.2.6">2.6.</a> <a href="#tokbind" id="tokbind">Token Binding</a></h2>
+<p id="rfc.section.2.6.p.1">The mechanism proposed in <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> can be used to provide a stable identifier for application servers.  This includes a signature over material that is exported from the underlying TLS connection.  Importantly, this does not require a new signature for each request: the same signature is repeated for every request, HTTP/2 is again used to reduce the cost of the repeated information.</p>
+<p id="rfc.section.2.6.p.2">Token binding could be used independently of cookies.  Consequently, an application server would not be required to accept and store cookies, though the push service would not be able to offload any state as a result.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.3.p.1">This document has no IANA actions (yet).</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.4.p.1">TLS 1.2 <a href="#RFC5246">[RFC5246]</a> does not provide any confidentiality protections for client certificates.  A network attacker can therefore see the identification information that is provided by the application server.  A push service MAY choose to offer confidentiality protection for application server identity by initiating TLS renegotiation immediately after establishing the TLS connection at the cost of some additional latency.  Using TLS 1.3 <a href="#I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</a> provides confidentiality protection for this information without additional latency.</p>
 <p id="rfc.section.4.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
-<h1 id="rfc.references"><a href="#rfc.references">5.</a> References</h1>
-<h2 id="rfc.references.1"><a href="#rfc.references.1">5.1.</a> Normative References</h2>
+<p id="rfc.section.4.p.3">Many of the alternative solutions are vulnerable to replay attacks.  Applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.  The token binding solution, which binds tokens to a single TLS connection can make tokens less reusable.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.5.p.1">This document would have been much worse than it currently is if not for the contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.</p>
+<h1 id="rfc.references"><a href="#rfc.references">6.</a> References</h1>
+<h2 id="rfc.references.1"><a href="#rfc.references.1">6.1.</a> Normative References</h2>
 <table>
   <tbody>
+    <tr>
+      <td class="reference">
+        <b id="FIPS186">[FIPS186]</b>
+      </td>
+      <td class="top"><a>National Institute of Standards and Technology (NIST)</a>, "<a>Digital Signature Standard (DSS)</a>", NIST PUB 186-4 , July 2013.</td>
+    </tr>
     <tr>
       <td class="reference">
         <b id="I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</b>
@@ -446,7 +473,7 @@ ol, ul {
     </tr>
   </tbody>
 </table>
-<h2 id="rfc.references.2"><a href="#rfc.references.2">5.2.</a> Informative References</h2>
+<h2 id="rfc.references.2"><a href="#rfc.references.2">6.2.</a> Informative References</h2>
 <table>
   <tbody>
     <tr>
@@ -469,6 +496,18 @@ ol, ul {
     </tr>
     <tr>
       <td class="reference">
+        <b id="I-D.thomson-http-content-signature">[I-D.thomson-http-content-signature]</b>
+      </td>
+      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-thomson-http-content-signature-00">Content-Signature Header Field for HTTP</a>", Internet-Draft draft-thomson-http-content-signature-00, July 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.thomson-http-encryption">[I-D.thomson-http-encryption]</b>
+      </td>
+      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-thomson-http-encryption-02">Encrypted Content-Encoding for HTTP</a>", Internet-Draft draft-thomson-http-encryption-02, October 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC5988">[RFC5988]</b>
       </td>
       <td class="top"><a>Nottingham, M.</a>, "<a href="http://tools.ietf.org/html/rfc5988">Web Linking</a>", RFC 5988, DOI 10.17487/RFC5988, October 2010.</td>
@@ -487,6 +526,12 @@ ol, ul {
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC6750">[RFC6750]</b>
+      </td>
+      <td class="top"><a>Jones, M.</a> and <a>D. Hardt</a>, "<a href="http://tools.ietf.org/html/rfc6750">The OAuth 2.0 Authorization Framework: Bearer Token Usage</a>", RFC 6750, DOI 10.17487/RFC6750, October 2012.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC7231">[RFC7231]</b>
       </td>
       <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>", RFC 7231, DOI 10.17487/RFC7231, June 2014.</td>
@@ -496,6 +541,18 @@ ol, ul {
         <b id="RFC7515">[RFC7515]</b>
       </td>
       <td class="top"><a>Jones, M.</a>, <a>Bradley, J.</a> and <a>N. Sakimura</a>, "<a href="http://tools.ietf.org/html/rfc7515">JSON Web Signature (JWS)</a>", RFC 7515, DOI 10.17487/RFC7515, May 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7517">[RFC7517]</b>
+      </td>
+      <td class="top"><a>Jones, M.</a>, "<a href="http://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a>", RFC 7517, DOI 10.17487/RFC7517, May 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7519">[RFC7519]</b>
+      </td>
+      <td class="top"><a>Jones, M.</a>, <a>Bradley, J.</a> and <a>N. Sakimura</a>, "<a href="http://tools.ietf.org/html/rfc7519">JSON Web Token (JWT)</a>", RFC 7519, DOI 10.17487/RFC7519, May 2015.</td>
     </tr>
     <tr>
       <td class="reference">
