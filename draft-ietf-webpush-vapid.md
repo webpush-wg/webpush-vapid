@@ -57,6 +57,7 @@ informative:
      title: "Web Push API"
      author:
        - ins: M. van Ouwerkerk
+       - ins: M. Thomson
      target: "https://w3c.github.io/push-api/"
      date: 2015
 
