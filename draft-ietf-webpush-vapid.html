@@ -272,23 +272,26 @@ ol, ul {
 <link href="#rfc.section.2.4" rel="Chapter" title="2.4 Contact Information Header Field"/>
 <link href="#rfc.section.2.5" rel="Chapter" title="2.5 Request Signing"/>
 <link href="#rfc.section.2.6" rel="Chapter" title="2.6 Token Binding"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 IANA Considerations"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 Security Considerations"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Acknowledgements"/>
-<link href="#rfc.references" rel="Chapter" title="6 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="6.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="6.2 Informative References"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Subscription Association"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Amendments to Subscribing for Push Messages"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Amendments to Requesting Push Message Delivery"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 IANA Considerations"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="7 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="7.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
   <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Thomson, M." />
+  <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2015-12-14" />
-  <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
-  <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
+  <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
+  <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
 
 </head>
 
@@ -307,11 +310,15 @@ ol, ul {
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">December 14, 2015</td>
+  <td class="right">P. Beverloo</td>
 </tr>
 <tr>
   <td class="left">Expires: June 16, 2016</td>
-  <td class="right"></td>
+  <td class="right">Google</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">December 14, 2015</td>
 </tr>
 
     	
@@ -324,7 +331,7 @@ ol, ul {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server.</p>
+<p>An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -352,13 +359,16 @@ ol, ul {
 <li>2.4.   <a href="#rfc.section.2.4">Contact Information Header Field</a></li>
 <li>2.5.   <a href="#rfc.section.2.5">Request Signing</a></li>
 <li>2.6.   <a href="#rfc.section.2.6">Token Binding</a></li>
-</ul><li>3.   <a href="#rfc.section.3">IANA Considerations</a></li>
-<li>4.   <a href="#rfc.section.4">Security Considerations</a></li>
-<li>5.   <a href="#rfc.section.5">Acknowledgements</a></li>
-<li>6.   <a href="#rfc.references">References</a></li>
-<ul><li>6.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>6.2.   <a href="#rfc.references.2">Informative References</a></li>
-</ul><li><a href="#rfc.authors">Author's Address</a></li>
+</ul><li>3.   <a href="#rfc.section.3">Subscription Association</a></li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Amendments to Subscribing for Push Messages</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Amendments to Requesting Push Message Delivery</a></li>
+</ul><li>4.   <a href="#rfc.section.4">IANA Considerations</a></li>
+<li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
+<li>6.   <a href="#rfc.section.6">Acknowledgements</a></li>
+<li>7.   <a href="#rfc.references">References</a></li>
+<ul><li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>7.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
@@ -367,11 +377,12 @@ ol, ul {
 <p id="rfc.section.1.p.1">The Web Push protocol <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a> describes how an application server is able to request that a push service deliver a push message to a user agent.</p>
 <p id="rfc.section.1.p.2">As a consequence of the expected deployment architecture, there is no basis for an application server to be known to a push service prior to requesting delivery of a push message.  By the same measure, requesting the creation of a subscription for push message receipts has no prior authentication.  Requiring that the push service be able to authenticate application servers places an unwanted constraint on the interactions between user agents and application servers, who are the ultimate users of a push service.  That constraint would also degrade the privacy-preserving properties the protocol provides.  For these reasons, <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a> does not define a mandatory system for authentication of application servers.</p>
 <p id="rfc.section.1.p.3">An unfortunate consequence of this design is that a push service is exposed to a greater risk of denial of service attack.  While requests from application servers can be indirectly attributed to user agents, this is not always efficient or even sufficient.  Providing more information about the application server more directly to a push service allows the push service to better distinguish between legitimate and bogus requests.</p>
-<p id="rfc.section.1.p.4">This document describes a system whereby an application server can volunteer information about itself to a push service.  At a minimum, this provides a stable identity for the application server, though this could also include contact information, such as an email address.</p>
-<p id="rfc.section.1.p.5">A consistent identity can be used by a push service to establish behavioral expectations for an application server.  Significant deviations from an established norm can then be used to trigger exception handling procedures.</p>
-<p id="rfc.section.1.p.6">Voluntarily-provided contact information can be used to contact an application server operator in the case of exceptional situations.</p>
-<p id="rfc.section.1.p.7">Experience with push service deployment has shown that software errors or unusual circumstances can cause large increases in push message volume.  Contacting the operator of the application server has proven to be valuable.</p>
-<p id="rfc.section.1.p.8">Even in the absence of usable contact information, an application server that has a well-established reputation might be given preference over an unidentified application server when choosing whether to discard a push message.</p>
+<p id="rfc.section.1.p.4">Additionally, this design also relies on endpoint secrecy as any application server in possession of the endpoint is able to send messages, albeit without payloads.  In situations where usage of a subscription can be limited to a single application server, the ability to associate said subscription with the application server provides could reduce the impact of a data leak.</p>
+<p id="rfc.section.1.p.5">This document describes a system whereby an application server can volunteer information about itself to a push service.  At a minimum, this provides a stable identity for the application server, though this could also include contact information, such as an email address.</p>
+<p id="rfc.section.1.p.6">A consistent identity can be used by a push service to establish behavioral expectations for an application server.  Significant deviations from an established norm can then be used to trigger exception handling procedures.</p>
+<p id="rfc.section.1.p.7">Voluntarily-provided contact information can be used to contact an application server operator in the case of exceptional situations.</p>
+<p id="rfc.section.1.p.8">Experience with push service deployment has shown that software errors or unusual circumstances can cause large increases in push message volume.  Contacting the operator of the application server has proven to be valuable.</p>
+<p id="rfc.section.1.p.9">Even in the absence of usable contact information, an application server that has a well-established reputation might be given preference over an unidentified application server when choosing whether to discard a push message.</p>
 <h2 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h2>
 <p id="rfc.section.1.1.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document.  It&#8217;s not shouting, when they are capitalized, they have the special meaning described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <p id="rfc.section.1.1.p.2">The terms &#8220;push message&#8221;, &#8220;push service&#8221;, &#8220;application server&#8221;, and &#8220;user agent&#8221; are used as defined in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a></p>
@@ -417,16 +428,25 @@ ol, ul {
 <h2 id="rfc.section.2.6"><a href="#rfc.section.2.6">2.6.</a> <a href="#tokbind" id="tokbind">Token Binding</a></h2>
 <p id="rfc.section.2.6.p.1">The mechanism proposed in <a href="#I-D.ietf-tokbind-https">[I-D.ietf-tokbind-https]</a> can be used to provide a stable identifier for application servers.  This includes a signature over material that is exported from the underlying TLS connection.  Importantly, this does not require a new signature for each request: the same signature is repeated for every request, HTTP/2 is again used to reduce the cost of the repeated information.</p>
 <p id="rfc.section.2.6.p.2">Token binding could be used independently of cookies.  Consequently, an application server would not be required to accept and store cookies, though the push service would not be able to offload any state as a result.</p>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
-<p id="rfc.section.3.p.1">This document has no IANA actions (yet).</p>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
-<p id="rfc.section.4.p.1">TLS 1.2 <a href="#RFC5246">[RFC5246]</a> does not provide any confidentiality protections for client certificates.  A network attacker can therefore see the identification information that is provided by the application server.  A push service MAY choose to offer confidentiality protection for application server identity by initiating TLS renegotiation immediately after establishing the TLS connection at the cost of some additional latency.  Using TLS 1.3 <a href="#I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</a> provides confidentiality protection for this information without additional latency.</p>
-<p id="rfc.section.4.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
-<p id="rfc.section.4.p.3">Many of the alternative solutions are vulnerable to replay attacks.  Applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.  The token binding solution, which binds tokens to a single TLS connection can make tokens less reusable.</p>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
-<p id="rfc.section.5.p.1">This document would have been much worse than it currently is if not for the contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.</p>
-<h1 id="rfc.references"><a href="#rfc.references">6.</a> References</h1>
-<h2 id="rfc.references.1"><a href="#rfc.references.1">6.1.</a> Normative References</h2>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#subscription-association" id="subscription-association">Subscription Association</a></h1>
+<p id="rfc.section.3.p.1">A stable identifier for an application server - such as a public key or a token - could also be used to associate a subscription with the application server.</p>
+<p id="rfc.section.3.p.2">Subscription association reduces the reliance on endpoint secrecy by requiring proof of possession to be demonstrated by an application server when requesting delivery of a push message.  This provides an additional level of protection against leaking of the details of the push subscription.</p>
+<h2 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#amendments-to-subscribing-for-push-messages" id="amendments-to-subscribing-for-push-messages">Amendments to Subscribing for Push Messages</a></h2>
+<p id="rfc.section.3.1.p.1">The user agent includes the public key or token of the application server when requesting the creation of a subscription.  For example, the Web Push API <a href="#API">[API]</a> could allow an application to provide a public key as part of a new field on the <samp>PushSubscriptionOptions</samp> dictionary.</p>
+<p id="rfc.section.3.1.p.2">This token might then be added to the request to create a push subscription.</p>
+<p id="rfc.section.3.1.p.3">Allowing the inclusion of multiple keys when creating a subscription would allow a subscription to be associated with multiple application servers or application server instances.  This would require more state to be maintained by the push service for each subscription.</p>
+<h2 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#amendments-to-requesting-push-message-delivery" id="amendments-to-requesting-push-message-delivery">Amendments to Requesting Push Message Delivery</a></h2>
+<p id="rfc.section.3.2.p.1">When a subscription has been associated with an application server, the request for push message delivery MUST include proof of possession for the associated private key or token that was used when creating the subscription.  Requests that do not contain proof of possession are rejected with a 401 (Unauthorized) status code.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
+<p id="rfc.section.4.p.1">This document has no IANA actions (yet).</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
+<p id="rfc.section.5.p.1">TLS 1.2 <a href="#RFC5246">[RFC5246]</a> does not provide any confidentiality protections for client certificates.  A network attacker can therefore see the identification information that is provided by the application server.  A push service MAY choose to offer confidentiality protection for application server identity by initiating TLS renegotiation immediately after establishing the TLS connection at the cost of some additional latency.  Using TLS 1.3 <a href="#I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</a> provides confidentiality protection for this information without additional latency.</p>
+<p id="rfc.section.5.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
+<p id="rfc.section.5.p.3">Many of the alternative solutions are vulnerable to replay attacks.  Applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.  The token binding solution, which binds tokens to a single TLS connection can make tokens less reusable.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.6.p.1">This document would have been much worse than it currently is if not for the contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.</p>
+<h1 id="rfc.references"><a href="#rfc.references">7.</a> References</h1>
+<h2 id="rfc.references.1"><a href="#rfc.references.1">7.1.</a> Normative References</h2>
 <table>
   <tbody>
     <tr>
@@ -473,9 +493,15 @@ ol, ul {
     </tr>
   </tbody>
 </table>
-<h2 id="rfc.references.2"><a href="#rfc.references.2">6.2.</a> Informative References</h2>
+<h2 id="rfc.references.2"><a href="#rfc.references.2">7.2.</a> Informative References</h2>
 <table>
   <tbody>
+    <tr>
+      <td class="reference">
+        <b id="API">[API]</b>
+      </td>
+      <td class="top"><a>van Ouwerkerk, M.</a>, "<a href="https://w3c.github.io/push-api/">Web Push API</a>", 2015.</td>
+    </tr>
     <tr>
       <td class="reference">
         <b id="I-D.cavage-http-signatures">[I-D.cavage-http-signatures]</b>
@@ -505,6 +531,12 @@ ol, ul {
         <b id="I-D.thomson-http-encryption">[I-D.thomson-http-encryption]</b>
       </td>
       <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-thomson-http-encryption-02">Encrypted Content-Encoding for HTTP</a>", Internet-Draft draft-thomson-http-encryption-02, October 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4648">[RFC4648]</b>
+      </td>
+      <td class="top"><a>Josefsson, S.</a>, "<a href="http://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a>", RFC 4648, DOI 10.17487/RFC4648, October 2006.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -569,7 +601,7 @@ ol, ul {
   </tbody>
 </table>
 <h1 id="rfc.authors">
-  <a href="#rfc.authors">Author's Address</a>
+  <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -590,6 +622,27 @@ ol, ul {
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:martin.thomson@gmail.com">martin.thomson@gmail.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Peter Beverloo</span> 
+	  <span class="n hidden">
+		<span class="family-name">Beverloo</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Google</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:beverloo@google.com">beverloo@google.com</a></span>
 
   </address>
 </div>

@@ -4,8 +4,9 @@
 
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
-Intended status: Standards Track                       December 14, 2015
-Expires: June 16, 2016
+Intended status: Standards Track                             P. Beverloo
+Expires: June 16, 2016                                            Google
+                                                       December 14, 2015
 
 
         Voluntary Application Server Identification for Web Push
@@ -16,10 +17,11 @@ Abstract
    An application server can voluntarily identify itself to a push
    service using the described technique.  This identification
    information can be used by the push service to attribute requests
-   that are made by the same application server to a single entity.  An
-   application server is further able include additional information the
-   operator of a push service can use to contact the operator of the
-   application server.
+   that are made by the same application server to a single entity, and
+   reduce the need for endpoint secrecy by being able to associate
+   subscriptions with an application server.  An application server is
+   further able include additional information the operator of a push
+   service can use to contact the operator of the application server.
 
 Status of This Memo
 
@@ -48,16 +50,16 @@ Copyright Notice
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
 
 
 
-Thomson                   Expires June 16, 2016                 [Page 1]
+Thomson & Beverloo        Expires June 16, 2016                 [Page 1]
 
 Internet-Draft             Self Identification             December 2015
 
 
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
 
@@ -65,20 +67,23 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
-   2.  Self-Identification Alternatives  . . . . . . . . . . . . . .   3
-     2.1.  Certificates  . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Self-Identification Alternatives  . . . . . . . . . . . . . .   4
+     2.1.  Certificates  . . . . . . . . . . . . . . . . . . . . . .   4
      2.2.  Server-Vended Tokens  . . . . . . . . . . . . . . . . . .   4
-     2.3.  Client-Vended Tokens  . . . . . . . . . . . . . . . . . .   4
+     2.3.  Client-Vended Tokens  . . . . . . . . . . . . . . . . . .   5
      2.4.  Contact Information Header Field  . . . . . . . . . . . .   5
-     2.5.  Request Signing . . . . . . . . . . . . . . . . . . . . .   5
+     2.5.  Request Signing . . . . . . . . . . . . . . . . . . . . .   6
      2.6.  Token Binding . . . . . . . . . . . . . . . . . . . . . .   6
-   3.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   8
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
+   3.  Subscription Association  . . . . . . . . . . . . . . . . . .   6
+     3.1.  Amendments to Subscribing for Push Messages . . . . . . .   7
+     3.2.  Amendments to Requesting Push Message Delivery  . . . . .   7
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -101,18 +106,25 @@ Table of Contents
    An unfortunate consequence of this design is that a push service is
    exposed to a greater risk of denial of service attack.  While
    requests from application servers can be indirectly attributed to
+
+
+
+Thomson & Beverloo        Expires June 16, 2016                 [Page 2]
+
+Internet-Draft             Self Identification             December 2015
+
+
    user agents, this is not always efficient or even sufficient.
    Providing more information about the application server more directly
    to a push service allows the push service to better distinguish
    between legitimate and bogus requests.
 
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 2]
-
-Internet-Draft             Self Identification             December 2015
-
+   Additionally, this design also relies on endpoint secrecy as any
+   application server in possession of the endpoint is able to send
+   messages, albeit without payloads.  In situations where usage of a
+   subscription can be limited to a single application server, the
+   ability to associate said subscription with the application server
+   provides could reduce the impact of a data leak.
 
    This document describes a system whereby an application server can
    volunteer information about itself to a push service.  At a minimum,
@@ -147,6 +159,17 @@ Internet-Draft             Self Identification             December 2015
    The terms "push message", "push service", "application server", and
    "user agent" are used as defined in [I-D.ietf-webpush-protocol]
 
+
+
+
+
+
+
+Thomson & Beverloo        Expires June 16, 2016                 [Page 3]
+
+Internet-Draft             Self Identification             December 2015
+
+
 2.  Self-Identification Alternatives
 
    Several options have been proposed, here are some of the more
@@ -161,14 +184,6 @@ Internet-Draft             Self Identification             December 2015
    An application server that does not have a client certificate offers
    no certificate in response; an application server that wishes to
    self-identify includes a certificate.
-
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 3]
-
-Internet-Draft             Self Identification             December 2015
-
 
    The certificate that the application server offers SHOULD be self-
    signed (see Section 3.2 of [RFC5280]).  The certificate MAY contain
@@ -204,6 +219,13 @@ Internet-Draft             Self Identification             December 2015
    such as [I-D.ietf-tokbind-https] might be needed.  However that
    suggests a separate option (see Section 2.6).
 
+
+
+Thomson & Beverloo        Expires June 16, 2016                 [Page 4]
+
+Internet-Draft             Self Identification             December 2015
+
+
    This information would be repeated with each request, but that
    overhead is greatly reduced by header compression [RFC7541] in HTTP/2
    [RFC7540].
@@ -218,14 +240,6 @@ Internet-Draft             Self Identification             December 2015
    [RFC7519].  This token is not bound to the request.  As a result, the
    token is reusable over a limited time, based on the value of the
    "exp" (Expiry) claim in the token.  An "exp" claim MUST be included;
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 4]
-
-Internet-Draft             Self Identification             December 2015
-
-
    similarly, an "aud" (Audience) claim MUST include the string
    "webpush".
 
@@ -260,6 +274,14 @@ Internet-Draft             Self Identification             December 2015
    link relation [RFC5988] that identified a vCard [RFC6350]).  Note
    that a From header field is limited to email addresses.
 
+
+
+
+Thomson & Beverloo        Expires June 16, 2016                 [Page 5]
+
+Internet-Draft             Self Identification             December 2015
+
+
    Like an server- or client-vended token (Section 2.2, Section 2.3),
    contact information would need to be repeated, though that cost is
    reduced with HTTP/2.
@@ -272,15 +294,6 @@ Internet-Draft             Self Identification             December 2015
    signatures [I-D.cavage-http-signatures] being the most likely
    options.  Note that the latter does not provide a means of conveying
    the signing key, which would be necessary for this application.
-
-
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 5]
-
-Internet-Draft             Self Identification             December 2015
-
 
    Request signing shares much in common with client-vended tokens
    Section 2.3, but it removes any possibility of token reuse in the
@@ -310,11 +323,56 @@ Internet-Draft             Self Identification             December 2015
    cookies, though the push service would not be able to offload any
    state as a result.
 
-3.  IANA Considerations
+3.  Subscription Association
+
+   A stable identifier for an application server - such as a public key
+   or a token - could also be used to associate a subscription with the
+   application server.
+
+
+
+
+
+Thomson & Beverloo        Expires June 16, 2016                 [Page 6]
+
+Internet-Draft             Self Identification             December 2015
+
+
+   Subscription association reduces the reliance on endpoint secrecy by
+   requiring proof of possession to be demonstrated by an application
+   server when requesting delivery of a push message.  This provides an
+   additional level of protection against leaking of the details of the
+   push subscription.
+
+3.1.  Amendments to Subscribing for Push Messages
+
+   The user agent includes the public key or token of the application
+   server when requesting the creation of a subscription.  For example,
+   the Web Push API [API] could allow an application to provide a public
+   key as part of a new field on the "PushSubscriptionOptions"
+   dictionary.
+
+   This token might then be added to the request to create a push
+   subscription.
+
+   Allowing the inclusion of multiple keys when creating a subscription
+   would allow a subscription to be associated with multiple application
+   servers or application server instances.  This would require more
+   state to be maintained by the push service for each subscription.
+
+3.2.  Amendments to Requesting Push Message Delivery
+
+   When a subscription has been associated with an application server,
+   the request for push message delivery MUST include proof of
+   possession for the associated private key or token that was used when
+   creating the subscription.  Requests that do not contain proof of
+   possession are rejected with a 401 (Unauthorized) status code.
+
+4.  IANA Considerations
 
    This document has no IANA actions (yet).
 
-4.  Security Considerations
+5.  Security Considerations
 
    TLS 1.2 [RFC5246] does not provide any confidentiality protections
    for client certificates.  A network attacker can therefore see the
@@ -328,15 +386,16 @@ Internet-Draft             Self Identification             December 2015
 
    An application server might offer falsified contact information.  A
    push service operator therefore cannot use the presence of
-   unvalidated contact information as input to any security-critical
-   decision-making process.
 
 
 
-Thomson                   Expires June 16, 2016                 [Page 6]
+Thomson & Beverloo        Expires June 16, 2016                 [Page 7]
 
 Internet-Draft             Self Identification             December 2015
 
+
+   unvalidated contact information as input to any security-critical
+   decision-making process.
 
    Many of the alternative solutions are vulnerable to replay attacks.
    Applying narrow limits to the period over which a replayable token
@@ -345,15 +404,15 @@ Internet-Draft             Self Identification             December 2015
    token binding solution, which binds tokens to a single TLS connection
    can make tokens less reusable.
 
-5.  Acknowledgements
+6.  Acknowledgements
 
    This document would have been much worse than it currently is if not
    for the contributions of Benjamin Bangert, Chris Karlof, Costin
    Manolache, and others.
 
-6.  References
+7.  References
 
-6.1.  Normative References
+7.1.  Normative References
 
    [FIPS186]  National Institute of Standards and Technology (NIST),
               "Digital Signature Standard (DSS)", NIST PUB 186-4 , July
@@ -386,10 +445,7 @@ Internet-Draft             Self Identification             December 2015
 
 
 
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 7]
+Thomson & Beverloo        Expires June 16, 2016                 [Page 8]
 
 Internet-Draft             Self Identification             December 2015
 
@@ -399,7 +455,10 @@ Internet-Draft             Self Identification             December 2015
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <http://www.rfc-editor.org/info/rfc7230>.
 
-6.2.  Informative References
+7.2.  Informative References
+
+   [API]      van Ouwerkerk, M., "Web Push API", 2015,
+              <https://w3c.github.io/push-api/>.
 
    [I-D.cavage-http-signatures]
               Cavage, M. and M. Sporny, "Signing HTTP Messages", draft-
@@ -426,6 +485,10 @@ Internet-Draft             Self Identification             December 2015
               thomson-http-encryption-02 (work in progress), October
               2015.
 
+   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
+              <http://www.rfc-editor.org/info/rfc4648>.
+
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
               DOI 10.17487/RFC5988, October 2010,
               <http://www.rfc-editor.org/info/rfc5988>.
@@ -433,6 +496,15 @@ Internet-Draft             Self Identification             December 2015
    [RFC6265]  Barth, A., "HTTP State Management Mechanism", RFC 6265,
               DOI 10.17487/RFC6265, April 2011,
               <http://www.rfc-editor.org/info/rfc6265>.
+
+
+
+
+
+Thomson & Beverloo        Expires June 16, 2016                 [Page 9]
+
+Internet-Draft             Self Identification             December 2015
+
 
    [RFC6350]  Perreault, S., "vCard Format Specification", RFC 6350,
               DOI 10.17487/RFC6350, August 2011,
@@ -442,13 +514,6 @@ Internet-Draft             Self Identification             December 2015
               Framework: Bearer Token Usage", RFC 6750,
               DOI 10.17487/RFC6750, October 2012,
               <http://www.rfc-editor.org/info/rfc6750>.
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 8]
-
-Internet-Draft             Self Identification             December 2015
-
 
    [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
@@ -476,7 +541,7 @@ Internet-Draft             Self Identification             December 2015
               HTTP/2", RFC 7541, DOI 10.17487/RFC7541, May 2015,
               <http://www.rfc-editor.org/info/rfc7541>.
 
-Author's Address
+Authors' Addresses
 
    Martin Thomson
    Mozilla
@@ -484,21 +549,12 @@ Author's Address
    Email: martin.thomson@gmail.com
 
 
+   Peter Beverloo
+   Google
+
+   Email: beverloo@google.com
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Thomson                   Expires June 16, 2016                 [Page 9]
+Thomson & Beverloo        Expires June 16, 2016                [Page 10]
