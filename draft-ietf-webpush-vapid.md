@@ -15,6 +15,11 @@ author:
     name: Martin Thomson
     org: Mozilla
     email: martin.thomson@gmail.com
+ -
+    ins: P. Beverloo
+    name: Peter Beverloo
+    org: Google
+    email: beverloo@google.com
 
 
 normative:
@@ -269,42 +274,35 @@ push service would not be able to offload any state as a result.
 
 # Subscription Association
 
-The public key or otherwise public token offered by the application service to
-the push service may also be used to associate a subscription with the
-application server that can prove possession of the private counterpart.
+A stable identifier for an application server - such as a public key or a token
+- could also be used to associate a subscription with the application server.
 
 Subscription association reduces the reliance on endpoint secrecy by requiring
-this proof to be presented when requesting delivery of a push message.  This can
-provide an additional level of security in a situation where the application
-server may suffer a data leak.
+proof of possession to be demonstrated by an application server when requesting
+delivery of a push message.  This provides an additional level of protection
+against leaking of the details of the push subscription.
 
 ## Amendments to Subscribing for Push Messages
 
-The user agent may include the public token of the application server to
-associate the subscription with when creating a subscription, when developer has
-made the association token available.  For example, the Web Push API [API] could
-enable the public token of the application server to associate the
-subscription with in the "association" field of the PushSubscriptionOptions
-dictionary.
+The user agent includes the public key or token of the application server when
+requesting the creation of a subscription.  For example, the Web Push API [API]
+could allow an application to provide a public key as part of a new field on the
+`PushSubscriptionOptions` dictionary.
 
-The URL-safe base-64 encoded [RFC4648] representation of the token may be
-included by the user agent by including a Crypto-Key header in the request to
-create a new subscription.
+This token might then be added to the request to create a push subscription.
 
-As an extension, accepting multiple keys to be specified in the Crypto-Key
-header when creating a subscription would allow a subscription to be associated
-with multiple application servers.  This would require more state to be
-maintained by the push service for each subscription.
-
+Allowing the inclusion of multiple keys when creating a subscription would allow
+a subscription to be associated with multiple application servers or application
+server instances.  This would require more state to be maintained by the push
+service for each subscription.
 
 ## Amendments to Requesting Push Message Delivery
 
 When a subscription has been associated with an application server, the request
-for push message delivery must include proof of possession of the private
-counterpart of the token that was used when creating the subscription.
-
-If the application server cannot satisfy this requirement, the application
-server must reject the delivery and generate a 401 (Unauthorized) status code.
+for push message delivery MUST include proof of possession for the associated
+private key or token that was used when creating the subscription.  Requests
+that do not contain proof of possession are rejected with a 401 (Unauthorized)
+status code.
 
 
 # IANA Considerations
