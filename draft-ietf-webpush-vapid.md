@@ -15,6 +15,11 @@ author:
     name: Martin Thomson
     org: Mozilla
     email: martin.thomson@gmail.com
+ -
+    ins: P. Beverloo
+    name: Peter Beverloo
+    org: Google
+    email: beverloo@google.com
 
 
 normative:
@@ -32,6 +37,7 @@ normative:
     seriesinfo: NIST PUB 186-4
 
 informative:
+  RFC4648:
   RFC7231:
   RFC7515:
   RFC7517:
@@ -47,15 +53,23 @@ informative:
   I-D.ietf-tokbind-https:
   I-D.thomson-http-encryption:
   I-D.thomson-http-content-signature:
+  API:
+     title: "Web Push API"
+     author:
+       - ins: M. van Ouwerkerk
+     target: "https://w3c.github.io/push-api/"
+     date: 2015
+
 
 --- abstract
 
 An application server can voluntarily identify itself to a push service using
 the described technique.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
-to a single entity.  An application server is further able include additional
-information the operator of a push service can use to contact the operator of
-the application server.
+to a single entity, and reduce the need for endpoint secrecy by being able to
+associate subscriptions with an application server.  An application server is
+further able include additional information the operator of a push service can
+use to contact the operator of the application server.
 
 
 --- middle
@@ -83,6 +97,12 @@ servers can be indirectly attributed to user agents, this is not always
 efficient or even sufficient.  Providing more information about the application
 server more directly to a push service allows the push service to better
 distinguish between legitimate and bogus requests.
+
+Additionally, this design also relies on endpoint secrecy as any application
+server in possession of the endpoint is able to send messages, albeit without
+payloads.  In situations where usage of a subscription can be limited to a
+single application server, the ability to associate said subscription with the
+application server provides could reduce the impact of a data leak.
 
 This document describes a system whereby an application server can volunteer
 information about itself to a push service.  At a minimum, this provides a
@@ -250,6 +270,39 @@ repeated information.
 Token binding could be used independently of cookies.  Consequently, an
 application server would not be required to accept and store cookies, though the
 push service would not be able to offload any state as a result.
+
+
+# Subscription Association
+
+A stable identifier for an application server - such as a public key or a token
+- could also be used to associate a subscription with the application server.
+
+Subscription association reduces the reliance on endpoint secrecy by requiring
+proof of possession to be demonstrated by an application server when requesting
+delivery of a push message.  This provides an additional level of protection
+against leaking of the details of the push subscription.
+
+## Amendments to Subscribing for Push Messages
+
+The user agent includes the public key or token of the application server when
+requesting the creation of a subscription.  For example, the Web Push API [API]
+could allow an application to provide a public key as part of a new field on the
+`PushSubscriptionOptions` dictionary.
+
+This token might then be added to the request to create a push subscription.
+
+Allowing the inclusion of multiple keys when creating a subscription would allow
+a subscription to be associated with multiple application servers or application
+server instances.  This would require more state to be maintained by the push
+service for each subscription.
+
+## Amendments to Requesting Push Message Delivery
+
+When a subscription has been associated with an application server, the request
+for push message delivery MUST include proof of possession for the associated
+private key or token that was used when creating the subscription.  Requests
+that do not contain proof of possession are rejected with a 401 (Unauthorized)
+status code.
 
 
 # IANA Considerations
