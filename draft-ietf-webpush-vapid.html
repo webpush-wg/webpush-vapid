@@ -17,7 +17,7 @@
   zoom: 1.0;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
   ul.toc, #rfc\.toc {
     position: fixed;
     bottom: 0;
@@ -47,7 +47,7 @@ body {
   font-size-adjust: 0.5;
   line-height: 130%;
   margin: 2.5em auto;
-  max-width: 700px;
+  max-width: 724px;
 }
 
 .title, .filename, h1, h2, h3, h4 {
@@ -62,7 +62,7 @@ body {
 h1 { font-size: 30px; }
 h2 { font-size: 24px; }
 h3, h4 { font-size: 18px; }
-h1 a:link, h2 a:link, h3 a:link, h4 a:link {
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
   color: #333;
 }
 
@@ -128,10 +128,13 @@ samp, tt, code, pre {
 pre {
   background-color: #eee;
   border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
 }
-
-pre.text, pre.text2 {
-  width: 90%;
+.figure {
+  font-style: italic;
+  margin: 0 1.5em;
 }
 
 address {
@@ -192,7 +195,7 @@ hr {
 a {
   text-decoration: none;
 }
-a:link {
+a:link, a:link:visited {
   color: #2a6496;
 }
 a:link:hover {
@@ -289,7 +292,7 @@ ol, ul {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-12-14" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-12-15" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
 
@@ -313,12 +316,12 @@ ol, ul {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: June 16, 2016</td>
+  <td class="left">Expires: June 17, 2016</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">December 14, 2015</td>
+  <td class="right">December 15, 2015</td>
 </tr>
 
     	
@@ -338,7 +341,7 @@ ol, ul {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 16, 2016.</p>
+<p>This Internet-Draft will expire on June 17, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -500,7 +503,7 @@ ol, ul {
       <td class="reference">
         <b id="API">[API]</b>
       </td>
-      <td class="top"><a>van Ouwerkerk, M.</a>, "<a href="https://w3c.github.io/push-api/">Web Push API</a>", 2015.</td>
+      <td class="top"><a>van Ouwerkerk, M.</a> and <a>M. Thomson</a>, "<a href="https://w3c.github.io/push-api/">Web Push API</a>", 2015.</td>
     </tr>
     <tr>
       <td class="reference">
