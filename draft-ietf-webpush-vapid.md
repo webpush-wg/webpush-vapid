@@ -28,6 +28,7 @@ normative:
   RFC5246:
   RFC5280:
   RFC2818:
+  RFC6068:
   RFC7230:
   FIPS186:
     title: "Digital Signature Standard (DSS)"
@@ -195,10 +196,10 @@ In this model, clients generates a token that it uses to prove ownership over a
 private key.  Use of the same key over time establishes a continuous identity.
 
 Push message requests can be accompanied by a JSON Web Token (JWT) [RFC7519].
-This token is not bound to the request.  As a result, the token is reusable over
-a limited time, based on the value of the "exp" (Expiry) claim in the token.  An
-"exp" claim MUST be included; similarly, an "aud" (Audience) claim MUST include
-the string "webpush".
+An "aud" (Audience) claim in the token MUST include the push resource URL.  This
+binds the token to a specific push subscription, but not a specific push
+message.  As a result, the token is reusable, limited by the value of the "exp"
+(Expiry) claim in the token.  An "exp" claim MUST be included.
 
 The JWT is included in an Authorization header field, using an auth-scheme of
 "WebPush".
@@ -222,6 +223,10 @@ application server.
 The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  Both the JWS and JWK
 MUST use an elliptic curve digital signature (ECDSA) key on the NIST P-256 curve
 [FIPS186].
+
+A JWT also offers the option of including contact information as an additional
+claim.  An "iss" (Issuer) claim can include a contact URI: either a "mailto:"
+(email) [RFC6068] or an "https:" [RFC2818] SHOULD be used.
 
 
 ## Contact Information Header Field {#from}
