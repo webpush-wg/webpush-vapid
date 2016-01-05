@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: July 3, 2016                                             Google
-                                                       December 31, 2015
+Expires: July 8, 2016                                             Google
+                                                                    2015
 
 
         Voluntary Application Server Identification for Web Push
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 3, 2016.
+   This Internet-Draft will expire on July 8, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo        Expires July 3, 2016                  [Page 1]
+Thomson & Beverloo        Expires July 8, 2016                  [Page 1]
 
-Internet-Draft             Self Identification             December 2015
+Internet-Draft             Self Identification                      2015
 
 
    to this document.  Code Components extracted from this document must
@@ -71,10 +71,10 @@ Table of Contents
      2.1.  Certificates  . . . . . . . . . . . . . . . . . . . . . .   4
      2.2.  Server-Vended Tokens  . . . . . . . . . . . . . . . . . .   4
      2.3.  Client-Vended Tokens  . . . . . . . . . . . . . . . . . .   5
-     2.4.  Contact Information Header Field  . . . . . . . . . . . .   5
+     2.4.  Contact Information Header Field  . . . . . . . . . . . .   6
      2.5.  Request Signing . . . . . . . . . . . . . . . . . . . . .   6
      2.6.  Token Binding . . . . . . . . . . . . . . . . . . . . . .   6
-   3.  Subscription Association  . . . . . . . . . . . . . . . . . .   6
+   3.  Subscription Association  . . . . . . . . . . . . . . . . . .   7
      3.1.  Amendments to Subscribing for Push Messages . . . . . . .   7
      3.2.  Amendments to Requesting Push Message Delivery  . . . . .   7
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo        Expires July 3, 2016                  [Page 2]
+Thomson & Beverloo        Expires July 8, 2016                  [Page 2]
 
-Internet-Draft             Self Identification             December 2015
+Internet-Draft             Self Identification                      2015
 
 
    user agents, this is not always efficient or even sufficient.
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification             December 2015
 
 
 
-Thomson & Beverloo        Expires July 3, 2016                  [Page 3]
+Thomson & Beverloo        Expires July 8, 2016                  [Page 3]
 
-Internet-Draft             Self Identification             December 2015
+Internet-Draft             Self Identification                      2015
 
 
 2.  Self-Identification Alternatives
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification             December 2015
 
 
 
-Thomson & Beverloo        Expires July 3, 2016                  [Page 4]
+Thomson & Beverloo        Expires July 8, 2016                  [Page 4]
 
-Internet-Draft             Self Identification             December 2015
+Internet-Draft             Self Identification                      2015
 
 
    This information would be repeated with each request, but that
@@ -237,11 +237,11 @@ Internet-Draft             Self Identification             December 2015
    establishes a continuous identity.
 
    Push message requests can be accompanied by a JSON Web Token (JWT)
-   [RFC7519].  This token is not bound to the request.  As a result, the
-   token is reusable over a limited time, based on the value of the
-   "exp" (Expiry) claim in the token.  An "exp" claim MUST be included;
-   similarly, an "aud" (Audience) claim MUST include the string
-   "webpush".
+   [RFC7519].  An "aud" (Audience) claim in the token MUST include the
+   push resource URL.  This binds the token to a specific push
+   subscription, but not a specific push message.  As a result, the
+   token is reusable, limited by the value of the "exp" (Expiry) claim
+   in the token.  An "exp" claim MUST be included.
 
    The JWT is included in an Authorization header field, using an auth-
    scheme of "WebPush".
@@ -266,6 +266,22 @@ Internet-Draft             Self Identification             December 2015
    and JWK MUST use an elliptic curve digital signature (ECDSA) key on
    the NIST P-256 curve [FIPS186].
 
+   A JWT also offers the option of including contact information as an
+   additional claim.  An "iss" (Issuer) claim can include a contact URI:
+   either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] SHOULD
+   be used.
+
+
+
+
+
+
+
+Thomson & Beverloo        Expires July 8, 2016                  [Page 5]
+
+Internet-Draft             Self Identification                      2015
+
+
 2.4.  Contact Information Header Field
 
    Contact information for an application server could be included in a
@@ -273,14 +289,6 @@ Internet-Draft             Self Identification             December 2015
    Section 5.5.1 of [RFC7231]), or by reference (e.g., a new "contact"
    link relation [RFC5988] that identified a vCard [RFC6350]).  Note
    that a From header field is limited to email addresses.
-
-
-
-
-Thomson & Beverloo        Expires July 3, 2016                  [Page 5]
-
-Internet-Draft             Self Identification             December 2015
-
 
    Like an server- or client-vended token (Section 2.2, Section 2.3),
    contact information would need to be repeated, though that cost is
@@ -323,20 +331,18 @@ Internet-Draft             Self Identification             December 2015
    cookies, though the push service would not be able to offload any
    state as a result.
 
+
+
+Thomson & Beverloo        Expires July 8, 2016                  [Page 6]
+
+Internet-Draft             Self Identification                      2015
+
+
 3.  Subscription Association
 
    A stable identifier for an application server - such as a public key
    or a token - could also be used to associate a subscription with the
    application server.
-
-
-
-
-
-Thomson & Beverloo        Expires July 3, 2016                  [Page 6]
-
-Internet-Draft             Self Identification             December 2015
-
 
    Subscription association reduces the reliance on endpoint secrecy by
    requiring proof of possession to be demonstrated by an application
@@ -380,20 +386,20 @@ Internet-Draft             Self Identification             December 2015
    server.  A push service MAY choose to offer confidentiality
    protection for application server identity by initiating TLS
    renegotiation immediately after establishing the TLS connection at
+
+
+
+Thomson & Beverloo        Expires July 8, 2016                  [Page 7]
+
+Internet-Draft             Self Identification                      2015
+
+
    the cost of some additional latency.  Using TLS 1.3
    [I-D.ietf-tls-tls13] provides confidentiality protection for this
    information without additional latency.
 
    An application server might offer falsified contact information.  A
    push service operator therefore cannot use the presence of
-
-
-
-Thomson & Beverloo        Expires July 3, 2016                  [Page 7]
-
-Internet-Draft             Self Identification             December 2015
-
-
    unvalidated contact information as input to any security-critical
    decision-making process.
 
@@ -437,18 +443,22 @@ Internet-Draft             Self Identification             December 2015
               DOI 10.17487/RFC5246, August 2008,
               <http://www.rfc-editor.org/info/rfc5246>.
 
+
+
+Thomson & Beverloo        Expires July 8, 2016                  [Page 8]
+
+Internet-Draft             Self Identification                      2015
+
+
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
               Housley, R., and W. Polk, "Internet X.509 Public Key
               Infrastructure Certificate and Certificate Revocation List
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <http://www.rfc-editor.org/info/rfc5280>.
 
-
-
-Thomson & Beverloo        Expires July 3, 2016                  [Page 8]
-
-Internet-Draft             Self Identification             December 2015
-
+   [RFC6068]  Duerst, M., Masinter, L., and J. Zawinski, "The 'mailto'
+              URI Scheme", RFC 6068, DOI 10.17487/RFC6068, October 2010,
+              <http://www.rfc-editor.org/info/rfc6068>.
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
@@ -489,6 +499,13 @@ Internet-Draft             Self Identification             December 2015
               Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
               <http://www.rfc-editor.org/info/rfc4648>.
 
+
+
+Thomson & Beverloo        Expires July 8, 2016                  [Page 9]
+
+Internet-Draft             Self Identification                      2015
+
+
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
               DOI 10.17487/RFC5988, October 2010,
               <http://www.rfc-editor.org/info/rfc5988>.
@@ -496,15 +513,6 @@ Internet-Draft             Self Identification             December 2015
    [RFC6265]  Barth, A., "HTTP State Management Mechanism", RFC 6265,
               DOI 10.17487/RFC6265, April 2011,
               <http://www.rfc-editor.org/info/rfc6265>.
-
-
-
-
-
-Thomson & Beverloo        Expires July 3, 2016                  [Page 9]
-
-Internet-Draft             Self Identification             December 2015
-
 
    [RFC6350]  Perreault, S., "vCard Format Specification", RFC 6350,
               DOI 10.17487/RFC6350, August 2011,
@@ -543,6 +551,17 @@ Internet-Draft             Self Identification             December 2015
 
 Authors' Addresses
 
+
+
+
+
+
+
+Thomson & Beverloo        Expires July 8, 2016                 [Page 10]
+
+Internet-Draft             Self Identification                      2015
+
+
    Martin Thomson
    Mozilla
 
@@ -557,4 +576,41 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo        Expires July 3, 2016                 [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thomson & Beverloo        Expires July 8, 2016                 [Page 11]

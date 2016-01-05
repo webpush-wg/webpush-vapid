@@ -294,7 +294,7 @@ li, p {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-12-31" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity, and reduce the need for endpoint secrecy by being able to associate subscriptions with an application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
 
@@ -318,12 +318,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: July 3, 2016</td>
+  <td class="left">Expires: July 8, 2016</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">December 31, 2015</td>
+  <td class="right">2015</td>
 </tr>
 
     	
@@ -343,7 +343,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 3, 2016.</p>
+<p>This Internet-Draft will expire on July 8, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -406,7 +406,7 @@ li, p {
 <p id="rfc.section.2.2.p.4">This information would be repeated with each request, but that overhead is greatly reduced by header compression <a href="#RFC7541">[RFC7541]</a> in HTTP/2 <a href="#RFC7540">[RFC7540]</a>.</p>
 <h2 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#client-token" id="client-token">Client-Vended Tokens</a></h2>
 <p id="rfc.section.2.3.p.1">In this model, clients generates a token that it uses to prove ownership over a private key.  Use of the same key over time establishes a continuous identity.</p>
-<p id="rfc.section.2.3.p.2">Push message requests can be accompanied by a JSON Web Token (JWT) <a href="#RFC7519">[RFC7519]</a>.  This token is not bound to the request.  As a result, the token is reusable over a limited time, based on the value of the &#8220;exp&#8221; (Expiry) claim in the token.  An &#8220;exp&#8221; claim MUST be included; similarly, an &#8220;aud&#8221; (Audience) claim MUST include the string &#8220;webpush&#8221;.</p>
+<p id="rfc.section.2.3.p.2">Push message requests can be accompanied by a JSON Web Token (JWT) <a href="#RFC7519">[RFC7519]</a>.  An &#8220;aud&#8221; (Audience) claim in the token MUST include the push resource URL.  This binds the token to a specific push subscription, but not a specific push message.  As a result, the token is reusable, limited by the value of the &#8220;exp&#8221; (Expiry) claim in the token.  An &#8220;exp&#8221; claim MUST be included.</p>
 <p id="rfc.section.2.3.p.3">The JWT is included in an Authorization header field, using an auth-scheme of &#8220;WebPush&#8221;.</p>
 <p/>
 
@@ -417,6 +417,7 @@ li, p {
 <p id="rfc.section.2.3.p.5">The corresponding public key is included in a JSON Web Key (JWK) <a href="#RFC7517">[RFC7517]</a>.  This would be included in either a newly-defined &#8220;jwk&#8221; parameter of the Crypto-Key header field <a href="#I-D.thomson-http-encryption">[I-D.thomson-http-encryption]</a>; alternatively, the &#8220;p256ecdsa&#8221; parameter defined in <a href="#I-D.thomson-http-content-signature">[I-D.thomson-http-content-signature]</a> could be used to transport a raw key.</p>
 <p id="rfc.section.2.3.p.6">For voluntarily-provided contact details, a separate header field could be used (as in <a href="#from">Section 2.4</a>) or the JWT could include claims about identity.  For the latter, the &#8220;sub&#8221; (subject) claim could include a contact URI for the application server.</p>
 <p id="rfc.section.2.3.p.7">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515">[RFC7515]</a>.  Both the JWS and JWK MUST use an elliptic curve digital signature (ECDSA) key on the NIST P-256 curve <a href="#FIPS186">[FIPS186]</a>.</p>
+<p id="rfc.section.2.3.p.8">A JWT also offers the option of including contact information as an additional claim.  An &#8220;iss&#8221; (Issuer) claim can include a contact URI: either a &#8220;mailto:&#8221; (email) <a href="#RFC6068">[RFC6068]</a> or an &#8220;https:&#8221; <a href="#RFC2818">[RFC2818]</a> SHOULD be used.</p>
 <h2 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#from" id="from">Contact Information Header Field</a></h2>
 <p id="rfc.section.2.4.p.1">Contact information for an application server could be included in a header field, either directly (e.g., a From header field, Section 5.5.1 of <a href="#RFC7231">[RFC7231]</a>), or by reference (e.g., a new &#8220;contact&#8221; link relation <a href="#RFC5988">[RFC5988]</a> that identified a vCard <a href="#RFC6350">[RFC6350]</a>).  Note that a From header field is limited to email addresses.</p>
 <p id="rfc.section.2.4.p.2">Like an server- or client-vended token (<a href="#server-token">Section 2.2</a>, <a href="#client-token">Section 2.3</a>), contact information would need to be repeated, though that cost is reduced with HTTP/2.</p>
@@ -489,6 +490,12 @@ li, p {
         <b id="RFC5280">[RFC5280]</b>
       </td>
       <td class="top"><a>Cooper, D.</a>, <a>Santesson, S.</a>, <a>Farrell, S.</a>, <a>Boeyen, S.</a>, <a>Housley, R.</a> and <a>W. Polk</a>, "<a href="http://tools.ietf.org/html/rfc5280">Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a>", RFC 5280, DOI 10.17487/RFC5280, May 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6068">[RFC6068]</b>
+      </td>
+      <td class="top"><a>Duerst, M.</a>, <a>Masinter, L.</a> and <a>J. Zawinski</a>, "<a href="http://tools.ietf.org/html/rfc6068">The 'mailto' URI Scheme</a>", RFC 6068, DOI 10.17487/RFC6068, October 2010.</td>
     </tr>
     <tr>
       <td class="reference">
