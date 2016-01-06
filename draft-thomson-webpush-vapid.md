@@ -1,7 +1,7 @@
 ---
 title: Voluntary Application Server Identification for Web Push
 abbrev: Self Identification
-docname: draft-ietf-webpush-vapid-latest
+docname: draft-thomson-webpush-vapid-latest
 date: 2016
 category: std
 ipr: trust200902
