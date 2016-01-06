@@ -38,7 +38,6 @@ normative:
     seriesinfo: NIST PUB 186-4
 
 informative:
-  RFC4648:
   RFC7231:
   RFC7515:
   RFC7517:
