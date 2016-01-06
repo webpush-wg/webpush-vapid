@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: July 8, 2016                                             Google
-                                                                    2015
+Expires: July 9, 2016                                             Google
+                                                         January 6, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -38,11 +38,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 8, 2016.
+   This Internet-Draft will expire on July 9, 2016.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2016 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 1]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 1]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    to this document.  Code Components extracted from this document must
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 2]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 2]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    user agents, this is not always efficient or even sufficient.
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 3]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 3]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
 2.  Self-Identification Alternatives
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 4]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 4]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    This information would be repeated with each request, but that
@@ -253,9 +253,9 @@ Internet-Draft             Self Identification                      2015
    The corresponding public key is included in a JSON Web Key (JWK)
    [RFC7517].  This would be included in either a newly-defined "jwk"
    parameter of the Crypto-Key header field
-   [I-D.thomson-http-encryption]; alternatively, the "p256ecdsa"
-   parameter defined in [I-D.thomson-http-content-signature] could be
-   used to transport a raw key.
+   [I-D.ietf-httpbis-encryption-encoding]; alternatively, the
+   "p256ecdsa" parameter defined in [I-D.thomson-http-content-signature]
+   could be used to transport a raw key.
 
    For voluntarily-provided contact details, a separate header field
    could be used (as in Section 2.4) or the JWT could include claims
@@ -277,9 +277,9 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 5]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 5]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
 2.4.  Contact Information Header Field
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 6]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 6]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
 3.  Subscription Association
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 7]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 7]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    the cost of some additional latency.  Using TLS 1.3
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 8]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 8]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
@@ -475,6 +475,11 @@ Internet-Draft             Self Identification                      2015
               cavage-http-signatures-05 (work in progress), October
               2015.
 
+   [I-D.ietf-httpbis-encryption-encoding]
+              Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
+              ietf-httpbis-encryption-encoding-00 (work in progress),
+              December 2015.
+
    [I-D.ietf-tls-tls13]
               Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", draft-ietf-tls-tls13-11 (work in progress),
@@ -490,20 +495,15 @@ Internet-Draft             Self Identification                      2015
               draft-thomson-http-content-signature-00 (work in
               progress), July 2015.
 
-   [I-D.thomson-http-encryption]
-              Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
-              thomson-http-encryption-02 (work in progress), October
-              2015.
-
    [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
               Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
               <http://www.rfc-editor.org/info/rfc4648>.
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                  [Page 9]
+Thomson & Beverloo        Expires July 9, 2016                  [Page 9]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
@@ -557,9 +557,9 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                 [Page 10]
+Thomson & Beverloo        Expires July 9, 2016                 [Page 10]
 
-Internet-Draft             Self Identification                      2015
+Internet-Draft             Self Identification              January 2016
 
 
    Martin Thomson
@@ -613,4 +613,4 @@ Internet-Draft             Self Identification                      2015
 
 
 
-Thomson & Beverloo        Expires July 8, 2016                 [Page 11]
+Thomson & Beverloo        Expires July 9, 2016                 [Page 11]
