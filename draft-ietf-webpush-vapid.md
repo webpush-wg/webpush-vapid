@@ -2,7 +2,7 @@
 title: Voluntary Application Server Identification for Web Push
 abbrev: Self Identification
 docname: draft-ietf-webpush-vapid-latest
-date: 2015
+date: 2016
 category: std
 ipr: trust200902
 
@@ -52,7 +52,7 @@ informative:
   I-D.cavage-http-signatures:
   I-D.ietf-tls-tls13:
   I-D.ietf-tokbind-https:
-  I-D.thomson-http-encryption:
+  I-D.ietf-httpbis-encryption-encoding:
   I-D.thomson-http-content-signature:
   API:
      title: "Web Push API"
@@ -211,7 +211,7 @@ Editor's Note:
 
 The corresponding public key is included in a JSON Web Key (JWK) [RFC7517].
 This would be included in either a newly-defined "jwk" parameter of the
-Crypto-Key header field [I-D.thomson-http-encryption]; alternatively, the
+Crypto-Key header field [I-D.ietf-httpbis-encryption-encoding]; alternatively, the
 "p256ecdsa" parameter defined in [I-D.thomson-http-content-signature] could be
 used to transport a raw key.
 
