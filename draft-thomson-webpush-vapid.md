@@ -289,9 +289,10 @@ key.  For example:
 ~~~
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Crypto-Key: p256ecdsa=jlkHa8qs0NzPkTai633GkPykMW_vf0AmVNHEBSc9PSTG
-                      OWeeZUb62bPnSGpvjeNrtwSisaIebCW92cvqyaLOA4GA
+Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
+                      KImoRwJm5xK9hLrbfIik20g31z8MpLFMCMr8y2cu6gY
 ~~~
+{: #ex-restrict title="Example Subscribe Request"}
 
 
 An application might use the Web Push API [API] to include this information.
