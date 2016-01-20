@@ -229,13 +229,6 @@ generate the Authorization header field without any additional information from
 a server.  Therefore, a challenge for this authentication scheme MUST NOT be
 sent in a WWW-Authenticate header field.
 
-A single parameter is defined for this challenge.  A `keyid` parameter includes
-an identifier for the key that was used to sign the JWT.  This parameter MAY be
-omitted if the recipient can be expected to locate the correct key without this
-assistance.  For instance, if there is exactly one Crypto-Key header field in
-the same request that contains a key of the right type, the `keyid` can be
-safely omitted.
-
 All unknown or unsupported parameters to "WebPush" authentication credentials
 MUST be ignored.  The `realm` parameter is ignored for this authentication
 scheme.
@@ -325,10 +318,10 @@ A push service MUST reject a message that includes invalid credentials with a
   public key,
 
 * the current time is later than the time identified in the "exp" (Expiry)
-  claim,
+  claim or more than 24 hours before the expiry time,
 
-* the origin of the push resource is include included in the "aud" (Audience)
-  claim, or
+* the origin of the push resource is not included in the "aud" (Audience) claim,
+  or
 
 * the public key used to sign the doesn't match the one that was included in the
   creation of the push message.
