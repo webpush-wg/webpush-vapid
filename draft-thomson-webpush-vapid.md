@@ -23,14 +23,15 @@ author:
 
 
 normative:
-  I-D.ietf-webpush-protocol:
   RFC2119:
-  RFC4648:
   RFC2818:
+  RFC4648:
   RFC6068:
   RFC6454:
   RFC7515:
+  RFC7518:
   RFC7519:
+  I-D.ietf-webpush-protocol:
   I-D.ietf-httpbis-encryption-encoding:
   FIPS186:
     title: "Digital Signature Standard (DSS)"
@@ -46,6 +47,7 @@ normative:
      seriesinfo: ANSI X9.62
 
 informative:
+  RFC3339:
   RFC7235:
   RFC7517:
   API:
@@ -55,6 +57,7 @@ informative:
        - ins: M. Thomson
      target: "https://w3c.github.io/push-api/"
      date: 2015
+ I-D.ietf-webpush-encryption:
 
 
 --- abstract
@@ -138,16 +141,18 @@ server", and "user agent" are used as defined in [I-D.ietf-webpush-protocol].
 # Application Server Self-Identification {#jwt}
 
 Application servers SHOULD generate and maintain a signing key pair usable with
-ECDSA over the P-256 curve [FIPS186].  Use of this key when sending push
-messages establishes a continuous identity for the application server.
+elliptic curve digital signature (ECDSA) over the P-256 curve [FIPS186].  Use of
+this key when sending push messages establishes a continuous identity for the
+application server.
 
 When requesting delivery of a push message, the application includes a JSON Web
 Token (JWT) [RFC7519], signed using its signing key.  The token includes a
 number of claims as follows:
 
- * An "aud" (Audience) claim in the token MUST include the origin [RFC6454] of
-   the push resource URL.  This binds the token to a specific push service.
-   Such a token is reusable for all endpoints that share the same origin.
+ * An "aud" (Audience) claim in the token MUST include the unicode serialization
+   of the origin (Section 6.1 of [RFC6454]) of the push resource URL.  This
+   binds the token to a specific push service.  This ensures that the token is
+   reusable for all push resource URLs that share the same origin.
 
  * An "exp" (Expiry) claim MUST be included with the time after which the token
    expires.  This limits the time that a token over which a token is valid.  An
@@ -158,7 +163,15 @@ This JWT is included in an Authorization header field, using an auth-scheme of
 code [RFC7235] if the JWT signature or its claims are invalid.
 
 The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  The signature MUST use
-elliptic curve digital signature (ECDSA) on the NIST P-256 curve [FIPS186].
+ECDSA on the NIST P-256 curve [FIPS186], that is "ES256" [RFC7518].
+
+
+## Application Server Contact Information
+
+If the application server wishes to provide the JWT can include an "iss"
+(Issuer) claim.  The "iss" claim MAY include a contact URI for the application
+server; either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] SHOULD be
+provided.
 
 
 ## Example
@@ -175,20 +188,31 @@ Host: push.example.net
 Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
 Content-Type: text/plain;charset=utf8
 Content-Length: 36
-Authorization: WebPush <TODO: JWT>
-Crypto-Key: p256ecdsa=<TODO: key for JWT...>
+Authorization: WebPush
+    eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3B
+    1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTMzNDEyMDUsImlzcyI6Im1haWx
+    0bzpwdXNoQGV4YW1wbGUuY29tIn0.GLtGcE7UIxVKwP0hHqPbvr1E-NKj37d
+    wc2M8ACTlKVhYTEtVyYVTX_ZmpRd9IJXrmwQbKhZ95qrMpNGkvgaMCA
+Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
+                      KImoRwJm5xK9hLrbfIik20g31z8MpLFMCMr8y2cu6gY
 
 iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
 ~~~
 {: #ex-push title="Requesting Push Message Delivery with JWT"}
 
+Note that the header fields shown in {{ex-push}} don't include whitespace, line
+wrapping and whitespace is added only to meet formatting constraints.
 
-## Application Server Contact Information
+This equates to a JWT with the header and body shown in {{ex-jwt}}.  This JWT
+would be valid until 2016-01-21T01:53:25Z [RFC3339].
 
-If the application server wishes to provide the JWT can include an "iss"
-(Issuer) claim.  The "iss" claim MAY include a contact URI for the application
-server; either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] SHOULD be
-provided.
+~~~
+header = {"typ":"JWT","alg":"ES256"}
+body = { "aud":"https://push.example.net",
+         "exp":1453341205,
+         "iss":"mailto:push@example.com" }
+~~~
+{: #ex-jwt title="Example JWT Header and Body"}
 
 
 # WebPush Authentication Scheme {#auth}
@@ -227,6 +251,10 @@ this information.
 The `p256ecdsa` parameter includes an elliptic curve digital signature algorithm
 (ECDSA) public key [FIPS186] in uncompressed form [X9.62] that is encoded using
 the URL- and filename-safe variant of base-64 [RFC4648] without padding.
+
+Note that with push message encryption [I-D.ietf-webpush-encryption], this
+results in two values for the Crypto-Key header field, one with the a `p256dh`
+key and another with a `p256ecdsa` key.
 
 Editor's Note:
 
