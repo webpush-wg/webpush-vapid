@@ -360,6 +360,12 @@ An application server might offer falsified contact information.  A push service
 operator therefore cannot use the presence of unvalidated contact information as
 input to any security-critical decision-making process.
 
+Validation of a signature on the JWT requires a non-trivial amount of
+computation.  For something that might be used to identify legitimate requests
+under denial of service attack conditions, this is not ideal.  Application
+servers are therefore encouraged to reuse a JWT, which permits the push service
+to cache the results of signature validation.
+
 
 # IANA Considerations {#iana}
 
