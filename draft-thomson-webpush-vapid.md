@@ -275,7 +275,7 @@ delivery of a push message.  This provides an additional level of protection
 against leaking of the details of the push subscription.
 
 
-## Creating a Restricted Push Subscriptions
+## Creating a Restricted Push Subscription
 
 The user agent includes the public key of the application server when requesting
 that a push subscription.  This restricts use of the resulting push subscription
