@@ -40,24 +40,24 @@ normative:
     date: July 2013
     seriesinfo: NIST PUB 186-4
   X9.62:
-     title: "Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)"
-     author:
-       - org: ANSI
-     date: 1998
-     seriesinfo: ANSI X9.62
+    title: "Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)"
+    author:
+      - org: ANSI
+    date: 1998
+    seriesinfo: ANSI X9.62
 
 informative:
   RFC3339:
   RFC7235:
   RFC7517:
   API:
-     title: "Web Push API"
-     author:
-       - ins: M. van Ouwerkerk
-       - ins: M. Thomson
-     target: "https://w3c.github.io/push-api/"
-     date: 2015
- I-D.ietf-webpush-encryption:
+    title: "Web Push API"
+    author:
+      - ins: M. van Ouwerkerk
+      - ins: M. Thomson
+    target: "https://w3c.github.io/push-api/"
+    date: 2015
+  I-D.ietf-webpush-encryption:
 
 
 --- abstract
