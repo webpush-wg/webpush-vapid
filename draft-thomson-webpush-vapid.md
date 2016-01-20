@@ -200,8 +200,8 @@ iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
 ~~~
 {: #ex-push title="Requesting Push Message Delivery with JWT"}
 
-Note that the header fields shown in {{ex-push}} don't include whitespace, line
-wrapping and whitespace is added only to meet formatting constraints.
+Note that the header fields shown in {{ex-push}} don't include line wrapping.
+Extra whitespace is added to meet formatting constraints.
 
 This equates to a JWT with the header and body shown in {{ex-jwt}}.  This JWT
 would be valid until 2016-01-21T01:53:25Z [RFC3339].
@@ -250,17 +250,17 @@ this information.
 
 The `p256ecdsa` parameter includes an elliptic curve digital signature algorithm
 (ECDSA) public key [FIPS186] in uncompressed form [X9.62] that is encoded using
-the URL- and filename-safe variant of base-64 [RFC4648] without padding.
+the URL- and filename-safe variant of base-64 [RFC4648] with padding removed.
 
 Note that with push message encryption [I-D.ietf-webpush-encryption], this
-results in two values for the Crypto-Key header field, one with the a `p256dh`
+results in two values in the Crypto-Key header field, one with the a `p256dh`
 key and another with a `p256ecdsa` key.
 
 Editor's Note:
 
 : JWK [RFC7517] seems like the obvious choice here.  However, JWK doesn't define
-  a compact representation for public keys, which makes even relatively small
-  public keys very hard to represent in HTTP header fields.
+  a compact representation for public keys, which complicates the representation
+  of JWK in a header field.
 
 
 # Subscription Restriction
