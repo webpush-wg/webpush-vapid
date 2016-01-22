@@ -168,10 +168,9 @@ ECDSA on the NIST P-256 curve [FIPS186], that is "ES256" [RFC7518].
 
 ## Application Server Contact Information
 
-If the application server wishes to provide the JWT can include an "iss"
-(Issuer) claim.  The "iss" claim MAY include a contact URI for the application
-server; either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] SHOULD be
-provided.
+If the application server wishes to provide the JWT MAY include an "sub"
+(Subject) claim.  The "sub" claim SHOULD include a contact URI for the application
+server as either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
 
 
 ## Example
@@ -188,13 +187,13 @@ Host: push.example.net
 Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
 Content-Type: text/plain;charset=utf8
 Content-Length: 36
-Authorization: WebPush
+Authorization: Bearer
     eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3B
-    1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTMzNDEyMDUsImlzcyI6Im1haWx
-    0bzpwdXNoQGV4YW1wbGUuY29tIn0.GLtGcE7UIxVKwP0hHqPbvr1E-NKj37d
-    wc2M8ACTlKVhYTEtVyYVTX_ZmpRd9IJXrmwQbKhZ95qrMpNGkvgaMCA
-Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
-                      KImoRwJm5xK9hLrbfIik20g31z8MpLFMCMr8y2cu6gY
+    1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1haWx
+    0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_HLGk
+    MlMuCGSK2rpiUfnK9ojFwDXb1JrErtmysazNjjvW2L9OkSSHzvoD1oA
+Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                      F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 
 iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
 ~~~
@@ -210,9 +209,14 @@ would be valid until 2016-01-21T01:53:25Z [RFC3339].
 header = {"typ":"JWT","alg":"ES256"}
 body = { "aud":"https://push.example.net",
          "exp":1453341205,
-         "iss":"mailto:push@example.com" }
+         "sub":"mailto:push@example.com" }
 ~~~
 {: #ex-jwt title="Example JWT Header and Body"}
+
+Issue:
+
+: The first part of the JWT is effectively fixed.  Would be it acceptable to
+  require that that segment is omitted from the header field?
 
 
 # WebPush Authentication Scheme {#auth}

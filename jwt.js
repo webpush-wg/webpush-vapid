@@ -18,7 +18,7 @@ console.log('header', JSON.stringify(jwtHeader));
 var jwtBody = {
   "aud": "https://push.example.net",
   "exp": Math.floor(Date.now() / 1000) + 60*60*24,
-  "iss": "mailto:push@example.com"
+  "sub": "mailto:push@example.com"
 };
 console.log('header', JSON.stringify(jwtBody));
 
