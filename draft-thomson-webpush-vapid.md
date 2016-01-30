@@ -23,43 +23,41 @@ author:
 
 
 normative:
-  I-D.ietf-webpush-protocol:
   RFC2119:
-  RFC5246:
-  RFC5280:
   RFC2818:
+  RFC4648:
   RFC6068:
-  RFC7230:
+  RFC6454:
+  RFC7515:
+  RFC7518:
+  RFC7519:
+  I-D.ietf-webpush-protocol:
+  I-D.ietf-httpbis-encryption-encoding:
   FIPS186:
     title: "Digital Signature Standard (DSS)"
     author:
       - org: National Institute of Standards and Technology (NIST)
     date: July 2013
     seriesinfo: NIST PUB 186-4
+  X9.62:
+    title: "Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)"
+    author:
+      - org: ANSI
+    date: 1998
+    seriesinfo: ANSI X9.62
 
 informative:
-  RFC7231:
-  RFC7515:
+  RFC3339:
+  RFC7235:
   RFC7517:
-  RFC7519:
-  RFC7540:
-  RFC7541:
-  RFC6350:
-  RFC5988:
-  RFC6265:
-  RFC6750:
-  I-D.cavage-http-signatures:
-  I-D.ietf-tls-tls13:
-  I-D.ietf-tokbind-https:
-  I-D.ietf-httpbis-encryption-encoding:
-  I-D.thomson-http-content-signature:
   API:
-     title: "Web Push API"
-     author:
-       - ins: M. van Ouwerkerk
-       - ins: M. Thomson
-     target: "https://w3c.github.io/push-api/"
-     date: 2015
+    title: "Web Push API"
+    author:
+      - ins: M. van Ouwerkerk
+      - ins: M. Thomson
+    target: "https://w3c.github.io/push-api/"
+    date: 2015
+  I-D.ietf-webpush-encryption:
 
 
 --- abstract
@@ -67,10 +65,11 @@ informative:
 An application server can voluntarily identify itself to a push service using
 the described technique.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
-to a single entity, and reduce the need for endpoint secrecy by being able to
-associate subscriptions with an application server.  An application server is
-further able include additional information the operator of a push service can
-use to contact the operator of the application server.
+to a single entity.  This can used to reduce the secrecy for push subscription
+URLs by being able to restrict subscriptions to a specific application server.
+An application server is further able include additional information the
+operator of a push service can use to contact the operator of the application
+server.
 
 
 --- middle
@@ -96,14 +95,17 @@ An unfortunate consequence of this design is that a push service is exposed to a
 greater risk of denial of service attack.  While requests from application
 servers can be indirectly attributed to user agents, this is not always
 efficient or even sufficient.  Providing more information about the application
-server more directly to a push service allows the push service to better
-distinguish between legitimate and bogus requests.
+server directly to a push service allows the push service to better distinguish
+between legitimate and bogus requests.
 
 Additionally, this design also relies on endpoint secrecy as any application
 server in possession of the endpoint is able to send messages, albeit without
 payloads.  In situations where usage of a subscription can be limited to a
-single application server, the ability to associate said subscription with the
-application server provides could reduce the impact of a data leak.
+single application server, the ability to associate a subscription with the
+application server could reduce the impact of a data leak.
+
+
+## Voluntary Identification
 
 This document describes a system whereby an application server can volunteer
 information about itself to a push service.  At a minimum, this provides a
@@ -132,211 +134,278 @@ The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this document.
 It's not shouting, when they are capitalized, they have the special meaning
 described in [RFC2119].
 
-The terms "push message", "push service", "application server", and "user agent"
-are used as defined in [I-D.ietf-webpush-protocol]
+The terms "push message", "push service", "push subscription", "application
+server", and "user agent" are used as defined in [I-D.ietf-webpush-protocol].
 
 
-# Self-Identification Alternatives
+# Application Server Self-Identification {#jwt}
 
-Several options have been proposed, here are some of the more concrete options.
+Application servers SHOULD generate and maintain a signing key pair usable with
+elliptic curve digital signature (ECDSA) over the P-256 curve [FIPS186].  Use of
+this key when sending push messages establishes a continuous identity for the
+application server.
 
+When requesting delivery of a push message, the application includes a JSON Web
+Token (JWT) [RFC7519], signed using its signing key.  The token includes a
+number of claims as follows:
 
-## Certificates
+ * An "aud" (Audience) claim in the token MUST include the unicode serialization
+   of the origin (Section 6.1 of [RFC6454]) of the push resource URL.  This
+   binds the token to a specific push service.  This ensures that the token is
+   reusable for all push resource URLs that share the same origin.
 
-A push service that supports application server self-identification requests a
-client certificate from application servers.  The client certificate is
-requested during the TLS [RFC5246] handshake.
+ * An "exp" (Expiry) claim MUST be included with the time after which the token
+   expires.  This limits the time that a token over which a token is valid.  An
+   "exp" claim MUST NOT be more than 24 hours from the time of the request.
 
-An application server that does not have a client certificate offers no
-certificate in response; an application server that wishes to self-identify
-includes a certificate.
+This JWT is included in an Authorization header field, using an auth-scheme of
+"WebPush".  A push service MAY reject a request with a 403 (Forbidden) status
+code [RFC7235] if the JWT signature or its claims are invalid.
 
-The certificate that the application server offers SHOULD be self-signed (see
-Section 3.2 of [RFC5280]).  The certificate MAY contain an alternative name
-extension (Section 4.2.1.6 of [RFC5280]) that includes contact information.  Of
-the available options, an email address using the `rfc822Name` form or an HTTP
-[RFC7230] (or HTTPS [RFC2818]) `uniformResourceIdentifier` SHOULD be included,
-though including other options are not prohibited.
-
-The offered end-entity certificate or the public key it contains becomes an
-identifier for the application server.  Push services are able to reduce the
-data they retain for an application server, either by extracting important
-information like the subject public key information (SPKI), by hashing, or a
-combination.  Of course, a push service might choose to ignore the provided
-information.
-
-To avoid requesting certificates from user agents, it might be necessary to
-serve requests from user agents and requests from application servers on
-different hostnames or port numbers.
+The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  The signature MUST use
+ECDSA on the NIST P-256 curve [FIPS186], that is "ES256" [RFC7518].
 
 
-## Server-Vended Tokens {#server-token}
+## Application Server Contact Information
 
-In this model, the push service vends a token to each application server that
-requests it.  That token is kept secret and used as the basis for
-authentication.
-
-This doesn't address the need for contact information, but it addresses the need
-for a consistent application server identifier.
-
-A Cookie [RFC6265] is a token of this nature.  All the considerations regarding
-the use (and misuse) of HTTP cookies apply should this option be chosen.  A
-mechanism that makes token theft more difficult, such as
-[I-D.ietf-tokbind-https] might be needed.  However that suggests a separate
-option (see {{tokbind}}).
-
-This information would be repeated with each request, but that overhead is
-greatly reduced by header compression [RFC7541] in HTTP/2 [RFC7540].
+If the application server wishes to provide the JWT MAY include an "sub"
+(Subject) claim.  The "sub" claim SHOULD include a contact URI for the application
+server as either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
 
 
-## Client-Vended Tokens {#client-token}
+## Example
 
-In this model, clients generates a token that it uses to prove ownership over a
-private key.  Use of the same key over time establishes a continuous identity.
+An application server requests the delivery of a push message as described in
+[I-D.ietf-webpush-protocol].  If the application server wishes to self-identify,
+it includes an Authorization header field with credentials that use the
+"WebPush" authentication scheme {{auth}} and a Crypto-Key header field that
+includes its public key {{key}}.
 
-Push message requests can be accompanied by a JSON Web Token (JWT) [RFC7519].
-An "aud" (Audience) claim in the token MUST include the push resource URL.  This
-binds the token to a specific push subscription, but not a specific push
-message.  As a result, the token is reusable, limited by the value of the "exp"
-(Expiry) claim in the token.  An "exp" claim MUST be included.
+~~~
+POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
+Host: push.example.net
+Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
+Content-Type: text/plain;charset=utf8
+Content-Length: 36
+Authorization: Bearer
+    eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3B
+    1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1haWx
+    0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_HLGk
+    MlMuCGSK2rpiUfnK9ojFwDXb1JrErtmysazNjjvW2L9OkSSHzvoD1oA
+Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                      F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 
-The JWT is included in an Authorization header field, using an auth-scheme of
-"WebPush".
+iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
+~~~
+{: #ex-push title="Requesting Push Message Delivery with JWT"}
+
+Note that the header fields shown in {{ex-push}} don't include line wrapping.
+Extra whitespace is added to meet formatting constraints.
+
+This equates to a JWT with the header and body shown in {{ex-jwt}}.  This JWT
+would be valid until 2016-01-21T01:53:25Z [RFC3339].
+
+~~~
+header = {"typ":"JWT","alg":"ES256"}
+body = { "aud":"https://push.example.net",
+         "exp":1453341205,
+         "sub":"mailto:push@example.com" }
+~~~
+{: #ex-jwt title="Example JWT Header and Body"}
+
+Issue:
+
+: The first part of the JWT is effectively fixed.  Would be it acceptable to
+  require that that segment is omitted from the header field?
+
+
+# WebPush Authentication Scheme {#auth}
+
+A new "WebPush" HTTP authentication scheme [RFC7235] is defined.  This
+authentication scheme carries a signed JWT, as described in {{jwt}}.
+
+This authentication scheme is for origin-server authentication only.  Therefore,
+this authentication scheme MUST NOT be used with The Proxy-Authenticate or
+Proxy-Authorization header fields.
+
+This authentication scheme does not require a challenge.  Clients are able to
+generate the Authorization header field without any additional information from
+a server.  Therefore, a challenge for this authentication scheme MUST NOT be
+sent in a WWW-Authenticate header field.
+
+All unknown or unsupported parameters to "WebPush" authentication credentials
+MUST be ignored.  The `realm` parameter is ignored for this authentication
+scheme.
+
+
+# Public Key Representation {#key}
+
+In order for the push service to be able to validate the JWT, it needs to learn
+the public key of the application server.  A `p256ecdsa` parameter is defined
+for the Crypto-Key header field [I-D.ietf-httpbis-encryption-encoding] to carry
+this information.
+
+The `p256ecdsa` parameter includes an elliptic curve digital signature algorithm
+(ECDSA) public key [FIPS186] in uncompressed form [X9.62] that is encoded using
+the URL- and filename-safe variant of base-64 [RFC4648] with padding removed.
+
+Note that with push message encryption [I-D.ietf-webpush-encryption], this
+results in two values in the Crypto-Key header field, one with the a `p256dh`
+key and another with a `p256ecdsa` key.
 
 Editor's Note:
 
-: The definition of the "Bearer" auth-scheme in [RFC6750] is almost perfect, but
-  context would seem to indicate that this is only valid for use with OAuth.
+: JWK [RFC7517] seems like the obvious choice here.  However, JWK doesn't define
+  a compact representation for public keys, which complicates the representation
+  of JWK in a header field.
 
-The corresponding public key is included in a JSON Web Key (JWK) [RFC7517].
-This would be included in either a newly-defined "jwk" parameter of the
-Crypto-Key header field [I-D.ietf-httpbis-encryption-encoding]; alternatively, the
-"p256ecdsa" parameter defined in [I-D.thomson-http-content-signature] could be
-used to transport a raw key.
 
-For voluntarily-provided contact details, a separate header field could be used
-(as in {{from}}) or the JWT could include claims about identity.  For the
-latter, the "sub" (subject) claim could include a contact URI for the
+# Subscription Restriction
+
+The public key of the application server serves as a stable identifier for the
+server.  This key can be used to restrict a push subscription to a specific
 application server.
 
-The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  Both the JWS and JWK
-MUST use an elliptic curve digital signature (ECDSA) key on the NIST P-256 curve
-[FIPS186].
-
-A JWT also offers the option of including contact information as an additional
-claim.  An "iss" (Issuer) claim can include a contact URI: either a "mailto:"
-(email) [RFC6068] or an "https:" [RFC2818] SHOULD be used.
-
-
-## Contact Information Header Field {#from}
-
-Contact information for an application server could be included in a header
-field, either directly (e.g., a From header field, Section 5.5.1 of [RFC7231]),
-or by reference (e.g., a new "contact" link relation [RFC5988] that identified a
-vCard [RFC6350]).  Note that a From header field is limited to email addresses.
-
-Like an server- or client-vended token ({{server-token}}, {{client-token}}),
-contact information would need to be repeated, though that cost is reduced with
-HTTP/2.
-
-
-## Request Signing
-
-Signing of push message requests would allow the push service to attribute
-requests to an application server based on an asymmetric key.  This could be
-done in any number of ways JWS [RFC7515] and HTTP signatures
-[I-D.cavage-http-signatures] being the most likely options.  Note that the
-latter does not provide a means of conveying the signing key, which would be
-necessary for this application.
-
-Request signing shares much in common with client-vended tokens
-{{client-token}}, but it removes any possibility of token reuse in the interests
-of security.
-
-Request signing has a few shortcomings:
-
-* Deciding what to sign is challenging.  Signing only the body of a message is
-  not sufficient to prevent message replay attacks.
-
-* Every message contains a signature, which can increase the load on a server
-  signficantly.  This is especially bad if a signature validation result is
-  input to denial of service mitigation decision making.
-
-
-## Token Binding {#tokbind}
-
-The mechanism proposed in [I-D.ietf-tokbind-https] can be used to provide a
-stable identifier for application servers.  This includes a signature over
-material that is exported from the underlying TLS connection.  Importantly, this
-does not require a new signature for each request: the same signature is
-repeated for every request, HTTP/2 is again used to reduce the cost of the
-repeated information.
-
-Token binding could be used independently of cookies.  Consequently, an
-application server would not be required to accept and store cookies, though the
-push service would not be able to offload any state as a result.
-
-
-# Subscription Association
-
-A stable identifier for an application server - such as a public key or a token
-- could also be used to associate a subscription with the application server.
-
-Subscription association reduces the reliance on endpoint secrecy by requiring
+Subscription restriction reduces the reliance on endpoint secrecy by requiring
 proof of possession to be demonstrated by an application server when requesting
 delivery of a push message.  This provides an additional level of protection
 against leaking of the details of the push subscription.
 
-## Amendments to Subscribing for Push Messages
 
-The user agent includes the public key or token of the application server when
-requesting the creation of a subscription.  For example, the Web Push API [API]
-could allow an application to provide a public key as part of a new field on the
-`PushSubscriptionOptions` dictionary.
+## Creating a Restricted Push Subscription
 
-This token might then be added to the request to create a push subscription.
+The user agent includes the public key of the application server when requesting
+that a push subscription.  This restricts use of the resulting push subscription
+to application servers that are able to provide proof of possession for the
+corresponding private key.
 
-Allowing the inclusion of multiple keys when creating a subscription would allow
-a subscription to be associated with multiple application servers or application
-server instances.  This would require more state to be maintained by the push
-service for each subscription.
+This public key is then added to the request to create a push subscription as
+described in {{key}}.  The Crypto-Key header field includes exactly one public
+key.  For example:
 
-## Amendments to Requesting Push Message Delivery
-
-When a subscription has been associated with an application server, the request
-for push message delivery MUST include proof of possession for the associated
-private key or token that was used when creating the subscription.  Requests
-that do not contain proof of possession are rejected with a 401 (Unauthorized)
-status code.
+~~~
+POST /subscribe/ HTTP/1.1
+Host: push.example.net
+Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
+                      KImoRwJm5xK9hLrbfIik20g31z8MpLFMCMr8y2cu6gY
+~~~
+{: #ex-restrict title="Example Subscribe Request"}
 
 
-# IANA Considerations
+An application might use the Web Push API [API] to include this information.
+For example, the API might permit an application to provide a public key as part
+of a new field on the `PushSubscriptionOptions` dictionary.
 
-This document has no IANA actions (yet).
+
+Editor's Note:
+
+: Allowing the inclusion of multiple keys when creating a subscription would
+  allow a subscription to be associated with multiple application servers or
+  application server instances.  This might be more flexible, but it also would
+  require more state to be maintained by the push service for each subscription.
 
 
-# Security Considerations
+## Using Restricted Subscriptions
 
-TLS 1.2 [RFC5246] does not provide any confidentiality protections for client
-certificates.  A network attacker can therefore see the identification
-information that is provided by the application server.  A push service MAY
-choose to offer confidentiality protection for application server identity by
-initiating TLS renegotiation immediately after establishing the TLS connection
-at the cost of some additional latency.  Using TLS 1.3 [I-D.ietf-tls-tls13]
-provides confidentiality protection for this information without additional
-latency.
+When a push subscription has been associated with an application server, the
+request for push message delivery MUST include proof of possession for the
+associated private key or token that was used when creating the push
+subscription.
+
+A push service MUST reject a message that includes omits mandatory credentials
+with a 401 (Unauthorized) status code.  A push service MAY reject a message
+that includes invalid credentials with a 403 (Forbidden) status code.
+Credentials are invalid if:
+
+* either the authentication credentials or public key are not included in the
+  request,
+
+* the signature on the JWT cannot be successfully verified using the included
+  public key,
+
+* the current time is later than the time identified in the "exp" (Expiry)
+  claim or more than 24 hours before the expiry time,
+
+* the origin of the push resource is not included in the "aud" (Audience) claim,
+  or
+
+* the public key used to sign the doesn't match the one that was included in the
+  creation of the push message.
+
+A push subscription that is not restricted to a particular key MAY still
+validate a token that is present, except for the last check.  A push service MAY
+then reject a request if the token is found to be invalid.
+
+Editor's Note:
+
+: In theory, since the push service was given a public key, the push message
+  request could omit the public key.  On balance, this keeps things simple and
+  it allows push services to compress the public key (by hashing it, for
+  example).  In any case, the relatively minor space savings aren't particularly
+  important on the connection between the application server and push service.
+
+A push service does not need to forward the JWT or public key to the user agent
+when delivering the push message.
+
+
+# Security Considerations {#security}
+
+This authentication scheme is vulnerable to replay attacks if an attacker can
+acquire a valid JWT.  Applying narrow limits to the period over which a
+replayable token can be reused limits the potential value of a stolen token to
+an attacker and can increase the difficulty of stealing a token.
 
 An application server might offer falsified contact information.  A push service
 operator therefore cannot use the presence of unvalidated contact information as
 input to any security-critical decision-making process.
 
-Many of the alternative solutions are vulnerable to replay attacks.  Applying
-narrow limits to the period over which a replayable token can be reused limits
-the potential value of a stolen token to an attacker and can increase the
-difficulty of stealing a token.  The token binding solution, which binds tokens
-to a single TLS connection can make tokens less reusable.
+Validation of a signature on the JWT requires a non-trivial amount of
+computation.  For something that might be used to identify legitimate requests
+under denial of service attack conditions, this is not ideal.  Application
+servers are therefore encouraged to reuse a JWT, which permits the push service
+to cache the results of signature validation.
 
-# Acknowledgements
+
+# IANA Considerations {#iana}
+
+## WebPush Authentication Scheme
+
+This registers the "WebPush" authentication scheme in the "Hypertext Transfer
+Protocol (HTTP) Authentication Scheme Registry" established in [RFC7235].
+
+Authentication Scheme Name:
+
+: WebPush
+
+Pointer to specification text:
+
+: {{auth}} of this document
+
+Notes:
+
+: This scheme is origin-server only and does not define a challenge.
+
+
+## p256ecdsa Parameter for Crypto-Key Header Field
+
+This registers a `p256ecdsa` parameter for the Crypto-Key header field in the
+"Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters" established in
+[I-D.ietf-httpbis-encryption-encoding].
+
+Parameter Name:
+
+: p256ecdsa
+
+Purpose:
+
+: Conveys a public key for that is used to generate an ECDSA signature.
+
+Reference:
+
+: {{key}} of this document
+
+
+# Acknowledgements {#ack}
 
 This document would have been much worse than it currently is if not for the
 contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.
