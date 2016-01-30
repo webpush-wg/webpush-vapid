@@ -95,8 +95,8 @@ An unfortunate consequence of this design is that a push service is exposed to a
 greater risk of denial of service attack.  While requests from application
 servers can be indirectly attributed to user agents, this is not always
 efficient or even sufficient.  Providing more information about the application
-server more directly to a push service allows the push service to better
-distinguish between legitimate and bogus requests.
+server directly to a push service allows the push service to better distinguish
+between legitimate and bogus requests.
 
 Additionally, this design also relies on endpoint secrecy as any application
 server in possession of the endpoint is able to send messages, albeit without
@@ -159,7 +159,7 @@ number of claims as follows:
    "exp" claim MUST NOT be more than 24 hours from the time of the request.
 
 This JWT is included in an Authorization header field, using an auth-scheme of
-"WebPush".  A push service MAY reject a request with a 401 (Unauthorized) status
+"WebPush".  A push service MAY reject a request with a 403 (Forbidden) status
 code [RFC7235] if the JWT signature or its claims are invalid.
 
 The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  The signature MUST use
@@ -313,7 +313,7 @@ associated private key or token that was used when creating the push
 subscription.
 
 A push service MUST reject a message that includes omits mandatory credentials
-with a 401 (Unauthorized) status code.  A push service MUST reject a message
+with a 401 (Unauthorized) status code.  A push service MAY reject a message
 that includes invalid credentials with a 403 (Forbidden) status code.
 Credentials are invalid if:
 
