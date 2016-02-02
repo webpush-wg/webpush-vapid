@@ -295,7 +295,7 @@ li, p {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-1-30" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-2-2" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
 
@@ -319,12 +319,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 2, 2016</td>
+  <td class="left">Expires: August 5, 2016</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">January 30, 2016</td>
+  <td class="right">February 2, 2016</td>
 </tr>
 
     	
@@ -344,7 +344,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 2, 2016.</p>
+<p>This Internet-Draft will expire on August 5, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -484,7 +484,7 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
 </dl>
 <h2 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#using-restricted-subscriptions" id="using-restricted-subscriptions">Using Restricted Subscriptions</a></h2>
 <p id="rfc.section.5.2.p.1">When a push subscription has been associated with an application server, the request for push message delivery MUST include proof of possession for the associated private key or token that was used when creating the push subscription.</p>
-<p id="rfc.section.5.2.p.2">A push service MUST reject a message that includes omits mandatory credentials with a 401 (Unauthorized) status code.  A push service MAY reject a message that includes invalid credentials with a 403 (Forbidden) status code.  Credentials are invalid if:</p>
+<p id="rfc.section.5.2.p.2">A push service MUST reject a message that omits mandatory credentials with a 401 (Unauthorized) status code.  A push service MAY reject a message that includes invalid credentials with a 403 (Forbidden) status code.  Credentials are invalid if:</p>
 <p/>
 
 <ul>

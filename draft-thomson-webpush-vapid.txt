@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: August 2, 2016                                           Google
-                                                        January 30, 2016
+Expires: August 5, 2016                                           Google
+                                                        February 2, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 2, 2016.
+   This Internet-Draft will expire on August 5, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 1]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 1]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 2]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 2]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    An unfortunate consequence of this design is that a push service is
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 3]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 3]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    The terms "push message", "push service", "push subscription",
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 4]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 4]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    Section 3 and a Crypto-Key header field that includes its public key
@@ -277,9 +277,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 5]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 5]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    This authentication scheme does not require a challenge.  Clients are
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 6]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 6]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    resulting push subscription to application servers that are able to
@@ -370,10 +370,10 @@ Internet-Draft             Self Identification              January 2016
    possession for the associated private key or token that was used when
    creating the push subscription.
 
-   A push service MUST reject a message that includes omits mandatory
-   credentials with a 401 (Unauthorized) status code.  A push service
-   MAY reject a message that includes invalid credentials with a 403
-   (Forbidden) status code.  Credentials are invalid if:
+   A push service MUST reject a message that omits mandatory credentials
+   with a 401 (Unauthorized) status code.  A push service MAY reject a
+   message that includes invalid credentials with a 403 (Forbidden)
+   status code.  Credentials are invalid if:
 
    o  either the authentication credentials or public key are not
       included in the request,
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 7]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 7]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    o  the public key used to sign the doesn't match the one that was
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 8]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 8]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    Pointer to specification text:  Section 3 of this document
@@ -501,9 +501,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                 [Page 9]
+Thomson & Beverloo       Expires August 5, 2016                 [Page 9]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
@@ -557,9 +557,9 @@ Internet-Draft             Self Identification              January 2016
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                [Page 10]
+Thomson & Beverloo       Expires August 5, 2016                [Page 10]
 
-Internet-Draft             Self Identification              January 2016
+Internet-Draft             Self Identification             February 2016
 
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo       Expires August 2, 2016                [Page 11]
+Thomson & Beverloo       Expires August 5, 2016                [Page 11]
