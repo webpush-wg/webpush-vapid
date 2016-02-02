@@ -312,7 +312,7 @@ request for push message delivery MUST include proof of possession for the
 associated private key or token that was used when creating the push
 subscription.
 
-A push service MUST reject a message that includes omits mandatory credentials
+A push service MUST reject a message that omits mandatory credentials
 with a 401 (Unauthorized) status code.  A push service MAY reject a message
 that includes invalid credentials with a 403 (Forbidden) status code.
 Credentials are invalid if:
