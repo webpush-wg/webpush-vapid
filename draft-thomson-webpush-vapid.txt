@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: August 5, 2016                                           Google
-                                                        February 2, 2016
+Expires: August 12, 2016                                          Google
+                                                        February 9, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 5, 2016.
+   This Internet-Draft will expire on August 12, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 1]
+Thomson & Beverloo       Expires August 12, 2016                [Page 1]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 2]
+Thomson & Beverloo       Expires August 12, 2016                [Page 2]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -165,7 +165,7 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 3]
+Thomson & Beverloo       Expires August 12, 2016                [Page 3]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -207,10 +207,10 @@ Internet-Draft             Self Identification             February 2016
 
 2.1.  Application Server Contact Information
 
-   If the application server wishes to provide the JWT MAY include an
-   "sub" (Subject) claim.  The "sub" claim SHOULD include a contact URI
-   for the application server as either a "mailto:" (email) [RFC6068] or
-   an "https:" [RFC2818] URI.
+   If the application server wishes to provide contact details it MAY
+   include an "sub" (Subject) claim in the JWT.  The "sub" claim SHOULD
+   include a contact URI for the application server as either a
+   "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
 
 2.2.  Example
 
@@ -221,7 +221,7 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 4]
+Thomson & Beverloo       Expires August 12, 2016                [Page 4]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -277,7 +277,7 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 5]
+Thomson & Beverloo       Expires August 12, 2016                [Page 5]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -328,17 +328,17 @@ Internet-Draft             Self Identification             February 2016
 5.1.  Creating a Restricted Push Subscription
 
    The user agent includes the public key of the application server when
-   requesting that a push subscription.  This restricts use of the
+   requesting the creation of a push subscription.  This restricts use
 
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 6]
+Thomson & Beverloo       Expires August 12, 2016                [Page 6]
 
 Internet-Draft             Self Identification             February 2016
 
 
-   resulting push subscription to application servers that are able to
+   of the resulting subscription to application servers that are able to
    provide proof of possession for the corresponding private key.
 
    This public key is then added to the request to create a push
@@ -389,12 +389,12 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 7]
+Thomson & Beverloo       Expires August 12, 2016                [Page 7]
 
 Internet-Draft             Self Identification             February 2016
 
 
-   o  the public key used to sign the doesn't match the one that was
+   o  the public key used to sign the JWT doesn't match the one that was
       included in the creation of the push message.
 
    A push subscription that is not restricted to a particular key MAY
@@ -404,11 +404,11 @@ Internet-Draft             Self Identification             February 2016
 
    Editor's Note:  In theory, since the push service was given a public
       key, the push message request could omit the public key.  On
-      balance, this keeps things simple and it allows push services to
-      compress the public key (by hashing it, for example).  In any
-      case, the relatively minor space savings aren't particularly
-      important on the connection between the application server and
-      push service.
+      balance, requiring the key keeps things simple and it allows push
+      services to compress the public key (by hashing it, for example).
+      In any case, the relatively minor space savings aren't
+      particularly important on the connection between the application
+      server and push service.
 
    A push service does not need to forward the JWT or public key to the
    user agent when delivering the push message.
@@ -445,7 +445,7 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 8]
+Thomson & Beverloo       Expires August 12, 2016                [Page 8]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -501,7 +501,7 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                 [Page 9]
+Thomson & Beverloo       Expires August 12, 2016                [Page 9]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -557,7 +557,7 @@ Internet-Draft             Self Identification             February 2016
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                [Page 10]
+Thomson & Beverloo       Expires August 12, 2016               [Page 10]
 
 Internet-Draft             Self Identification             February 2016
 
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo       Expires August 5, 2016                [Page 11]
+Thomson & Beverloo       Expires August 12, 2016               [Page 11]
