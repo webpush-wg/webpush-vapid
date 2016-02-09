@@ -168,9 +168,10 @@ ECDSA on the NIST P-256 curve [FIPS186], that is "ES256" [RFC7518].
 
 ## Application Server Contact Information
 
-If the application server wishes to provide the JWT MAY include an "sub"
-(Subject) claim.  The "sub" claim SHOULD include a contact URI for the application
-server as either a "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
+If the application server wishes to provide contact details it MAY include an
+"sub" (Subject) claim in the JWT.  The "sub" claim SHOULD include a contact URI
+for the application server as either a "mailto:" (email) [RFC6068] or an
+"https:" [RFC2818] URI.
 
 
 ## Example
