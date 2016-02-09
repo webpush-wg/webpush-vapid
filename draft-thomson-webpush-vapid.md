@@ -330,8 +330,8 @@ Credentials are invalid if:
 * the origin of the push resource is not included in the "aud" (Audience) claim,
   or
 
-* the public key used to sign the doesn't match the one that was included in the
-  creation of the push message.
+* the public key used to sign the JWT doesn't match the one that was included in
+  the creation of the push message.
 
 A push subscription that is not restricted to a particular key MAY still
 validate a token that is present, except for the last check.  A push service MAY
@@ -340,10 +340,11 @@ then reject a request if the token is found to be invalid.
 Editor's Note:
 
 : In theory, since the push service was given a public key, the push message
-  request could omit the public key.  On balance, this keeps things simple and
-  it allows push services to compress the public key (by hashing it, for
-  example).  In any case, the relatively minor space savings aren't particularly
-  important on the connection between the application server and push service.
+  request could omit the public key.  On balance, requiring the key keeps things
+  simple and it allows push services to compress the public key (by hashing it,
+  for example).  In any case, the relatively minor space savings aren't
+  particularly important on the connection between the application server and
+  push service.
 
 A push service does not need to forward the JWT or public key to the user agent
 when delivering the push message.
