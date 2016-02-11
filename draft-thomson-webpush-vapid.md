@@ -257,9 +257,9 @@ key and another with a `p256ecdsa` key.
 Some implementations permit the same P-256 key to be used for signing and key
 exchange.  An application server MUST select a different private key for the key
 exchange (i.e., `p256dh`) and signing (i.e., `p256ecdsa`).  Though a push
-service is not obligated to check either parameter, it SHOULD reject push
-messages that have identical values for these parameters with a 400 (Bad
-Request) status code.
+service is not obligated to check either parameter for every push message, a
+push service SHOULD reject push messages that have identical values for these
+parameters with a 400 (Bad Request) status code.
 
 Editor's Note:
 
