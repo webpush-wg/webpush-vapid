@@ -254,11 +254,19 @@ Note that with push message encryption [I-D.ietf-webpush-encryption], this
 results in two values in the Crypto-Key header field, one with the a `p256dh`
 key and another with a `p256ecdsa` key.
 
+Some implementations permit the same P-256 key to be used for signing and key
+exchange.  An application server MUST select a different private key for the key
+exchange (i.e., `p256dh`) and signing (i.e., `p256ecdsa`).  Though a push
+service is not obligated to check either parameter, it SHOULD reject push
+messages that have identical values for these parameters with a 400 (Bad
+Request) status code.
+
 Editor's Note:
 
 : JWK [RFC7517] seems like the obvious choice here.  However, JWK doesn't define
   a compact representation for public keys, which complicates the representation
   of JWK in a header field.
+
 
 
 # Subscription Restriction
