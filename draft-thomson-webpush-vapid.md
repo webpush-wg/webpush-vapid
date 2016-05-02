@@ -67,7 +67,7 @@ the described technique.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
 to a single entity.  This can used to reduce the secrecy for push subscription
 URLs by being able to restrict subscriptions to a specific application server.
-An application server is further able include additional information the
+An application server is further able to include additional information that the
 operator of a push service can use to contact the operator of the application
 server.
 
@@ -226,7 +226,7 @@ A new "WebPush" HTTP authentication scheme [RFC7235] is defined.  This
 authentication scheme carries a signed JWT, as described in {{jwt}}.
 
 This authentication scheme is for origin-server authentication only.  Therefore,
-this authentication scheme MUST NOT be used with The Proxy-Authenticate or
+this authentication scheme MUST NOT be used with the Proxy-Authenticate or
 Proxy-Authorization header fields.
 
 This authentication scheme does not require a challenge.  Clients are able to
