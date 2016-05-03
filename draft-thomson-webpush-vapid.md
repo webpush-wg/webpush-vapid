@@ -354,8 +354,8 @@ Note:
   particularly important on the connection between the application server and
   push service.
 
-A push service does not need to forward the JWT or public key to the user agent
-when delivering the push message.
+A push service MUST NOT forward the JWT or public key to the user agent when
+delivering the push message.
 
 
 # Security Considerations {#security}
