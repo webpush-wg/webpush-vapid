@@ -296,8 +296,8 @@ li, p {
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-webpush-vapid-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2016-5-3" />
-  <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
-  <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
+  <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
+  <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
 
 </head>
 
@@ -337,7 +337,7 @@ li, p {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server.</p>
+<p>An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -447,7 +447,7 @@ body = { "aud":"https://push.example.net",
 </dl>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#auth" id="auth">WebPush Authentication Scheme</a></h1>
 <p id="rfc.section.3.p.1">A new &#8220;WebPush&#8221; HTTP authentication scheme <a href="#RFC7235">[RFC7235]</a> is defined.  This authentication scheme carries a signed JWT, as described in <a href="#jwt">Section 2</a>.</p>
-<p id="rfc.section.3.p.2">This authentication scheme is for origin-server authentication only.  Therefore, this authentication scheme MUST NOT be used with The Proxy-Authenticate or Proxy-Authorization header fields.</p>
+<p id="rfc.section.3.p.2">This authentication scheme is for origin-server authentication only.  Therefore, this authentication scheme MUST NOT be used with the Proxy-Authenticate or Proxy-Authorization header fields.</p>
 <p id="rfc.section.3.p.3">This authentication scheme does not require a challenge.  Clients are able to generate the Authorization header field without any additional information from a server.  Therefore, a challenge for this authentication scheme MUST NOT be sent in a WWW-Authenticate header field.</p>
 <p id="rfc.section.3.p.4">All unknown or unsupported parameters to &#8220;WebPush&#8221; authentication credentials MUST be ignored.  The <samp>realm</samp> parameter is ignored for this authentication scheme.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#key" id="key">Public Key Representation</a></h1>

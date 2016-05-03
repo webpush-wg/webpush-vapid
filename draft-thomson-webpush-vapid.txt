@@ -20,9 +20,9 @@ Abstract
    that are made by the same application server to a single entity.
    This can used to reduce the secrecy for push subscription URLs by
    being able to restrict subscriptions to a specific application
-   server.  An application server is further able include additional
-   information the operator of a push service can use to contact the
-   operator of the application server.
+   server.  An application server is further able to include additional
+   information that the operator of a push service can use to contact
+   the operator of the application server.
 
 Status of This Memo
 
@@ -270,7 +270,7 @@ Internet-Draft             Self Identification                  May 2016
    Section 2.
 
    This authentication scheme is for origin-server authentication only.
-   Therefore, this authentication scheme MUST NOT be used with The
+   Therefore, this authentication scheme MUST NOT be used with the
    Proxy-Authenticate or Proxy-Authorization header fields.
 
 
