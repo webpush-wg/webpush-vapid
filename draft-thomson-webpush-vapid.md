@@ -306,7 +306,7 @@ For example, the API might permit an application to provide a public key as part
 of a new field on the `PushSubscriptionOptions` dictionary.
 
 
-Editor's Note:
+Note:
 
 : Allowing the inclusion of multiple keys when creating a subscription would
   allow a subscription to be associated with multiple application servers or
@@ -345,7 +345,7 @@ A push subscription that is not restricted to a particular key MAY still
 validate a token that is present, except for the last check.  A push service MAY
 then reject a request if the token is found to be invalid.
 
-Editor's Note:
+Note:
 
 : In theory, since the push service was given a public key, the push message
   request could omit the public key.  On balance, requiring the key keeps things
