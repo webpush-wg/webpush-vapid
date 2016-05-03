@@ -318,8 +318,7 @@ Note:
 
 When a push subscription has been associated with an application server, the
 request for push message delivery MUST include proof of possession for the
-associated private key or token that was used when creating the push
-subscription.
+associated private key that was used when creating the push subscription.
 
 A push service MUST reject a message that omits mandatory credentials
 with a 401 (Unauthorized) status code.  A push service MAY reject a message
