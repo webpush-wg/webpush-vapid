@@ -364,8 +364,8 @@ Internet-Draft             Self Identification                  May 2016
    provide a public key as part of a new field on the
    "PushSubscriptionOptions" dictionary.
 
-   Editor's Note:  Allowing the inclusion of multiple keys when creating
-      a subscription would allow a subscription to be associated with
+   Note:  Allowing the inclusion of multiple keys when creating a
+      subscription would allow a subscription to be associated with
       multiple application servers or application server instances.
       This might be more flexible, but it also would require more state
       to be maintained by the push service for each subscription.
@@ -411,16 +411,16 @@ Internet-Draft             Self Identification                  May 2016
    push service MAY then reject a request if the token is found to be
    invalid.
 
-   Editor's Note:  In theory, since the push service was given a public
-      key, the push message request could omit the public key.  On
-      balance, requiring the key keeps things simple and it allows push
-      services to compress the public key (by hashing it, for example).
-      In any case, the relatively minor space savings aren't
-      particularly important on the connection between the application
-      server and push service.
+   Note:  In theory, since the push service was given a public key, the
+      push message request could omit the public key.  On balance,
+      requiring the key keeps things simple and it allows push services
+      to compress the public key (by hashing it, for example).  In any
+      case, the relatively minor space savings aren't particularly
+      important on the connection between the application server and
+      push service.
 
-   A push service does not need to forward the JWT or public key to the
-   user agent when delivering the push message.
+   A push service MUST NOT forward the JWT or public key to the user
+   agent when delivering the push message.
 
 6.  Security Considerations
 

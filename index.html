@@ -480,7 +480,7 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
 <p/>
 
 <dl>
-  <dt>Editor&#8217;s Note:</dt>
+  <dt>Note:</dt>
   <dd style="margin-left: 8">Allowing the inclusion of multiple keys when creating a subscription would allow a subscription to be associated with multiple application servers or application server instances.  This might be more flexible, but it also would require more state to be maintained by the push service for each subscription.</dd>
 </dl>
 <h2 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#using-restricted-subscriptions" id="using-restricted-subscriptions">Using Restricted Subscriptions</a></h2>
@@ -499,10 +499,10 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
 <p/>
 
 <dl>
-  <dt>Editor&#8217;s Note:</dt>
+  <dt>Note:</dt>
   <dd style="margin-left: 8">In theory, since the push service was given a public key, the push message request could omit the public key.  On balance, requiring the key keeps things simple and it allows push services to compress the public key (by hashing it, for example).  In any case, the relatively minor space savings aren&#8217;t particularly important on the connection between the application server and push service.</dd>
 </dl>
-<p id="rfc.section.5.2.p.6">A push service does not need to forward the JWT or public key to the user agent when delivering the push message.</p>
+<p id="rfc.section.5.2.p.6">A push service MUST NOT forward the JWT or public key to the user agent when delivering the push message.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.6.p.1">This authentication scheme is vulnerable to replay attacks if an attacker can acquire a valid JWT.  Applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.</p>
 <p id="rfc.section.6.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
