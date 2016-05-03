@@ -140,10 +140,11 @@ server", and "user agent" are used as defined in [I-D.ietf-webpush-protocol].
 
 # Application Server Self-Identification {#jwt}
 
-Application servers SHOULD generate and maintain a signing key pair usable with
-elliptic curve digital signature (ECDSA) over the P-256 curve [FIPS186].  Use of
-this key when sending push messages establishes a continuous identity for the
-application server.
+Application servers that wish to self-identity generate and maintain a signing
+key pair.  This key pair MUST be usable with elliptic curve digital signature
+(ECDSA) over the P-256 curve [FIPS186].  Use of this key when sending push
+messages establishes an identity for the application server that is consistent
+across multiple messages.
 
 When requesting delivery of a push message, the application includes a JSON Web
 Token (JWT) [RFC7519], signed using its signing key.  The token includes a
