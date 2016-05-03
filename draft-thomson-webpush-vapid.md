@@ -214,11 +214,6 @@ body = { "aud":"https://push.example.net",
 ~~~
 {: #ex-jwt title="Example JWT Header and Body"}
 
-Issue:
-
-: The first part of the JWT is effectively fixed.  Would be it acceptable to
-  require that that segment is omitted from the header field?
-
 
 # WebPush Authentication Scheme {#auth}
 
