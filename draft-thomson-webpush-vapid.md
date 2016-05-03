@@ -341,8 +341,8 @@ Credentials are invalid if:
   the creation of the push message.
 
 A push subscription that is not restricted to a particular key MAY still
-validate a token that is present, except for the last check.  A push service MAY
-then reject a request if the token is found to be invalid.
+validate a JWT that is present, with the exception of the last check.  A push
+service MAY then reject a request if the JWT is found to be invalid.
 
 Note:
 
