@@ -295,7 +295,7 @@ li, p {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-2-9" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-5-3" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able include additional information the operator of a push service can use to contact the operator of the application server." />
 
@@ -319,12 +319,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 12, 2016</td>
+  <td class="left">Expires: November 4, 2016</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 9, 2016</td>
+  <td class="right">May 3, 2016</td>
 </tr>
 
     	
@@ -344,7 +344,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 12, 2016.</p>
+<p>This Internet-Draft will expire on November 4, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -454,6 +454,7 @@ body = { "aud":"https://push.example.net",
 <p id="rfc.section.4.p.1">In order for the push service to be able to validate the JWT, it needs to learn the public key of the application server.  A <samp>p256ecdsa</samp> parameter is defined for the Crypto-Key header field <a href="#I-D.ietf-httpbis-encryption-encoding">[I-D.ietf-httpbis-encryption-encoding]</a> to carry this information.</p>
 <p id="rfc.section.4.p.2">The <samp>p256ecdsa</samp> parameter includes an elliptic curve digital signature algorithm (ECDSA) public key <a href="#FIPS186">[FIPS186]</a> in uncompressed form <a href="#X9.62">[X9.62]</a> that is encoded using the URL- and filename-safe variant of base-64 <a href="#RFC4648">[RFC4648]</a> with padding removed.</p>
 <p id="rfc.section.4.p.3">Note that with push message encryption <a href="#I-D.ietf-webpush-encryption">[I-D.ietf-webpush-encryption]</a>, this results in two values in the Crypto-Key header field, one with the a <samp>p256dh</samp> key and another with a <samp>p256ecdsa</samp> key.</p>
+<p id="rfc.section.4.p.4">Some implementations permit the same P-256 key to be used for signing and key exchange.  An application server MUST select a different private key for the key exchange (i.e., <samp>p256dh</samp>) and signing (i.e., <samp>p256ecdsa</samp>).  Though a push service is not obligated to check either parameter for every push message, a push service SHOULD reject push messages that have identical values for these parameters with a 400 (Bad Request) status code.</p>
 <p/>
 
 <dl>
@@ -547,13 +548,13 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
       <td class="reference">
         <b id="I-D.ietf-httpbis-encryption-encoding">[I-D.ietf-httpbis-encryption-encoding]</b>
       </td>
-      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-encryption-encoding-00">Encrypted Content-Encoding for HTTP</a>", Internet-Draft draft-ietf-httpbis-encryption-encoding-00, December 2015.</td>
+      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-encryption-encoding-01">Encrypted Content-Encoding for HTTP</a>", Internet-Draft draft-ietf-httpbis-encryption-encoding-01, March 2016.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</b>
       </td>
-      <td class="top"><a>Thomson, M.</a>, <a>Damaggio, E.</a> and <a>B. Raymor</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-protocol-02">Generic Event Delivery Using HTTP Push</a>", Internet-Draft draft-ietf-webpush-protocol-02, November 2015.</td>
+      <td class="top"><a>Thomson, M.</a>, <a>Damaggio, E.</a> and <a>B. Raymor</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-protocol-04">Generic Event Delivery Using HTTP Push</a>", Internet-Draft draft-ietf-webpush-protocol-04, March 2016.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -624,7 +625,7 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
       <td class="reference">
         <b id="I-D.ietf-webpush-encryption">[I-D.ietf-webpush-encryption]</b>
       </td>
-      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-encryption-01">Message Encryption for Web Push</a>", Internet-Draft draft-ietf-webpush-encryption-01, October 2015.</td>
+      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-encryption-02">Message Encryption for Web Push</a>", Internet-Draft draft-ietf-webpush-encryption-02, March 2016.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -693,6 +694,6 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
   </address>
 </div>
 
-  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/martinthomson/webpush-vapid">Fork me on GitHub</a></div></div>
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/webpush-wg/webpush-vapid">Fork me on GitHub</a></div></div>
 </body>
 </html>
