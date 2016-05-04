@@ -176,10 +176,11 @@ Internet-Draft             Self Identification                  May 2016
 
 2.  Application Server Self-Identification
 
-   Application servers SHOULD generate and maintain a signing key pair
-   usable with elliptic curve digital signature (ECDSA) over the P-256
-   curve [FIPS186].  Use of this key when sending push messages
-   establishes a continuous identity for the application server.
+   Application servers that wish to self-identity generate and maintain
+   a signing key pair.  This key pair MUST be usable with elliptic curve
+   digital signature (ECDSA) over the P-256 curve [FIPS186].  Use of
+   this key when sending push messages establishes an identity for the
+   application server that is consistent across multiple messages.
 
    When requesting delivery of a push message, the application includes
    a JSON Web Token (JWT) [RFC7519], signed using its signing key.  The
@@ -217,7 +218,6 @@ Internet-Draft             Self Identification                  May 2016
    An application server requests the delivery of a push message as
    described in [I-D.ietf-webpush-protocol].  If the application server
    wishes to self-identify, it includes an Authorization header field
-   with credentials that use the "WebPush" authentication scheme
 
 
 
@@ -226,6 +226,7 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 4]
 Internet-Draft             Self Identification                  May 2016
 
 
+   with credentials that use the "WebPush" authentication scheme
    Section 3 and a Crypto-Key header field that includes its public key
    Section 4.
 
@@ -273,7 +274,6 @@ Internet-Draft             Self Identification                  May 2016
    This authentication scheme does not require a challenge.  Clients are
    able to generate the Authorization header field without any
    additional information from a server.  Therefore, a challenge for
-
 
 
 

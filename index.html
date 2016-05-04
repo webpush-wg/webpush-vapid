@@ -395,7 +395,7 @@ li, p {
 <p id="rfc.section.1.2.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document.  It&#8217;s not shouting, when they are capitalized, they have the special meaning described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <p id="rfc.section.1.2.p.2">The terms &#8220;push message&#8221;, &#8220;push service&#8221;, &#8220;push subscription&#8221;, &#8220;application server&#8221;, and &#8220;user agent&#8221; are used as defined in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a>.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#jwt" id="jwt">Application Server Self-Identification</a></h1>
-<p id="rfc.section.2.p.1">Application servers SHOULD generate and maintain a signing key pair usable with elliptic curve digital signature (ECDSA) over the P-256 curve <a href="#FIPS186">[FIPS186]</a>.  Use of this key when sending push messages establishes a continuous identity for the application server.</p>
+<p id="rfc.section.2.p.1">Application servers that wish to self-identity generate and maintain a signing key pair.  This key pair MUST be usable with elliptic curve digital signature (ECDSA) over the P-256 curve <a href="#FIPS186">[FIPS186]</a>.  Use of this key when sending push messages establishes an identity for the application server that is consistent across multiple messages.</p>
 <p id="rfc.section.2.p.2">When requesting delivery of a push message, the application includes a JSON Web Token (JWT) <a href="#RFC7519">[RFC7519]</a>, signed using its signing key.  The token includes a number of claims as follows:</p>
 <p/>
 
