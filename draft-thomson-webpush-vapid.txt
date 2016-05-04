@@ -78,7 +78,7 @@ Table of Contents
      5.1.  Creating a Restricted Push Subscription . . . . . . . . .   7
      5.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   7
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
      7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   9
      7.2.  p256ecdsa Parameter for Crypto-Key Header Field . . . . .   9
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
@@ -374,8 +374,8 @@ Internet-Draft             Self Identification                  May 2016
 
    When a push subscription has been associated with an application
    server, the request for push message delivery MUST include proof of
-   possession for the associated private key or token that was used when
-   creating the push subscription.
+   possession for the associated private key that was used when creating
+   the push subscription.
 
    A push service MUST reject a message that omits mandatory credentials
    with a 401 (Unauthorized) status code.  A push service MAY reject a
@@ -405,11 +405,6 @@ Internet-Draft             Self Identification                  May 2016
 
    o  the public key used to sign the JWT doesn't match the one that was
       included in the creation of the push message.
-
-   A push subscription that is not restricted to a particular key MAY
-   still validate a token that is present, except for the last check.  A
-   push service MAY then reject a request if the token is found to be
-   invalid.
 
    Note:  In theory, since the push service was given a public key, the
       push message request could omit the public key.  On balance,
@@ -442,6 +437,11 @@ Internet-Draft             Self Identification                  May 2016
    which permits the push service to cache the results of signature
    validation.
 
+7.  IANA Considerations
+
+
+
+
 
 
 
@@ -449,8 +449,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 8]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-7.  IANA Considerations
 
 7.1.  WebPush Authentication Scheme
 
@@ -496,6 +494,8 @@ Internet-Draft             Self Identification                  May 2016
               Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
               ietf-httpbis-encryption-encoding-01 (work in progress),
               March 2016.
+
+
 
 
 
