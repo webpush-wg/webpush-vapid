@@ -183,7 +183,6 @@ includes its public key {{key}}.
 ~~~
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
 Host: push.example.net
-Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
 Content-Type: text/plain;charset=utf8
 Content-Length: 36
 Authorization: Bearer
