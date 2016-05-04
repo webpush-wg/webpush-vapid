@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: November 4, 2016                                         Google
-                                                             May 3, 2016
+Expires: November 5, 2016                                         Google
+                                                             May 4, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 4, 2016.
+   This Internet-Draft will expire on November 5, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 1]
+Thomson & Beverloo      Expires November 5, 2016                [Page 1]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 2]
+Thomson & Beverloo      Expires November 5, 2016                [Page 2]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -165,7 +165,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 3]
+Thomson & Beverloo      Expires November 5, 2016                [Page 3]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -221,7 +221,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 4]
+Thomson & Beverloo      Expires November 5, 2016                [Page 4]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -249,8 +249,9 @@ Internet-Draft             Self Identification                  May 2016
    Note that the header fields shown in Figure 1 don't include line
    wrapping.  Extra whitespace is added to meet formatting constraints.
 
-   This equates to a JWT with the header and body shown in Figure 2.
-   This JWT would be valid until 2016-01-21T01:53:25Z [RFC3339].
+   The value of the Authorization header field is a base64url-encoded
+   JWT with the header and body shown in Figure 2.  This JWT would be
+   valid until 2016-01-21T01:53:25Z [RFC3339].
 
    header = {"typ":"JWT","alg":"ES256"}
    body = { "aud":"https://push.example.net",
@@ -276,8 +277,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-
-Thomson & Beverloo      Expires November 4, 2016                [Page 5]
+Thomson & Beverloo      Expires November 5, 2016                [Page 5]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -333,7 +333,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 6]
+Thomson & Beverloo      Expires November 5, 2016                [Page 6]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -389,7 +389,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 7]
+Thomson & Beverloo      Expires November 5, 2016                [Page 7]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -445,7 +445,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 8]
+Thomson & Beverloo      Expires November 5, 2016                [Page 8]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -501,7 +501,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016                [Page 9]
+Thomson & Beverloo      Expires November 5, 2016                [Page 9]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -557,7 +557,7 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 4, 2016               [Page 10]
+Thomson & Beverloo      Expires November 5, 2016               [Page 10]
 
 Internet-Draft             Self Identification                  May 2016
 
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo      Expires November 4, 2016               [Page 11]
+Thomson & Beverloo      Expires November 5, 2016               [Page 11]
