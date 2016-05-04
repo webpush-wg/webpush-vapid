@@ -319,8 +319,7 @@ Note:
 
 When a push subscription has been associated with an application server, the
 request for push message delivery MUST include proof of possession for the
-associated private key or token that was used when creating the push
-subscription.
+associated private key that was used when creating the push subscription.
 
 A push service MUST reject a message that omits mandatory credentials
 with a 401 (Unauthorized) status code.  A push service MAY reject a message
@@ -341,10 +340,6 @@ Credentials are invalid if:
 
 * the public key used to sign the JWT doesn't match the one that was included in
   the creation of the push message.
-
-A push subscription that is not restricted to a particular key MAY still
-validate a token that is present, except for the last check.  A push service MAY
-then reject a request if the token is found to be invalid.
 
 Note:
 
