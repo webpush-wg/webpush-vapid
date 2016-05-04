@@ -340,10 +340,6 @@ Credentials are invalid if:
 * the public key used to sign the JWT doesn't match the one that was included in
   the creation of the push message.
 
-A push subscription that is not restricted to a particular key MAY still
-validate a JWT that is present, with the exception of the last check.  A push
-service MAY then reject a request if the JWT is found to be invalid.
-
 Note:
 
 : In theory, since the push service was given a public key, the push message
