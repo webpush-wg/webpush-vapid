@@ -382,7 +382,7 @@ li, p {
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
 <p id="rfc.section.1.p.1">The Web Push protocol <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a> describes how an application server is able to request that a push service deliver a push message to a user agent.</p>
-<p id="rfc.section.1.p.2">As a consequence of the expected deployment architecture, there is no basis for an application server to be known to a push service prior to requesting delivery of a push message.  By the same measure, requesting the creation of a subscription for push message receipts has no prior authentication.  Requiring that the push service be able to authenticate application servers places an unwanted constraint on the interactions between user agents and application servers, who are the ultimate users of a push service.  That constraint would also degrade the privacy-preserving properties the protocol provides.  For these reasons, <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a> does not define a mandatory system for authentication of application servers.</p>
+<p id="rfc.section.1.p.2">As a consequence of the expected deployment architecture, there is no basis for an application server to be known to a push service prior to requesting delivery of a push message.  Requiring that the push service be able to authenticate application servers places an unwanted constraint on the interactions between user agents and application servers, who are the ultimate users of a push service.  That constraint would also degrade the privacy-preserving properties the protocol provides.  For these reasons, <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a> does not define a mandatory system for authentication of application servers.</p>
 <p id="rfc.section.1.p.3">An unfortunate consequence of this design is that a push service is exposed to a greater risk of denial of service attack.  While requests from application servers can be indirectly attributed to user agents, this is not always efficient or even sufficient.  Providing more information about the application server directly to a push service allows the push service to better distinguish between legitimate and bogus requests.</p>
 <p id="rfc.section.1.p.4">Additionally, this design also relies on endpoint secrecy as any application server in possession of the endpoint is able to send messages, albeit without payloads.  In situations where usage of a subscription can be limited to a single application server, the ability to associate a subscription with the application server could reduce the impact of a data leak.</p>
 <h2 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#voluntary-identification" id="voluntary-identification">Voluntary Identification</a></h2>
@@ -414,7 +414,6 @@ li, p {
 <pre>
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
 Host: push.example.net
-Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
 Content-Type: text/plain;charset=utf8
 Content-Length: 36
 Authorization: WebPush

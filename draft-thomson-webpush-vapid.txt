@@ -95,17 +95,17 @@ Table of Contents
 
    As a consequence of the expected deployment architecture, there is no
    basis for an application server to be known to a push service prior
-   to requesting delivery of a push message.  By the same measure,
-   requesting the creation of a subscription for push message receipts
-   has no prior authentication.  Requiring that the push service be able
-   to authenticate application servers places an unwanted constraint on
-   the interactions between user agents and application servers, who are
-   the ultimate users of a push service.  That constraint would also
-   degrade the privacy-preserving properties the protocol provides.  For
-   these reasons, [I-D.ietf-webpush-protocol] does not define a
-   mandatory system for authentication of application servers.
+   to requesting delivery of a push message.  Requiring that the push
+   service be able to authenticate application servers places an
+   unwanted constraint on the interactions between user agents and
+   application servers, who are the ultimate users of a push service.
+   That constraint would also degrade the privacy-preserving properties
+   the protocol provides.  For these reasons,
+   [I-D.ietf-webpush-protocol] does not define a mandatory system for
+   authentication of application servers.
 
-
+   An unfortunate consequence of this design is that a push service is
+   exposed to a greater risk of denial of service attack.  While
 
 
 
@@ -114,8 +114,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 2]
 Internet-Draft             Self Identification                  May 2016
 
 
-   An unfortunate consequence of this design is that a push service is
-   exposed to a greater risk of denial of service attack.  While
    requests from application servers can be indirectly attributed to
    user agents, this is not always efficient or even sufficient.
    Providing more information about the application server directly to a
@@ -161,7 +159,9 @@ Internet-Draft             Self Identification                  May 2016
    document.  It's not shouting, when they are capitalized, they have
    the special meaning described in [RFC2119].
 
-
+   The terms "push message", "push service", "push subscription",
+   "application server", and "user agent" are used as defined in
+   [I-D.ietf-webpush-protocol].
 
 
 
@@ -169,10 +169,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 3]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-   The terms "push message", "push service", "push subscription",
-   "application server", and "user agent" are used as defined in
-   [I-D.ietf-webpush-protocol].
 
 2.  Application Server Self-Identification
 
@@ -218,6 +214,10 @@ Internet-Draft             Self Identification                  May 2016
    An application server requests the delivery of a push message as
    described in [I-D.ietf-webpush-protocol].  If the application server
    wishes to self-identify, it includes an Authorization header field
+   with credentials that use the "WebPush" authentication scheme
+   Section 3 and a Crypto-Key header field that includes its public key
+   Section 4.
+
 
 
 
@@ -226,13 +226,8 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 4]
 Internet-Draft             Self Identification                  May 2016
 
 
-   with credentials that use the "WebPush" authentication scheme
-   Section 3 and a Crypto-Key header field that includes its public key
-   Section 4.
-
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
    Host: push.example.net
-   Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
    Content-Type: text/plain;charset=utf8
    Content-Length: 36
    Authorization: WebPush
@@ -274,6 +269,11 @@ Internet-Draft             Self Identification                  May 2016
    This authentication scheme does not require a challenge.  Clients are
    able to generate the Authorization header field without any
    additional information from a server.  Therefore, a challenge for
+   this authentication scheme MUST NOT be sent in a WWW-Authenticate
+   header field.
+
+
+
 
 
 
@@ -281,9 +281,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 5]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-   this authentication scheme MUST NOT be sent in a WWW-Authenticate
-   header field.
 
    All unknown or unsupported parameters to "WebPush" authentication
    credentials MUST be ignored.  The "realm" parameter is ignored for
@@ -329,6 +326,9 @@ Internet-Draft             Self Identification                  May 2016
    server when requesting delivery of a push message.  This provides an
    additional level of protection against leaking of the details of the
    push subscription.
+
+
+
 
 
 
