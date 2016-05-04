@@ -439,12 +439,6 @@ body = { "aud":"https://push.example.net",
          "sub":"mailto:push@example.com" }
 </pre>
 <p class="figure">Figure 2: Example JWT Header and Body</p>
-<p/>
-
-<dl>
-  <dt>Issue:</dt>
-  <dd style="margin-left: 8">The first part of the JWT is effectively fixed.  Would be it acceptable to require that that segment is omitted from the header field?</dd>
-</dl>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#auth" id="auth">WebPush Authentication Scheme</a></h1>
 <p id="rfc.section.3.p.1">A new &#8220;WebPush&#8221; HTTP authentication scheme <a href="#RFC7235">[RFC7235]</a> is defined.  This authentication scheme carries a signed JWT, as described in <a href="#jwt">Section 2</a>.</p>
 <p id="rfc.section.3.p.2">This authentication scheme is for origin-server authentication only.  Therefore, this authentication scheme MUST NOT be used with the Proxy-Authenticate or Proxy-Authorization header fields.</p>

@@ -79,7 +79,7 @@ Table of Contents
      5.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   7
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-     7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   9
+     7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   8
      7.2.  p256ecdsa Parameter for Crypto-Key Header Field . . . . .   9
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
@@ -260,10 +260,6 @@ Internet-Draft             Self Identification                  May 2016
 
                    Figure 2: Example JWT Header and Body
 
-   Issue:  The first part of the JWT is effectively fixed.  Would be it
-      acceptable to require that that segment is omitted from the header
-      field?
-
 3.  WebPush Authentication Scheme
 
    A new "WebPush" HTTP authentication scheme [RFC7235] is defined.
@@ -274,6 +270,10 @@ Internet-Draft             Self Identification                  May 2016
    Therefore, this authentication scheme MUST NOT be used with the
    Proxy-Authenticate or Proxy-Authorization header fields.
 
+   This authentication scheme does not require a challenge.  Clients are
+   able to generate the Authorization header field without any
+   additional information from a server.  Therefore, a challenge for
+
 
 
 
@@ -282,9 +282,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 5]
 Internet-Draft             Self Identification                  May 2016
 
 
-   This authentication scheme does not require a challenge.  Clients are
-   able to generate the Authorization header field without any
-   additional information from a server.  Therefore, a challenge for
    this authentication scheme MUST NOT be sent in a WWW-Authenticate
    header field.
 
@@ -330,6 +327,9 @@ Internet-Draft             Self Identification                  May 2016
    Subscription restriction reduces the reliance on endpoint secrecy by
    requiring proof of possession to be demonstrated by an application
    server when requesting delivery of a push message.  This provides an
+   additional level of protection against leaking of the details of the
+   push subscription.
+
 
 
 
@@ -337,9 +337,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 6]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-   additional level of protection against leaking of the details of the
-   push subscription.
 
 5.1.  Creating a Restricted Push Subscription
 
@@ -385,6 +382,9 @@ Internet-Draft             Self Identification                  May 2016
    o  either the authentication credentials or public key are not
       included in the request,
 
+   o  the signature on the JWT cannot be successfully verified using the
+      included public key,
+
 
 
 
@@ -393,9 +393,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 7]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-   o  the signature on the JWT cannot be successfully verified using the
-      included public key,
 
    o  the current time is later than the time identified in the "exp"
       (Expiry) claim or more than 24 hours before the expiry time,
@@ -439,8 +436,11 @@ Internet-Draft             Self Identification                  May 2016
 
 7.  IANA Considerations
 
+7.1.  WebPush Authentication Scheme
 
-
+   This registers the "WebPush" authentication scheme in the "Hypertext
+   Transfer Protocol (HTTP) Authentication Scheme Registry" established
+   in [RFC7235].
 
 
 
@@ -449,12 +449,6 @@ Thomson & Beverloo      Expires November 5, 2016                [Page 8]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-7.1.  WebPush Authentication Scheme
-
-   This registers the "WebPush" authentication scheme in the "Hypertext
-   Transfer Protocol (HTTP) Authentication Scheme Registry" established
-   in [RFC7235].
 
    Authentication Scheme Name:  WebPush
 
@@ -495,17 +489,6 @@ Internet-Draft             Self Identification                  May 2016
               ietf-httpbis-encryption-encoding-01 (work in progress),
               March 2016.
 
-
-
-
-
-
-
-Thomson & Beverloo      Expires November 5, 2016                [Page 9]
-
-Internet-Draft             Self Identification                  May 2016
-
-
    [I-D.ietf-webpush-protocol]
               Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
               Delivery Using HTTP Push", draft-ietf-webpush-protocol-04
@@ -515,6 +498,13 @@ Internet-Draft             Self Identification                  May 2016
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
+
+
+
+Thomson & Beverloo      Expires November 5, 2016                [Page 9]
+
+Internet-Draft             Self Identification                  May 2016
+
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
               DOI 10.17487/RFC2818, May 2000,
@@ -553,6 +543,16 @@ Internet-Draft             Self Identification                  May 2016
    [API]      van Ouwerkerk, M. and M. Thomson, "Web Push API", 2015,
               <https://w3c.github.io/push-api/>.
 
+   [I-D.ietf-webpush-encryption]
+              Thomson, M., "Message Encryption for Web Push", draft-
+              ietf-webpush-encryption-02 (work in progress), March 2016.
+
+   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
+              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
+              <http://www.rfc-editor.org/info/rfc3339>.
+
+
+
 
 
 
@@ -561,14 +561,6 @@ Thomson & Beverloo      Expires November 5, 2016               [Page 10]
 
 Internet-Draft             Self Identification                  May 2016
 
-
-   [I-D.ietf-webpush-encryption]
-              Thomson, M., "Message Encryption for Web Push", draft-
-              ietf-webpush-encryption-02 (work in progress), March 2016.
-
-   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
-              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
-              <http://www.rfc-editor.org/info/rfc3339>.
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
@@ -591,6 +583,14 @@ Authors' Addresses
    Google
 
    Email: beverloo@google.com
+
+
+
+
+
+
+
+
 
 
 
