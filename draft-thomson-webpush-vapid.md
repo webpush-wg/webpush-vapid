@@ -203,8 +203,9 @@ iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
 Note that the header fields shown in {{ex-push}} don't include line wrapping.
 Extra whitespace is added to meet formatting constraints.
 
-This equates to a JWT with the header and body shown in {{ex-jwt}}.  This JWT
-would be valid until 2016-01-21T01:53:25Z [RFC3339].
+The value of the Authorization header field is a base64url-encoded JWT with the
+header and body shown in {{ex-jwt}}.  This JWT would be valid until
+2016-01-21T01:53:25Z [RFC3339].
 
 ~~~
 header = {"typ":"JWT","alg":"ES256"}
