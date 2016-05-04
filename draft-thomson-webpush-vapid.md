@@ -82,14 +82,12 @@ agent.
 
 As a consequence of the expected deployment architecture, there is no basis for
 an application server to be known to a push service prior to requesting delivery
-of a push message.  By the same measure, requesting the creation of a
-subscription for push message receipts has no prior authentication.  Requiring
-that the push service be able to authenticate application servers places an
-unwanted constraint on the interactions between user agents and application
-servers, who are the ultimate users of a push service.  That constraint would
-also degrade the privacy-preserving properties the protocol provides.  For these
-reasons, [I-D.ietf-webpush-protocol] does not define a mandatory system for
-authentication of application servers.
+of a push message.  Requiring that the push service be able to authenticate
+application servers places an unwanted constraint on the interactions between
+user agents and application servers, who are the ultimate users of a push
+service.  That constraint would also degrade the privacy-preserving properties
+the protocol provides.  For these reasons, [I-D.ietf-webpush-protocol] does not
+define a mandatory system for authentication of application servers.
 
 An unfortunate consequence of this design is that a push service is exposed to a
 greater risk of denial of service attack.  While requests from application
@@ -186,7 +184,6 @@ includes its public key {{key}}.
 ~~~
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
 Host: push.example.net
-Push-Receipt: https://push.example.net/r/3ZtI4YVNBnUUZhuoChl6omU
 Content-Type: text/plain;charset=utf8
 Content-Length: 36
 Authorization: WebPush
