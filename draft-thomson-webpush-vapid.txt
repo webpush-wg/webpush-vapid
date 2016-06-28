@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: November 5, 2016                                         Google
-                                                             May 4, 2016
+Expires: December 30, 2016                                        Google
+                                                           June 28, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 5, 2016.
+   This Internet-Draft will expire on December 30, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 1]
+Thomson & Beverloo      Expires December 30, 2016               [Page 1]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 2]
+Thomson & Beverloo      Expires December 30, 2016               [Page 2]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    requests from application servers can be indirectly attributed to
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 3]
+Thomson & Beverloo      Expires December 30, 2016               [Page 3]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
 2.  Application Server Self-Identification
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 4]
+Thomson & Beverloo      Expires December 30, 2016               [Page 4]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
@@ -277,9 +277,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 5]
+Thomson & Beverloo      Expires December 30, 2016               [Page 5]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    All unknown or unsupported parameters to "WebPush" authentication
@@ -300,11 +300,11 @@ Internet-Draft             Self Identification                  May 2016
 
    Note that with push message encryption [I-D.ietf-webpush-encryption],
    this results in two values in the Crypto-Key header field, one with
-   the a "p256dh" key and another with a "p256ecdsa" key.
+   the a "dh" key and another with a "p256ecdsa" key.
 
    Some implementations permit the same P-256 key to be used for signing
    and key exchange.  An application server MUST select a different
-   private key for the key exchange (i.e., "p256dh") and signing (i.e.,
+   private key for the key exchange (i.e., "dh") and signing (i.e.,
    "p256ecdsa").  Though a push service is not obligated to check either
    parameter for every push message, a push service SHOULD reject push
    messages that have identical values for these parameters with a 400
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 6]
+Thomson & Beverloo      Expires December 30, 2016               [Page 6]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
 5.1.  Creating a Restricted Push Subscription
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 7]
+Thomson & Beverloo      Expires December 30, 2016               [Page 7]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    o  the current time is later than the time identified in the "exp"
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 8]
+Thomson & Beverloo      Expires December 30, 2016               [Page 8]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    Authentication Scheme Name:  WebPush
@@ -491,8 +491,8 @@ Internet-Draft             Self Identification                  May 2016
 
    [I-D.ietf-webpush-protocol]
               Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
-              Delivery Using HTTP Push", draft-ietf-webpush-protocol-04
-              (work in progress), March 2016.
+              Delivery Using HTTP Push", draft-ietf-webpush-protocol-06
+              (work in progress), June 2016.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -501,9 +501,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016                [Page 9]
+Thomson & Beverloo      Expires December 30, 2016               [Page 9]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
@@ -557,9 +557,9 @@ Internet-Draft             Self Identification                  May 2016
 
 
 
-Thomson & Beverloo      Expires November 5, 2016               [Page 10]
+Thomson & Beverloo      Expires December 30, 2016              [Page 10]
 
-Internet-Draft             Self Identification                  May 2016
+Internet-Draft             Self Identification                 June 2016
 
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo      Expires November 5, 2016               [Page 11]
+Thomson & Beverloo      Expires December 30, 2016              [Page 11]
