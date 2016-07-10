@@ -173,6 +173,13 @@ for the application server as either a "mailto:" (email) [RFC6068] or an
 "https:" [RFC2818] URI.
 
 
+## Additional Claims
+
+An application server MAY include additional claims using public or private
+names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT is in a header
+field, the size of additional claims SHOULD be kept as small as possible.
+
+
 ## Example
 
 An application server requests the delivery of a push message as described in
@@ -407,4 +414,5 @@ Reference:
 # Acknowledgements {#ack}
 
 This document would have been much worse than it currently is if not for the
-contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.
+contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache,
+and others.
