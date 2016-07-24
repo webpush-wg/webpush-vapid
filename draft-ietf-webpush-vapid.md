@@ -138,7 +138,7 @@ server", and "user agent" are used as defined in [I-D.ietf-webpush-protocol].
 
 # Application Server Self-Identification {#jwt}
 
-Application servers that wish to self-identity generate and maintain a signing
+Application servers that wish to self-identify generate and maintain a signing
 key pair.  This key pair MUST be usable with elliptic curve digital signature
 (ECDSA) over the P-256 curve [FIPS186].  Use of this key when sending push
 messages establishes an identity for the application server that is consistent
@@ -167,7 +167,7 @@ ECDSA on the NIST P-256 curve [FIPS186], that is "ES256" [RFC7518].
 
 ## Application Server Contact Information
 
-If the application server wishes to provide contact details it MAY include an
+If the application server wishes to provide contact details it MAY include a
 "sub" (Subject) claim in the JWT.  The "sub" claim SHOULD include a contact URI
 for the application server as either a "mailto:" (email) [RFC6068] or an
 "https:" [RFC2818] URI.
@@ -178,8 +178,8 @@ for the application server as either a "mailto:" (email) [RFC6068] or an
 An application server requests the delivery of a push message as described in
 [I-D.ietf-webpush-protocol].  If the application server wishes to self-identify,
 it includes an Authorization header field with credentials that use the
-"WebPush" authentication scheme {{auth}} and a Crypto-Key header field that
-includes its public key {{key}}.
+"WebPush" authentication scheme ({{auth}}) and a Crypto-Key header field that
+includes its public key ({{key}}).
 
 ~~~
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
