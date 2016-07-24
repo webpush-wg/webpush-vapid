@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: January 1, 2017                                          Google
-                                                           June 30, 2016
+Expires: January 25, 2017                                         Google
+                                                           July 24, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 1, 2017.
+   This Internet-Draft will expire on January 25, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 1]
+Thomson & Beverloo      Expires January 25, 2017                [Page 1]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 2]
+Thomson & Beverloo      Expires January 25, 2017                [Page 2]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    requests from application servers can be indirectly attributed to
@@ -165,14 +165,14 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 3]
+Thomson & Beverloo      Expires January 25, 2017                [Page 3]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
 2.  Application Server Self-Identification
 
-   Application servers that wish to self-identity generate and maintain
+   Application servers that wish to self-identify generate and maintain
    a signing key pair.  This key pair MUST be usable with elliptic curve
    digital signature (ECDSA) over the P-256 curve [FIPS186].  Use of
    this key when sending push messages establishes an identity for the
@@ -205,7 +205,7 @@ Internet-Draft             Self Identification                 June 2016
 2.1.  Application Server Contact Information
 
    If the application server wishes to provide contact details it MAY
-   include an "sub" (Subject) claim in the JWT.  The "sub" claim SHOULD
+   include a "sub" (Subject) claim in the JWT.  The "sub" claim SHOULD
    include a contact URI for the application server as either a
    "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
 
@@ -215,15 +215,15 @@ Internet-Draft             Self Identification                 June 2016
    described in [I-D.ietf-webpush-protocol].  If the application server
    wishes to self-identify, it includes an Authorization header field
    with credentials that use the "WebPush" authentication scheme
-   Section 3 and a Crypto-Key header field that includes its public key
-   Section 4.
+   (Section 3) and a Crypto-Key header field that includes its public
+   key (Section 4).
 
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 4]
+Thomson & Beverloo      Expires January 25, 2017                [Page 4]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
@@ -277,9 +277,9 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 5]
+Thomson & Beverloo      Expires January 25, 2017                [Page 5]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    All unknown or unsupported parameters to "WebPush" authentication
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 6]
+Thomson & Beverloo      Expires January 25, 2017                [Page 6]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
 5.1.  Creating a Restricted Push Subscription
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 7]
+Thomson & Beverloo      Expires January 25, 2017                [Page 7]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    o  the current time is later than the time identified in the "exp"
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 8]
+Thomson & Beverloo      Expires January 25, 2017                [Page 8]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    Authentication Scheme Name:  WebPush
@@ -486,8 +486,8 @@ Internet-Draft             Self Identification                 June 2016
 
    [I-D.ietf-httpbis-encryption-encoding]
               Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
-              ietf-httpbis-encryption-encoding-01 (work in progress),
-              March 2016.
+              ietf-httpbis-encryption-encoding-02 (work in progress),
+              June 2016.
 
    [I-D.ietf-webpush-protocol]
               Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
@@ -501,9 +501,9 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017                [Page 9]
+Thomson & Beverloo      Expires January 25, 2017                [Page 9]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
@@ -545,7 +545,7 @@ Internet-Draft             Self Identification                 June 2016
 
    [I-D.ietf-webpush-encryption]
               Thomson, M., "Message Encryption for Web Push", draft-
-              ietf-webpush-encryption-02 (work in progress), March 2016.
+              ietf-webpush-encryption-03 (work in progress), June 2016.
 
    [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
@@ -557,9 +557,9 @@ Internet-Draft             Self Identification                 June 2016
 
 
 
-Thomson & Beverloo       Expires January 1, 2017               [Page 10]
+Thomson & Beverloo      Expires January 25, 2017               [Page 10]
 
-Internet-Draft             Self Identification                 June 2016
+Internet-Draft             Self Identification                 July 2016
 
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
@@ -613,4 +613,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo       Expires January 1, 2017               [Page 11]
+Thomson & Beverloo      Expires January 25, 2017               [Page 11]
