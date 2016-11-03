@@ -273,7 +273,8 @@ li, p {
 <link href="#rfc.section.1.2" rel="Chapter" title="1.2 Notational Conventions"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Application Server Self-Identification"/>
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Application Server Contact Information"/>
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Example"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Additional Claims"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Example"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 WebPush Authentication Scheme"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Public Key Representation"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Subscription Restriction"/>
@@ -290,12 +291,12 @@ li, p {
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-7-24" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-3" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
 
@@ -319,12 +320,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: January 25, 2017</td>
+  <td class="left">Expires: May 7, 2017</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">July 24, 2016</td>
+  <td class="right">November 3, 2016</td>
 </tr>
 
     	
@@ -344,7 +345,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 25, 2017.</p>
+<p>This Internet-Draft will expire on May 7, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -361,7 +362,8 @@ li, p {
 <li>1.2.   <a href="#rfc.section.1.2">Notational Conventions</a></li>
 </ul><li>2.   <a href="#rfc.section.2">Application Server Self-Identification</a></li>
 <ul><li>2.1.   <a href="#rfc.section.2.1">Application Server Contact Information</a></li>
-<li>2.2.   <a href="#rfc.section.2.2">Example</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Additional Claims</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Example</a></li>
 </ul><li>3.   <a href="#rfc.section.3">WebPush Authentication Scheme</a></li>
 <li>4.   <a href="#rfc.section.4">Public Key Representation</a></li>
 <li>5.   <a href="#rfc.section.5">Subscription Restriction</a></li>
@@ -407,8 +409,10 @@ li, p {
 <p id="rfc.section.2.p.5">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515">[RFC7515]</a>.  The signature MUST use ECDSA on the NIST P-256 curve <a href="#FIPS186">[FIPS186]</a>, that is &#8220;ES256&#8221; <a href="#RFC7518">[RFC7518]</a>.</p>
 <h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#application-server-contact-information" id="application-server-contact-information">Application Server Contact Information</a></h2>
 <p id="rfc.section.2.1.p.1">If the application server wishes to provide contact details it MAY include a &#8220;sub&#8221; (Subject) claim in the JWT.  The &#8220;sub&#8221; claim SHOULD include a contact URI for the application server as either a &#8220;mailto:&#8221; (email) <a href="#RFC6068">[RFC6068]</a> or an &#8220;https:&#8221; <a href="#RFC2818">[RFC2818]</a> URI.</p>
-<h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#example" id="example">Example</a></h2>
-<p id="rfc.section.2.2.p.1">An application server requests the delivery of a push message as described in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a>.  If the application server wishes to self-identify, it includes an Authorization header field with credentials that use the &#8220;WebPush&#8221; authentication scheme (<a href="#auth">Section 3</a>) and a Crypto-Key header field that includes its public key (<a href="#key">Section 4</a>).</p>
+<h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#additional-claims" id="additional-claims">Additional Claims</a></h2>
+<p id="rfc.section.2.2.p.1">An application server MAY include additional claims using public or private names (see Sections 4.2 and 4.3 of <a href="#RFC7519">[RFC7519]</a>).  Since the JWT is in a header field, the size of additional claims SHOULD be kept as small as possible.</p>
+<h2 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#example" id="example">Example</a></h2>
+<p id="rfc.section.2.3.p.1">An application server requests the delivery of a push message as described in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a>.  If the application server wishes to self-identify, it includes an Authorization header field with credentials that use the &#8220;WebPush&#8221; authentication scheme (<a href="#auth">Section 3</a>) and a Crypto-Key header field that includes its public key (<a href="#key">Section 4</a>).</p>
 <div id="rfc.figure.1"/>
 <div id="ex-push"/>
 <pre>
@@ -427,8 +431,8 @@ Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
 iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
 </pre>
 <p class="figure">Figure 1: Requesting Push Message Delivery with JWT</p>
-<p id="rfc.section.2.2.p.2">Note that the header fields shown in <a href="#ex-push">Figure 1</a> don&#8217;t include line wrapping.  Extra whitespace is added to meet formatting constraints.</p>
-<p id="rfc.section.2.2.p.3">The value of the Authorization header field is a base64url-encoded JWT with the header and body shown in <a href="#ex-jwt">Figure 2</a>.  This JWT would be valid until 2016-01-21T01:53:25Z <a href="#RFC3339">[RFC3339]</a>.</p>
+<p id="rfc.section.2.3.p.2">Note that the header fields shown in <a href="#ex-push">Figure 1</a> don&#8217;t include line wrapping.  Extra whitespace is added to meet formatting constraints.</p>
+<p id="rfc.section.2.3.p.3">The value of the Authorization header field is a base64url-encoded JWT with the header and body shown in <a href="#ex-jwt">Figure 2</a>.  This JWT would be valid until 2016-01-21T01:53:25Z <a href="#RFC3339">[RFC3339]</a>.</p>
 <div id="rfc.figure.2"/>
 <div id="ex-jwt"/>
 <pre>
@@ -525,7 +529,7 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
   <dd style="margin-left: 8"><a href="#key">Section 4</a> of this document</dd>
 </dl>
 <h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#ack" id="ack">Acknowledgements</a></h1>
-<p id="rfc.section.8.p.1">This document would have been much worse than it currently is if not for the contributions of Benjamin Bangert, Chris Karlof, Costin Manolache, and others.</p>
+<p id="rfc.section.8.p.1">This document would have been much worse than it currently is if not for the contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache, and others.</p>
 <h1 id="rfc.references"><a href="#rfc.references">9.</a> References</h1>
 <h2 id="rfc.references.1"><a href="#rfc.references.1">9.1.</a> Normative References</h2>
 <table>
@@ -540,13 +544,13 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
       <td class="reference">
         <b id="I-D.ietf-httpbis-encryption-encoding">[I-D.ietf-httpbis-encryption-encoding]</b>
       </td>
-      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-encryption-encoding-02">Encrypted Content-Encoding for HTTP</a>", Internet-Draft draft-ietf-httpbis-encryption-encoding-02, June 2016.</td>
+      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-encryption-encoding-04">Encrypted Content-Encoding for HTTP</a>", Internet-Draft draft-ietf-httpbis-encryption-encoding-04, October 2016.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</b>
       </td>
-      <td class="top"><a>Thomson, M.</a>, <a>Damaggio, E.</a> and <a>B. Raymor</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-protocol-06">Generic Event Delivery Using HTTP Push</a>", Internet-Draft draft-ietf-webpush-protocol-06, June 2016.</td>
+      <td class="top"><a>Thomson, M.</a>, <a>Damaggio, E.</a> and <a>B. Raymor</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-protocol-12">Generic Event Delivery Using HTTP Push</a>", Internet-Draft draft-ietf-webpush-protocol-12, October 2016.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -617,7 +621,7 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
       <td class="reference">
         <b id="I-D.ietf-webpush-encryption">[I-D.ietf-webpush-encryption]</b>
       </td>
-      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-encryption-03">Message Encryption for Web Push</a>", Internet-Draft draft-ietf-webpush-encryption-03, June 2016.</td>
+      <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-encryption-06">Message Encryption for Web Push</a>", Internet-Draft draft-ietf-webpush-encryption-06, October 2016.</td>
     </tr>
     <tr>
       <td class="reference">

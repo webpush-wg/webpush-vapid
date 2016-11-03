@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: January 25, 2017                                         Google
-                                                           July 24, 2016
+Expires: May 7, 2017                                              Google
+                                                        November 3, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 25, 2017.
+   This Internet-Draft will expire on May 7, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo      Expires January 25, 2017                [Page 1]
+Thomson & Beverloo         Expires May 7, 2017                  [Page 1]
 
-Internet-Draft             Self Identification                 July 2016
+Internet-Draft             Self Identification             November 2016
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -71,15 +71,16 @@ Table of Contents
      1.2.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
    2.  Application Server Self-Identification  . . . . . . . . . . .   4
      2.1.  Application Server Contact Information  . . . . . . . . .   4
-     2.2.  Example . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.2.  Additional Claims . . . . . . . . . . . . . . . . . . . .   4
+     2.3.  Example . . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  WebPush Authentication Scheme . . . . . . . . . . . . . . . .   5
    4.  Public Key Representation . . . . . . . . . . . . . . . . . .   6
    5.  Subscription Restriction  . . . . . . . . . . . . . . . . . .   6
      5.1.  Creating a Restricted Push Subscription . . . . . . . . .   7
      5.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   7
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-     7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   8
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+     7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   9
      7.2.  p256ecdsa Parameter for Crypto-Key Header Field . . . . .   9
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
@@ -104,16 +105,17 @@ Table of Contents
    [I-D.ietf-webpush-protocol] does not define a mandatory system for
    authentication of application servers.
 
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 2]
+
+Internet-Draft             Self Identification             November 2016
+
+
    An unfortunate consequence of this design is that a push service is
    exposed to a greater risk of denial of service attack.  While
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 2]
-
-Internet-Draft             Self Identification                 July 2016
-
-
    requests from application servers can be indirectly attributed to
    user agents, this is not always efficient or even sufficient.
    Providing more information about the application server directly to a
@@ -159,16 +161,18 @@ Internet-Draft             Self Identification                 July 2016
    document.  It's not shouting, when they are capitalized, they have
    the special meaning described in [RFC2119].
 
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 3]
+
+Internet-Draft             Self Identification             November 2016
+
+
    The terms "push message", "push service", "push subscription",
    "application server", and "user agent" are used as defined in
    [I-D.ietf-webpush-protocol].
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 3]
-
-Internet-Draft             Self Identification                 July 2016
-
 
 2.  Application Server Self-Identification
 
@@ -209,7 +213,23 @@ Internet-Draft             Self Identification                 July 2016
    include a contact URI for the application server as either a
    "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
 
-2.2.  Example
+2.2.  Additional Claims
+
+   An application server MAY include additional claims using public or
+   private names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 4]
+
+Internet-Draft             Self Identification             November 2016
+
+
+   is in a header field, the size of additional claims SHOULD be kept as
+   small as possible.
+
+2.3.  Example
 
    An application server requests the delivery of a push message as
    described in [I-D.ietf-webpush-protocol].  If the application server
@@ -217,14 +237,6 @@ Internet-Draft             Self Identification                 July 2016
    with credentials that use the "WebPush" authentication scheme
    (Section 3) and a Crypto-Key header field that includes its public
    key (Section 4).
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 4]
-
-Internet-Draft             Self Identification                 July 2016
-
 
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
    Host: push.example.net
@@ -262,6 +274,14 @@ Internet-Draft             Self Identification                 July 2016
    This authentication scheme carries a signed JWT, as described in
    Section 2.
 
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 5]
+
+Internet-Draft             Self Identification             November 2016
+
+
    This authentication scheme is for origin-server authentication only.
    Therefore, this authentication scheme MUST NOT be used with the
    Proxy-Authenticate or Proxy-Authorization header fields.
@@ -271,16 +291,6 @@ Internet-Draft             Self Identification                 July 2016
    additional information from a server.  Therefore, a challenge for
    this authentication scheme MUST NOT be sent in a WWW-Authenticate
    header field.
-
-
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 5]
-
-Internet-Draft             Self Identification                 July 2016
-
 
    All unknown or unsupported parameters to "WebPush" authentication
    credentials MUST be ignored.  The "realm" parameter is ignored for
@@ -321,22 +331,18 @@ Internet-Draft             Self Identification                 July 2016
    identifier for the server.  This key can be used to restrict a push
    subscription to a specific application server.
 
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 6]
+
+Internet-Draft             Self Identification             November 2016
+
+
    Subscription restriction reduces the reliance on endpoint secrecy by
    requiring proof of possession to be demonstrated by an application
    server when requesting delivery of a push message.  This provides an
    additional level of protection against leaking of the details of the
    push subscription.
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 6]
-
-Internet-Draft             Self Identification                 July 2016
-
 
 5.1.  Creating a Restricted Push Subscription
 
@@ -379,20 +385,20 @@ Internet-Draft             Self Identification                 July 2016
    message that includes invalid credentials with a 403 (Forbidden)
    status code.  Credentials are invalid if:
 
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 7]
+
+Internet-Draft             Self Identification             November 2016
+
+
    o  either the authentication credentials or public key are not
       included in the request,
 
    o  the signature on the JWT cannot be successfully verified using the
       included public key,
-
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 7]
-
-Internet-Draft             Self Identification                 July 2016
-
 
    o  the current time is later than the time identified in the "exp"
       (Expiry) claim or more than 24 hours before the expiry time,
@@ -434,6 +440,16 @@ Internet-Draft             Self Identification                 July 2016
    which permits the push service to cache the results of signature
    validation.
 
+
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 8]
+
+Internet-Draft             Self Identification             November 2016
+
+
 7.  IANA Considerations
 
 7.1.  WebPush Authentication Scheme
@@ -441,14 +457,6 @@ Internet-Draft             Self Identification                 July 2016
    This registers the "WebPush" authentication scheme in the "Hypertext
    Transfer Protocol (HTTP) Authentication Scheme Registry" established
    in [RFC7235].
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 8]
-
-Internet-Draft             Self Identification                 July 2016
-
 
    Authentication Scheme Name:  WebPush
 
@@ -473,8 +481,8 @@ Internet-Draft             Self Identification                 July 2016
 8.  Acknowledgements
 
    This document would have been much worse than it currently is if not
-   for the contributions of Benjamin Bangert, Chris Karlof, Costin
-   Manolache, and others.
+   for the contributions of Benjamin Bangert, JR Conlin, Chris Karlof,
+   Costin Manolache, and others.
 
 9.  References
 
@@ -486,25 +494,27 @@ Internet-Draft             Self Identification                 July 2016
 
    [I-D.ietf-httpbis-encryption-encoding]
               Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
-              ietf-httpbis-encryption-encoding-02 (work in progress),
-              June 2016.
+              ietf-httpbis-encryption-encoding-04 (work in progress),
+              October 2016.
+
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                  [Page 9]
+
+Internet-Draft             Self Identification             November 2016
+
 
    [I-D.ietf-webpush-protocol]
               Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
-              Delivery Using HTTP Push", draft-ietf-webpush-protocol-06
-              (work in progress), June 2016.
+              Delivery Using HTTP Push", draft-ietf-webpush-protocol-12
+              (work in progress), October 2016.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
-
-
-
-Thomson & Beverloo      Expires January 25, 2017                [Page 9]
-
-Internet-Draft             Self Identification                 July 2016
-
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
               DOI 10.17487/RFC2818, May 2000,
@@ -543,24 +553,23 @@ Internet-Draft             Self Identification                 July 2016
    [API]      van Ouwerkerk, M. and M. Thomson, "Web Push API", 2015,
               <https://w3c.github.io/push-api/>.
 
+
+
+
+
+Thomson & Beverloo         Expires May 7, 2017                 [Page 10]
+
+Internet-Draft             Self Identification             November 2016
+
+
    [I-D.ietf-webpush-encryption]
               Thomson, M., "Message Encryption for Web Push", draft-
-              ietf-webpush-encryption-03 (work in progress), June 2016.
+              ietf-webpush-encryption-06 (work in progress), October
+              2016.
 
    [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
               <http://www.rfc-editor.org/info/rfc3339>.
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017               [Page 10]
-
-Internet-Draft             Self Identification                 July 2016
-
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
@@ -604,13 +613,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires January 25, 2017               [Page 11]
+Thomson & Beverloo         Expires May 7, 2017                 [Page 11]
