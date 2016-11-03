@@ -23,16 +23,6 @@ author:
 
 
 normative:
-  RFC2119:
-  RFC2818:
-  RFC4648:
-  RFC6068:
-  RFC6454:
-  RFC7515:
-  RFC7518:
-  RFC7519:
-  I-D.ietf-webpush-protocol:
-  I-D.ietf-httpbis-encryption-encoding:
   FIPS186:
     title: "Digital Signature Standard (DSS)"
     author:
@@ -47,9 +37,6 @@ normative:
     seriesinfo: ANSI X9.62
 
 informative:
-  RFC3339:
-  RFC7235:
-  RFC7517:
   API:
     title: "Web Push API"
     author:
@@ -57,7 +44,6 @@ informative:
       - ins: M. Thomson
     target: "https://w3c.github.io/push-api/"
     date: 2015
-  I-D.ietf-webpush-encryption:
 
 
 --- abstract
@@ -76,7 +62,7 @@ server.
 
 # Introduction
 
-The Web Push protocol [I-D.ietf-webpush-protocol] describes how an application
+The Web Push protocol {{!I-D.ietf-webpush-protocol}} describes how an application
 server is able to request that a push service deliver a push message to a user
 agent.
 
@@ -86,7 +72,7 @@ of a push message.  Requiring that the push service be able to authenticate
 application servers places an unwanted constraint on the interactions between
 user agents and application servers, who are the ultimate users of a push
 service.  That constraint would also degrade the privacy-preserving properties
-the protocol provides.  For these reasons, [I-D.ietf-webpush-protocol] does not
+the protocol provides.  For these reasons, {{!I-D.ietf-webpush-protocol}} does not
 define a mandatory system for authentication of application servers.
 
 An unfortunate consequence of this design is that a push service is exposed to a
@@ -130,26 +116,26 @@ application server when choosing whether to discard a push message.
 
 The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this document.
 It's not shouting, when they are capitalized, they have the special meaning
-described in [RFC2119].
+described in {{!RFC2119}}.
 
 The terms "push message", "push service", "push subscription", "application
-server", and "user agent" are used as defined in [I-D.ietf-webpush-protocol].
+server", and "user agent" are used as defined in {{!I-D.ietf-webpush-protocol}}.
 
 
 # Application Server Self-Identification {#jwt}
 
 Application servers that wish to self-identify generate and maintain a signing
 key pair.  This key pair MUST be usable with elliptic curve digital signature
-(ECDSA) over the P-256 curve [FIPS186].  Use of this key when sending push
+(ECDSA) over the P-256 curve {{FIPS186}}.  Use of this key when sending push
 messages establishes an identity for the application server that is consistent
 across multiple messages.
 
 When requesting delivery of a push message, the application includes a JSON Web
-Token (JWT) [RFC7519], signed using its signing key.  The token includes a
+Token (JWT) {{!RFC7519}}, signed using its signing key.  The token includes a
 number of claims as follows:
 
  * An "aud" (Audience) claim in the token MUST include the unicode serialization
-   of the origin (Section 6.1 of [RFC6454]) of the push resource URL.  This
+   of the origin (Section 6.1 of {{!RFC6454}}) of the push resource URL.  This
    binds the token to a specific push service.  This ensures that the token is
    reusable for all push resource URLs that share the same origin.
 
@@ -159,31 +145,32 @@ number of claims as follows:
 
 This JWT is included in an Authorization header field, using an auth-scheme of
 "WebPush".  A push service MAY reject a request with a 403 (Forbidden) status
-code [RFC7235] if the JWT signature or its claims are invalid.
+code {{!RFC7235}} if the JWT signature or its claims are invalid.
 
-The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  The signature MUST use
-ECDSA on the NIST P-256 curve [FIPS186], that is "ES256" [RFC7518].
+The JWT MUST use a JSON Web Signature (JWS) {{!RFC7515}}.  The signature MUST
+use ECDSA on the NIST P-256 curve {{FIPS186}} which is identified as "ES256"
+{{!RFC7518}}.
 
 
 ## Application Server Contact Information
 
 If the application server wishes to provide contact details it MAY include a
 "sub" (Subject) claim in the JWT.  The "sub" claim SHOULD include a contact URI
-for the application server as either a "mailto:" (email) [RFC6068] or an
-"https:" [RFC2818] URI.
+for the application server as either a "mailto:" (email) {{!RFC6068}} or an
+"https:" {{!RFC2818}} URI.
 
 
 ## Additional Claims
 
 An application server MAY include additional claims using public or private
-names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT is in a header
+names (see Sections 4.2 and 4.3 of {{!RFC7519}}).  Since the JWT is in a header
 field, the size of additional claims SHOULD be kept as small as possible.
 
 
 ## Example
 
 An application server requests the delivery of a push message as described in
-[I-D.ietf-webpush-protocol].  If the application server wishes to self-identify,
+{{!I-D.ietf-webpush-protocol}}.  If the application server wishes to self-identify,
 it includes an Authorization header field with credentials that use the
 "WebPush" authentication scheme ({{auth}}) and a Crypto-Key header field that
 includes its public key ({{key}}).
@@ -210,7 +197,7 @@ Extra whitespace is added to meet formatting constraints.
 
 The value of the Authorization header field is a base64url-encoded JWT with the
 header and body shown in {{ex-jwt}}.  This JWT would be valid until
-2016-01-21T01:53:25Z [RFC3339].
+2016-01-21T01:53:25Z {{?RFC3339}}.
 
 ~~~
 header = {"typ":"JWT","alg":"ES256"}
@@ -223,7 +210,7 @@ body = { "aud":"https://push.example.net",
 
 # WebPush Authentication Scheme {#auth}
 
-A new "WebPush" HTTP authentication scheme [RFC7235] is defined.  This
+A new "WebPush" HTTP authentication scheme {{!RFC7235}} is defined.  This
 authentication scheme carries a signed JWT, as described in {{jwt}}.
 
 This authentication scheme is for origin-server authentication only.  Therefore,
@@ -244,14 +231,14 @@ scheme.
 
 In order for the push service to be able to validate the JWT, it needs to learn
 the public key of the application server.  A `p256ecdsa` parameter is defined
-for the Crypto-Key header field [I-D.ietf-httpbis-encryption-encoding] to carry
-this information.
+for the Crypto-Key header field {{!I-D.ietf-httpbis-encryption-encoding}} to
+carry this information.
 
 The `p256ecdsa` parameter includes an elliptic curve digital signature algorithm
-(ECDSA) public key [FIPS186] in uncompressed form [X9.62] that is encoded using
-the URL- and filename-safe variant of base-64 [RFC4648] with padding removed.
+(ECDSA) public key {{FIPS186}} in uncompressed form {{X9.62}} that is encoded using
+the URL- and filename-safe variant of base-64 {{!RFC4648}} with padding removed.
 
-Note that with push message encryption [I-D.ietf-webpush-encryption], this
+Note that with push message encryption {{?I-D.ietf-webpush-encryption}}, this
 results in two values in the Crypto-Key header field, one with the a `dh` key
 and another with a `p256ecdsa` key.
 
@@ -261,13 +248,6 @@ exchange (i.e., `dh`) and signing (i.e., `p256ecdsa`).  Though a push service is
 not obligated to check either parameter for every push message, a push service
 SHOULD reject push messages that have identical values for these parameters with
 a 400 (Bad Request) status code.
-
-Editor's Note:
-
-: JWK [RFC7517] seems like the obvious choice here.  However, JWK doesn't define
-  a compact representation for public keys, which complicates the representation
-  of JWK in a header field.
-
 
 
 # Subscription Restriction
@@ -302,7 +282,7 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
 {: #ex-restrict title="Example Subscribe Request"}
 
 
-An application might use the Web Push API [API] to include this information.
+An application might use the Web Push API {{API}} to include this information.
 For example, the API might permit an application to provide a public key as part
 of a new field on the `PushSubscriptionOptions` dictionary.
 
@@ -377,7 +357,7 @@ to cache the results of signature validation.
 ## WebPush Authentication Scheme
 
 This registers the "WebPush" authentication scheme in the "Hypertext Transfer
-Protocol (HTTP) Authentication Scheme Registry" established in [RFC7235].
+Protocol (HTTP) Authentication Scheme Registry" established in {{!RFC7235}}.
 
 Authentication Scheme Name:
 
@@ -396,7 +376,7 @@ Notes:
 
 This registers a `p256ecdsa` parameter for the Crypto-Key header field in the
 "Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters" established in
-[I-D.ietf-httpbis-encryption-encoding].
+{{!I-D.ietf-httpbis-encryption-encoding}}.
 
 Parameter Name:
 
