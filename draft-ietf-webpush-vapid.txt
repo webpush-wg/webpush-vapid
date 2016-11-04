@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: May 7, 2017                                              Google
-                                                        November 3, 2016
+Expires: May 8, 2017                                              Google
+                                                        November 4, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 7, 2017.
+   This Internet-Draft will expire on May 8, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 1]
+Thomson & Beverloo         Expires May 8, 2017                  [Page 1]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -79,13 +79,13 @@ Table of Contents
      5.1.  Creating a Restricted Push Subscription . . . . . . . . .   7
      5.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   7
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
      7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   9
      7.2.  p256ecdsa Parameter for Crypto-Key Header Field . . . . .   9
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  11
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 2]
+Thomson & Beverloo         Expires May 8, 2017                  [Page 2]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -165,7 +165,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 3]
+Thomson & Beverloo         Expires May 8, 2017                  [Page 3]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -203,8 +203,8 @@ Internet-Draft             Self Identification             November 2016
    are invalid.
 
    The JWT MUST use a JSON Web Signature (JWS) [RFC7515].  The signature
-   MUST use ECDSA on the NIST P-256 curve [FIPS186], that is "ES256"
-   [RFC7518].
+   MUST use ECDSA on the NIST P-256 curve [FIPS186] which is identified
+   as "ES256" [RFC7518].
 
 2.1.  Application Server Contact Information
 
@@ -221,7 +221,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 4]
+Thomson & Beverloo         Expires May 8, 2017                  [Page 4]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -277,7 +277,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 5]
+Thomson & Beverloo         Expires May 8, 2017                  [Page 5]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -320,27 +320,24 @@ Internet-Draft             Self Identification             November 2016
    messages that have identical values for these parameters with a 400
    (Bad Request) status code.
 
-   Editor's Note:  JWK [RFC7517] seems like the obvious choice here.
-      However, JWK doesn't define a compact representation for public
-      keys, which complicates the representation of JWK in a header
-      field.
-
 5.  Subscription Restriction
 
    The public key of the application server serves as a stable
    identifier for the server.  This key can be used to restrict a push
    subscription to a specific application server.
 
+   Subscription restriction reduces the reliance on endpoint secrecy by
+   requiring proof of possession to be demonstrated by an application
+   server when requesting delivery of a push message.  This provides an
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 6]
+
+
+Thomson & Beverloo         Expires May 8, 2017                  [Page 6]
 
 Internet-Draft             Self Identification             November 2016
 
 
-   Subscription restriction reduces the reliance on endpoint secrecy by
-   requiring proof of possession to be demonstrated by an application
-   server when requesting delivery of a push message.  This provides an
    additional level of protection against leaking of the details of the
    push subscription.
 
@@ -385,17 +382,17 @@ Internet-Draft             Self Identification             November 2016
    message that includes invalid credentials with a 403 (Forbidden)
    status code.  Credentials are invalid if:
 
+   o  either the authentication credentials or public key are not
+      included in the request,
 
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 7]
+
+Thomson & Beverloo         Expires May 8, 2017                  [Page 7]
 
 Internet-Draft             Self Identification             November 2016
 
-
-   o  either the authentication credentials or public key are not
-      included in the request,
 
    o  the signature on the JWT cannot be successfully verified using the
       included public key,
@@ -440,17 +437,18 @@ Internet-Draft             Self Identification             November 2016
    which permits the push service to cache the results of signature
    validation.
 
+7.  IANA Considerations
 
 
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 8]
+
+
+Thomson & Beverloo         Expires May 8, 2017                  [Page 8]
 
 Internet-Draft             Self Identification             November 2016
 
-
-7.  IANA Considerations
 
 7.1.  WebPush Authentication Scheme
 
@@ -501,7 +499,9 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                  [Page 9]
+
+
+Thomson & Beverloo         Expires May 8, 2017                  [Page 9]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -532,6 +532,11 @@ Internet-Draft             Self Identification             November 2016
               DOI 10.17487/RFC6454, December 2011,
               <http://www.rfc-editor.org/info/rfc6454>.
 
+   [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Authentication", RFC 7235,
+              DOI 10.17487/RFC7235, June 2014,
+              <http://www.rfc-editor.org/info/rfc7235>.
+
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <http://www.rfc-editor.org/info/rfc7515>.
@@ -548,19 +553,19 @@ Internet-Draft             Self Identification             November 2016
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
 
+
+
+
+
+Thomson & Beverloo         Expires May 8, 2017                 [Page 10]
+
+Internet-Draft             Self Identification             November 2016
+
+
 9.2.  Informative References
 
    [API]      van Ouwerkerk, M. and M. Thomson, "Web Push API", 2015,
               <https://w3c.github.io/push-api/>.
-
-
-
-
-
-Thomson & Beverloo         Expires May 7, 2017                 [Page 10]
-
-Internet-Draft             Self Identification             November 2016
-
 
    [I-D.ietf-webpush-encryption]
               Thomson, M., "Message Encryption for Web Push", draft-
@@ -570,15 +575,6 @@ Internet-Draft             Self Identification             November 2016
    [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
               <http://www.rfc-editor.org/info/rfc3339>.
-
-   [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
-              Protocol (HTTP/1.1): Authentication", RFC 7235,
-              DOI 10.17487/RFC7235, June 2014,
-              <http://www.rfc-editor.org/info/rfc7235>.
-
-   [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
-              DOI 10.17487/RFC7517, May 2015,
-              <http://www.rfc-editor.org/info/rfc7517>.
 
 Authors' Addresses
 
@@ -613,4 +609,8 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo         Expires May 7, 2017                 [Page 11]
+
+
+
+
+Thomson & Beverloo         Expires May 8, 2017                 [Page 11]

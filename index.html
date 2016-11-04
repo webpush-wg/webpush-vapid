@@ -296,7 +296,7 @@ li, p {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-3" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-4" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
 
@@ -320,12 +320,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 7, 2017</td>
+  <td class="left">Expires: May 8, 2017</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 3, 2016</td>
+  <td class="right">November 4, 2016</td>
 </tr>
 
     	
@@ -345,7 +345,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 7, 2017.</p>
+<p>This Internet-Draft will expire on May 8, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -406,7 +406,7 @@ li, p {
   <li>An &#8220;exp&#8221; (Expiry) claim MUST be included with the time after which the token expires.  This limits the time that a token over which a token is valid.  An &#8220;exp&#8221; claim MUST NOT be more than 24 hours from the time of the request.</li>
 </ul>
 <p id="rfc.section.2.p.4">This JWT is included in an Authorization header field, using an auth-scheme of &#8220;WebPush&#8221;.  A push service MAY reject a request with a 403 (Forbidden) status code <a href="#RFC7235">[RFC7235]</a> if the JWT signature or its claims are invalid.</p>
-<p id="rfc.section.2.p.5">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515">[RFC7515]</a>.  The signature MUST use ECDSA on the NIST P-256 curve <a href="#FIPS186">[FIPS186]</a>, that is &#8220;ES256&#8221; <a href="#RFC7518">[RFC7518]</a>.</p>
+<p id="rfc.section.2.p.5">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515">[RFC7515]</a>.  The signature MUST use ECDSA on the NIST P-256 curve <a href="#FIPS186">[FIPS186]</a> which is identified as &#8220;ES256&#8221; <a href="#RFC7518">[RFC7518]</a>.</p>
 <h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#application-server-contact-information" id="application-server-contact-information">Application Server Contact Information</a></h2>
 <p id="rfc.section.2.1.p.1">If the application server wishes to provide contact details it MAY include a &#8220;sub&#8221; (Subject) claim in the JWT.  The &#8220;sub&#8221; claim SHOULD include a contact URI for the application server as either a &#8220;mailto:&#8221; (email) <a href="#RFC6068">[RFC6068]</a> or an &#8220;https:&#8221; <a href="#RFC2818">[RFC2818]</a> URI.</p>
 <h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#additional-claims" id="additional-claims">Additional Claims</a></h2>
@@ -452,12 +452,6 @@ body = { "aud":"https://push.example.net",
 <p id="rfc.section.4.p.2">The <samp>p256ecdsa</samp> parameter includes an elliptic curve digital signature algorithm (ECDSA) public key <a href="#FIPS186">[FIPS186]</a> in uncompressed form <a href="#X9.62">[X9.62]</a> that is encoded using the URL- and filename-safe variant of base-64 <a href="#RFC4648">[RFC4648]</a> with padding removed.</p>
 <p id="rfc.section.4.p.3">Note that with push message encryption <a href="#I-D.ietf-webpush-encryption">[I-D.ietf-webpush-encryption]</a>, this results in two values in the Crypto-Key header field, one with the a <samp>dh</samp> key and another with a <samp>p256ecdsa</samp> key.</p>
 <p id="rfc.section.4.p.4">Some implementations permit the same P-256 key to be used for signing and key exchange.  An application server MUST select a different private key for the key exchange (i.e., <samp>dh</samp>) and signing (i.e., <samp>p256ecdsa</samp>).  Though a push service is not obligated to check either parameter for every push message, a push service SHOULD reject push messages that have identical values for these parameters with a 400 (Bad Request) status code.</p>
-<p/>
-
-<dl>
-  <dt>Editor&#8217;s Note:</dt>
-  <dd style="margin-left: 8">JWK <a href="#RFC7517">[RFC7517]</a> seems like the obvious choice here.  However, JWK doesn&#8217;t define a compact representation for public keys, which complicates the representation of JWK in a header field.</dd>
-</dl>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#subscription-restriction" id="subscription-restriction">Subscription Restriction</a></h1>
 <p id="rfc.section.5.p.1">The public key of the application server serves as a stable identifier for the server.  This key can be used to restrict a push subscription to a specific application server.</p>
 <p id="rfc.section.5.p.2">Subscription restriction reduces the reliance on endpoint secrecy by requiring proof of possession to be demonstrated by an application server when requesting delivery of a push message.  This provides an additional level of protection against leaking of the details of the push subscription.</p>
@@ -584,6 +578,12 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC7235">[RFC7235]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>", RFC 7235, DOI 10.17487/RFC7235, June 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC7515">[RFC7515]</b>
       </td>
       <td class="top"><a>Jones, M.</a>, <a>Bradley, J.</a> and <a>N. Sakimura</a>, "<a href="http://tools.ietf.org/html/rfc7515">JSON Web Signature (JWS)</a>", RFC 7515, DOI 10.17487/RFC7515, May 2015.</td>
@@ -628,18 +628,6 @@ Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
         <b id="RFC3339">[RFC3339]</b>
       </td>
       <td class="top"><a>Klyne, G.</a> and <a>C. Newman</a>, "<a href="http://tools.ietf.org/html/rfc3339">Date and Time on the Internet: Timestamps</a>", RFC 3339, DOI 10.17487/RFC3339, July 2002.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="RFC7235">[RFC7235]</b>
-      </td>
-      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>", RFC 7235, DOI 10.17487/RFC7235, June 2014.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="RFC7517">[RFC7517]</b>
-      </td>
-      <td class="top"><a>Jones, M.</a>, "<a href="http://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a>", RFC 7517, DOI 10.17487/RFC7517, May 2015.</td>
     </tr>
   </tbody>
 </table>
