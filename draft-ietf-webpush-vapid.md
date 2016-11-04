@@ -172,46 +172,53 @@ field, the size of additional claims SHOULD be kept as small as possible.
 An application server requests the delivery of a push message as described in
 {{!I-D.ietf-webpush-protocol}}.  If the application server wishes to self-identify,
 it includes an Authorization header field with credentials that use the
-"WebPush" authentication scheme ({{auth}}) and a Crypto-Key header field that
-includes its public key ({{key}}).
+"WebPush" authentication scheme ({{auth}}).
 
 ~~~
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
 Host: push.example.net
-Content-Type: text/plain;charset=utf8
-Content-Length: 36
+TTL: 30
+Content-Length: 136
+Content-Encoding: aes128gcm
 Authorization: WebPush
-    eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3B
-    1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1haWx
-    0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_HLGk
-    MlMuCGSK2rpiUfnK9ojFwDXb1JrErtmysazNjjvW2L9OkSSHzvoD1oA
-Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
-                      F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
+   t=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3
+     B1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1ha
+     Wx0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_H
+     LGkMlMuCGSK2rpiUfnK9ojFwDXb1JrErtmysazNjjvW2L9OkSSHzvoD1oA,
+   k=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxHF6YK5h4SDYic-dR
+     uU_RCPCfA5aq9ojSwk5Y2EmClBPs
 
-iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
+{ encrypted push message }
 ~~~
 {: #ex-push title="Requesting Push Message Delivery with JWT"}
 
-Note that the header fields shown in {{ex-push}} don't include line wrapping.
-Extra whitespace is added to meet formatting constraints.
+Note that the example header fields in this document include extra line wrapping
+to meet formatting constraints.
 
-The value of the Authorization header field is a base64url-encoded JWT with the
-header and body shown in {{ex-jwt}}.  This JWT would be valid until
-2016-01-21T01:53:25Z {{?RFC3339}}.
+The `t` parameter of the Authorization header field contains a JWT; the `k`
+parameter includes the base64url-encoded key that signed that token.  The JWT
+input values and the JWK {{?RFC7517}} corresponding to the signing key are shown
+in {{ex-decoded}} with additional whitespace added for readability purposes.
+This JWT would be valid until 2016-01-21T01:53:25Z {{?RFC3339}}.
 
 ~~~
-header = {"typ":"JWT","alg":"ES256"}
-body = { "aud":"https://push.example.net",
-         "exp":1453341205,
-         "sub":"mailto:push@example.com" }
+JWT header = { "typ": "JWT", "alg": "ES256" }
+JWT body = { "aud": "https://push.example.net",
+             "exp": 1453341205,
+             "sub": "mailto:push@example.com" }
+JWK = { "crv":"P-256",
+        "kty":"EC",
+        "x":"DUfHPKLVFQzVvnCPGyfucbECzPDa7rWbXriLcysAjEc",
+        "y":"F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 ~~~
-{: #ex-jwt title="Example JWT Header and Body"}
+{: #ex-decoded title="Decoded Example Values"}
 
 
 # WebPush Authentication Scheme {#auth}
 
 A new "WebPush" HTTP authentication scheme {{!RFC7235}} is defined.  This
-authentication scheme carries a signed JWT, as described in {{jwt}}.
+authentication scheme carries a signed JWT, as described in {{jwt}}, plus the
+key that signed that authentication scheme.
 
 This authentication scheme is for origin-server authentication only.  Therefore,
 this authentication scheme MUST NOT be used with the Proxy-Authenticate or
@@ -222,39 +229,48 @@ generate the Authorization header field without any additional information from
 a server.  Therefore, a challenge for this authentication scheme MUST NOT be
 sent in a WWW-Authenticate header field.
 
-All unknown or unsupported parameters to "WebPush" authentication credentials
-MUST be ignored.  The `realm` parameter is ignored for this authentication
-scheme.
+Two parameters are defined for this authentication scheme: `t` and `k`.  All
+unknown or unsupported parameters to "WebPush" authentication credentials MUST
+be ignored.  The `realm` parameter is ignored for this authentication scheme.
+
 
 This authentication scheme is intended for use by an application server when
 using the Web Push protocol {{?I-D.ietf-webpush-protocol}}, but it could be
 used in other contexts if applicable.
 
 
-# Public Key Representation {#key}
+## Token Parameter (t) {#token}
+
+The `t` parameter of the "WebPush" authentication scheme carries a JWT as
+described in {{jwt}}.
+
+
+## Public Key Parameter (k) {#key}
 
 In order for the push service to be able to validate the JWT, it needs to learn
-the public key of the application server.  A `p256ecdsa` parameter is defined
-for the Crypto-Key header field {{!I-D.ietf-httpbis-encryption-encoding}} to
-carry this information.
+the public key of the application server.  A `k` parameter is defined for the
+"WebPush" authentication scheme to carry this information.
 
-The `p256ecdsa` parameter includes an elliptic curve digital signature algorithm
-(ECDSA) public key {{FIPS186}} in uncompressed form {{X9.62}} that is encoded using
-the URL- and filename-safe variant of base-64 {{!RFC4648}} with padding removed.
+The `k` parameter includes an elliptic curve digital signature algorithm (ECDSA)
+public key {{FIPS186}} in uncompressed form {{X9.62}} that is encoded using
+base64url encoding {{!RFC7515}}.
 
-Note that with push message encryption {{?I-D.ietf-webpush-encryption}}, this
-results in two values in the Crypto-Key header field, one with the a `dh` key
-and another with a `p256ecdsa` key.
+Note:
+
+: X9.62 encoding is used over JWK {{?RFC7517}} for two reasons.  A JWK does not
+  have a canonical form, so X9.62 encoding makes it easier for the push service
+  to handle comparison of keys from different sources.  Secondarily, the X9.62
+  encoding is also considerably smaller.
 
 Some implementations permit the same P-256 key to be used for signing and key
 exchange.  An application server MUST select a different private key for the key
-exchange (i.e., `dh`) and signing (i.e., `p256ecdsa`).  Though a push service is
-not obligated to check either parameter for every push message, a push service
-SHOULD reject push messages that have identical values for these parameters with
-a 400 (Bad Request) status code.
+exchange {{?I-D.ietf-webpush-encryption}} and signing the authentication token.
+Though a push service is not obligated to check either parameter for every push
+message, a push service SHOULD reject push messages that have identical values
+for these parameters with a 400 (Bad Request) status code.
 
 
-# Subscription Restriction
+# Subscription Restriction {#restrict}
 
 The public key of the application server serves as a stable identifier for the
 server.  This key can be used to restrict a push subscription to a specific
@@ -274,29 +290,21 @@ subscription to application servers that are able to provide proof of possession
 for the corresponding private key.
 
 This public key is then added to the request to create a push subscription as
-described in {{key}}.  The Crypto-Key header field includes exactly one public
-key.  For example:
+described in {{key}}.  The Crypto-Key header field includes exactly one ECDSA
+public key on the P-256 curve, encoded in the uncompressed form {{X9.62}} and
+base64url {{!RFC7515}}.  The example in {{ex-restrict}} shows a restriction to
+the key used in {{ex-push}}:
 
 ~~~
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
-                      KImoRwJm5xK9hLrbfIik20g31z8MpLFMCMr8y2cu6gY
+Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                      F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 ~~~
 {: #ex-restrict title="Example Subscribe Request"}
 
-
-An application might use the Web Push API {{API}} to include this information.
-For example, the API might permit an application to provide a public key as part
-of a new field on the `PushSubscriptionOptions` dictionary.
-
-
-Note:
-
-: Allowing the inclusion of multiple keys when creating a subscription would
-  allow a subscription to be associated with multiple application servers or
-  application server instances.  This might be more flexible, but it also would
-  require more state to be maintained by the push service for each subscription.
+An application might use the Web Push API {{API}} to provide the user agent with
+a public key.
 
 
 ## Using Restricted Subscriptions
@@ -310,8 +318,7 @@ with a 401 (Unauthorized) status code.  A push service MAY reject a message
 that includes invalid credentials with a 403 (Forbidden) status code.
 Credentials are invalid if:
 
-* either the authentication credentials or public key are not included in the
-  request,
+* either the authentication token or public key are not included in the request,
 
 * the signature on the JWT cannot be successfully verified using the included
   public key,
@@ -323,16 +330,7 @@ Credentials are invalid if:
   or
 
 * the public key used to sign the JWT doesn't match the one that was included in
-  the creation of the push message.
-
-Note:
-
-: In theory, since the push service was given a public key, the push message
-  request could omit the public key.  On balance, requiring the key keeps things
-  simple and it allows push services to compress the public key (by hashing it,
-  for example).  In any case, the relatively minor space savings aren't
-  particularly important on the connection between the application server and
-  push service.
+  the creation of the push subscription.
 
 A push service MUST NOT forward the JWT or public key to the user agent when
 delivering the push message.
@@ -352,7 +350,7 @@ input to any security-critical decision-making process.
 Validation of a signature on the JWT requires a non-trivial amount of
 computation.  For something that might be used to identify legitimate requests
 under denial of service attack conditions, this is not ideal.  Application
-servers are therefore encouraged to reuse a JWT, which permits the push service
+servers are therefore encouraged to reuse tokens, which permits the push service
 to cache the results of signature validation.
 
 
@@ -376,6 +374,36 @@ Notes:
 : This scheme is origin-server only and does not define a challenge.
 
 
+## WebPush Authentication Scheme Parameters
+
+This creates a "WebPush Authentication Scheme Parameters" registry for
+parameters to the "WebPush" authentication scheme.  This registry is under the
+"WebPush Parameters" grouping.  The registry operates on the "Specification
+Required" policy {{!RFC5226}}.
+
+Registrations MUST include the following information:
+
+Parameter Name:
+
+: A name for the parameter, which conforms to the `token` grammar {{!RFC7230}}
+
+Purpose (optional):
+
+: A brief identifying the purpose of the parameter.
+
+Specification:
+
+: A link to the specification that defines the format and semantics of the
+  parameter.
+
+This registry initially contains the following entries:
+
+| Parameter Name | Purpose | Specification |
+|:-|:-|:-|
+| t | JWT authentication token | \[\[RFC-to-be]], {{token}} |
+| k | ECDSA signing key | \[\[RFC-to-be]], {{key}} |
+
+
 ## p256ecdsa Parameter for Crypto-Key Header Field
 
 This registers a `p256ecdsa` parameter for the Crypto-Key header field in the
@@ -392,7 +420,7 @@ Purpose:
 
 Reference:
 
-: {{key}} of this document
+: {{restrict}} of this document
 
 
 # Acknowledgements {#ack}
