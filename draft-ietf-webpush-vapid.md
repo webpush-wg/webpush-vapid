@@ -226,6 +226,10 @@ All unknown or unsupported parameters to "WebPush" authentication credentials
 MUST be ignored.  The `realm` parameter is ignored for this authentication
 scheme.
 
+This authentication scheme is intended for use by an application server when
+using the webpush protocol {{?I-D.ietf-webpush-protocol}}, but it could be
+used in other contexts if applicable.
+
 
 # Public Key Representation {#key}
 
