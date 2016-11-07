@@ -297,7 +297,7 @@ Internet-Draft             Self Identification             November 2016
    this authentication scheme.
 
    This authentication scheme is intended for use by an application
-   server when using the webpush protocol [I-D.ietf-webpush-protocol],
+   server when using the Web Push protocol [I-D.ietf-webpush-protocol],
    but it could be used in other contexts if applicable.
 
 4.  Public Key Representation
