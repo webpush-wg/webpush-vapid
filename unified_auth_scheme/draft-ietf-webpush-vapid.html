@@ -275,7 +275,7 @@ li, p {
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Application Server Contact Information"/>
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 Additional Claims"/>
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 Example"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 WebPush Authentication Scheme"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Vapid Authentication Scheme"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Token Parameter (t)"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Public Key Parameter (k)"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Subscription Restriction"/>
@@ -283,9 +283,9 @@ li, p {
 <link href="#rfc.section.4.2" rel="Chapter" title="4.2 Using Restricted Subscriptions"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations"/>
-<link href="#rfc.section.6.1" rel="Chapter" title="6.1 WebPush Authentication Scheme"/>
-<link href="#rfc.section.6.2" rel="Chapter" title="6.2 WebPush Authentication Scheme Parameters"/>
-<link href="#rfc.section.6.3" rel="Chapter" title="6.3 p256ecdsa Parameter for Crypto-Key Header Field"/>
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Vapid Authentication Scheme"/>
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Vapid Authentication Scheme Parameters"/>
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 &#x201C;vapid&#x201D; Parameter for Crypto-Key Header Field"/>
 <link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgements"/>
 <link href="#rfc.references" rel="Chapter" title="8 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
@@ -298,7 +298,7 @@ li, p {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-4" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-7" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
 
@@ -322,12 +322,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 8, 2017</td>
+  <td class="left">Expires: May 11, 2017</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 4, 2016</td>
+  <td class="right">November 7, 2016</td>
 </tr>
 
     	
@@ -347,7 +347,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 8, 2017.</p>
+<p>This Internet-Draft will expire on May 11, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -366,7 +366,7 @@ li, p {
 <ul><li>2.1.   <a href="#rfc.section.2.1">Application Server Contact Information</a></li>
 <li>2.2.   <a href="#rfc.section.2.2">Additional Claims</a></li>
 <li>2.3.   <a href="#rfc.section.2.3">Example</a></li>
-</ul><li>3.   <a href="#rfc.section.3">WebPush Authentication Scheme</a></li>
+</ul><li>3.   <a href="#rfc.section.3">Vapid Authentication Scheme</a></li>
 <ul><li>3.1.   <a href="#rfc.section.3.1">Token Parameter (t)</a></li>
 <li>3.2.   <a href="#rfc.section.3.2">Public Key Parameter (k)</a></li>
 </ul><li>4.   <a href="#rfc.section.4">Subscription Restriction</a></li>
@@ -374,9 +374,9 @@ li, p {
 <li>4.2.   <a href="#rfc.section.4.2">Using Restricted Subscriptions</a></li>
 </ul><li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
 <li>6.   <a href="#rfc.section.6">IANA Considerations</a></li>
-<ul><li>6.1.   <a href="#rfc.section.6.1">WebPush Authentication Scheme</a></li>
-<li>6.2.   <a href="#rfc.section.6.2">WebPush Authentication Scheme Parameters</a></li>
-<li>6.3.   <a href="#rfc.section.6.3">p256ecdsa Parameter for Crypto-Key Header Field</a></li>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Vapid Authentication Scheme</a></li>
+<li>6.2.   <a href="#rfc.section.6.2">Vapid Authentication Scheme Parameters</a></li>
+<li>6.3.   <a href="#rfc.section.6.3">&#8220;vapid&#8221; Parameter for Crypto-Key Header Field</a></li>
 </ul><li>7.   <a href="#rfc.section.7">Acknowledgements</a></li>
 <li>8.   <a href="#rfc.references">References</a></li>
 <ul><li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
@@ -409,14 +409,14 @@ li, p {
   <li>An &#8220;aud&#8221; (Audience) claim in the token MUST include the unicode serialization of the origin (Section 6.1 of <a href="#RFC6454">[RFC6454]</a>) of the push resource URL.  This binds the token to a specific push service.  This ensures that the token is reusable for all push resource URLs that share the same origin.</li>
   <li>An &#8220;exp&#8221; (Expiry) claim MUST be included with the time after which the token expires.  This limits the time that a token over which a token is valid.  An &#8220;exp&#8221; claim MUST NOT be more than 24 hours from the time of the request.</li>
 </ul>
-<p id="rfc.section.2.p.4">This JWT is included in an Authorization header field, using an auth-scheme of &#8220;WebPush&#8221;.  A push service MAY reject a request with a 403 (Forbidden) status code <a href="#RFC7235">[RFC7235]</a> if the JWT signature or its claims are invalid.</p>
+<p id="rfc.section.2.p.4">This JWT is included in an Authorization header field, using an auth-scheme of &#8220;vapid&#8221;.  A push service MAY reject a request with a 403 (Forbidden) status code <a href="#RFC7235">[RFC7235]</a> if the JWT signature or its claims are invalid.</p>
 <p id="rfc.section.2.p.5">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515">[RFC7515]</a>.  The signature MUST use ECDSA on the NIST P-256 curve <a href="#FIPS186">[FIPS186]</a> which is identified as &#8220;ES256&#8221; <a href="#RFC7518">[RFC7518]</a>.</p>
 <h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#application-server-contact-information" id="application-server-contact-information">Application Server Contact Information</a></h2>
 <p id="rfc.section.2.1.p.1">If the application server wishes to provide contact details it MAY include a &#8220;sub&#8221; (Subject) claim in the JWT.  The &#8220;sub&#8221; claim SHOULD include a contact URI for the application server as either a &#8220;mailto:&#8221; (email) <a href="#RFC6068">[RFC6068]</a> or an &#8220;https:&#8221; <a href="#RFC2818">[RFC2818]</a> URI.</p>
 <h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#additional-claims" id="additional-claims">Additional Claims</a></h2>
 <p id="rfc.section.2.2.p.1">An application server MAY include additional claims using public or private names (see Sections 4.2 and 4.3 of <a href="#RFC7519">[RFC7519]</a>).  Since the JWT is in a header field, the size of additional claims SHOULD be kept as small as possible.</p>
 <h2 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#example" id="example">Example</a></h2>
-<p id="rfc.section.2.3.p.1">An application server requests the delivery of a push message as described in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a>.  If the application server wishes to self-identify, it includes an Authorization header field with credentials that use the &#8220;WebPush&#8221; authentication scheme (<a href="#auth">Section 3</a>).</p>
+<p id="rfc.section.2.3.p.1">An application server requests the delivery of a push message as described in <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a>.  If the application server wishes to self-identify, it includes an Authorization header field with credentials that use the &#8220;vapid&#8221; authentication scheme (<a href="#auth">Section 3</a>).</p>
 <div id="rfc.figure.1"/>
 <div id="ex-push"/>
 <pre>
@@ -425,7 +425,7 @@ Host: push.example.net
 TTL: 30
 Content-Length: 136
 Content-Encoding: aes128gcm
-Authorization: WebPush
+Authorization: vapid
    t=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3
      B1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1ha
      Wx0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_H
@@ -451,15 +451,15 @@ JWK = { "crv":"P-256",
         "y":"F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 </pre>
 <p class="figure">Figure 2: Decoded Example Values</p>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#auth" id="auth">WebPush Authentication Scheme</a></h1>
-<p id="rfc.section.3.p.1">A new &#8220;WebPush&#8221; HTTP authentication scheme <a href="#RFC7235">[RFC7235]</a> is defined.  This authentication scheme carries a signed JWT, as described in <a href="#jwt">Section 2</a>, plus the key that signed that authentication scheme.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#auth" id="auth">Vapid Authentication Scheme</a></h1>
+<p id="rfc.section.3.p.1">A new &#8220;vapid&#8221; HTTP authentication scheme <a href="#RFC7235">[RFC7235]</a> is defined.  This authentication scheme carries a signed JWT, as described in <a href="#jwt">Section 2</a>, plus the key that signed that authentication scheme.</p>
 <p id="rfc.section.3.p.2">This authentication scheme is for origin-server authentication only.  Therefore, this authentication scheme MUST NOT be used with the Proxy-Authenticate or Proxy-Authorization header fields.</p>
 <p id="rfc.section.3.p.3">This authentication scheme does not require a challenge.  Clients are able to generate the Authorization header field without any additional information from a server.  Therefore, a challenge for this authentication scheme MUST NOT be sent in a WWW-Authenticate header field.</p>
-<p id="rfc.section.3.p.4">Two parameters are defined for this authentication scheme: <samp>t</samp> and <samp>k</samp>.  All unknown or unsupported parameters to &#8220;WebPush&#8221; authentication credentials MUST be ignored.  The <samp>realm</samp> parameter is ignored for this authentication scheme.</p>
+<p id="rfc.section.3.p.4">Two parameters are defined for this authentication scheme: <samp>t</samp> and <samp>k</samp>.  All unknown or unsupported parameters to &#8220;vapid&#8221; authentication credentials MUST be ignored.  The <samp>realm</samp> parameter is ignored for this authentication scheme.</p>
 <h2 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#token" id="token">Token Parameter (t)</a></h2>
-<p id="rfc.section.3.1.p.1">The <samp>t</samp> parameter of the &#8220;WebPush&#8221; authentication scheme carries a JWT as described in <a href="#jwt">Section 2</a>.</p>
+<p id="rfc.section.3.1.p.1">The <samp>t</samp> parameter of the &#8220;vapid&#8221; authentication scheme carries a JWT as described in <a href="#jwt">Section 2</a>.</p>
 <h2 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#key" id="key">Public Key Parameter (k)</a></h2>
-<p id="rfc.section.3.2.p.1">In order for the push service to be able to validate the JWT, it needs to learn the public key of the application server.  A <samp>k</samp> parameter is defined for the &#8220;WebPush&#8221; authentication scheme to carry this information.</p>
+<p id="rfc.section.3.2.p.1">In order for the push service to be able to validate the JWT, it needs to learn the public key of the application server.  A <samp>k</samp> parameter is defined for the &#8220;vapid&#8221; authentication scheme to carry this information.</p>
 <p id="rfc.section.3.2.p.2">The <samp>k</samp> parameter includes an elliptic curve digital signature algorithm (ECDSA) public key <a href="#FIPS186">[FIPS186]</a> in uncompressed form <a href="#X9.62">[X9.62]</a> that is encoded using base64url encoding <a href="#RFC7515">[RFC7515]</a>.</p>
 <p/>
 
@@ -479,8 +479,8 @@ JWK = { "crv":"P-256",
 <pre>
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
-                      F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
+Crypto-Key: vapid=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                  F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 </pre>
 <p class="figure">Figure 3: Example Subscribe Request</p>
 <p id="rfc.section.4.1.p.3">An application might use the Web Push API <a href="#API">[API]</a> to provide the user agent with a public key.</p>
@@ -502,20 +502,20 @@ Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
 <p id="rfc.section.5.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
 <p id="rfc.section.5.p.3">Validation of a signature on the JWT requires a non-trivial amount of computation.  For something that might be used to identify legitimate requests under denial of service attack conditions, this is not ideal.  Application servers are therefore encouraged to reuse tokens, which permits the push service to cache the results of signature validation.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
-<h2 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#webpush-authentication-scheme" id="webpush-authentication-scheme">WebPush Authentication Scheme</a></h2>
-<p id="rfc.section.6.1.p.1">This registers the &#8220;WebPush&#8221; authentication scheme in the &#8220;Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry&#8221; established in <a href="#RFC7235">[RFC7235]</a>.</p>
+<h2 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#vapid-authentication-scheme" id="vapid-authentication-scheme">Vapid Authentication Scheme</a></h2>
+<p id="rfc.section.6.1.p.1">This registers the &#8220;vapid&#8221; authentication scheme in the &#8220;Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry&#8221; established in <a href="#RFC7235">[RFC7235]</a>.</p>
 <p/>
 
 <dl>
   <dt>Authentication Scheme Name:</dt>
-  <dd style="margin-left: 8">WebPush</dd>
+  <dd style="margin-left: 8">vapid</dd>
   <dt>Pointer to specification text:</dt>
   <dd style="margin-left: 8"><a href="#auth">Section 3</a> of this document</dd>
   <dt>Notes:</dt>
   <dd style="margin-left: 8">This scheme is origin-server only and does not define a challenge.</dd>
 </dl>
-<h2 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#webpush-authentication-scheme-parameters" id="webpush-authentication-scheme-parameters">WebPush Authentication Scheme Parameters</a></h2>
-<p id="rfc.section.6.2.p.1">This creates a &#8220;WebPush Authentication Scheme Parameters&#8221; registry for parameters to the &#8220;WebPush&#8221; authentication scheme.  This registry is under the &#8220;WebPush Parameters&#8221; grouping.  The registry operates on the &#8220;Specification Required&#8221; policy <a href="#RFC5226">[RFC5226]</a>.</p>
+<h2 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#vapid-authentication-scheme-parameters" id="vapid-authentication-scheme-parameters">Vapid Authentication Scheme Parameters</a></h2>
+<p id="rfc.section.6.2.p.1">This creates a &#8220;Vapid Authentication Scheme Parameters&#8221; registry for parameters to the &#8220;vapid&#8221; authentication scheme.  This registry is under the &#8220;WebPush Parameters&#8221; grouping.  The registry operates on the &#8220;Specification Required&#8221; policy <a href="#RFC5226">[RFC5226]</a>.</p>
 <p id="rfc.section.6.2.p.2">Registrations MUST include the following information:</p>
 <p/>
 
@@ -549,15 +549,15 @@ Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
     </tr>
   </tbody>
 </table>
-<h2 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#p256ecdsa-parameter-for-crypto-key-header-field" id="p256ecdsa-parameter-for-crypto-key-header-field">p256ecdsa Parameter for Crypto-Key Header Field</a></h2>
-<p id="rfc.section.6.3.p.1">This registers a <samp>p256ecdsa</samp> parameter for the Crypto-Key header field in the &#8220;Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters&#8221; established in <a href="#I-D.ietf-httpbis-encryption-encoding">[I-D.ietf-httpbis-encryption-encoding]</a>.</p>
+<h2 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#vapid-parameter-for-crypto-key-header-field" id="vapid-parameter-for-crypto-key-header-field">&#8220;vapid&#8221; Parameter for Crypto-Key Header Field</a></h2>
+<p id="rfc.section.6.3.p.1">This registers a <samp>vapid</samp> parameter for the Crypto-Key header field in the &#8220;Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters&#8221; established in <a href="#I-D.ietf-httpbis-encryption-encoding">[I-D.ietf-httpbis-encryption-encoding]</a>.</p>
 <p/>
 
 <dl>
   <dt>Parameter Name:</dt>
-  <dd style="margin-left: 8">p256ecdsa</dd>
+  <dd style="margin-left: 8">vapid</dd>
   <dt>Purpose:</dt>
-  <dd style="margin-left: 8">Conveys a public key for that is used to generate an ECDSA signature.</dd>
+  <dd style="margin-left: 8">An ECDSA public key for use in validating vapid tokens</dd>
   <dt>Reference:</dt>
   <dd style="margin-left: 8"><a href="#restrict">Section 4</a> of this document</dd>
 </dl>

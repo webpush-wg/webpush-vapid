@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: May 8, 2017                                              Google
-                                                        November 4, 2016
+Expires: May 11, 2017                                             Google
+                                                        November 7, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 8, 2017.
+   This Internet-Draft will expire on May 11, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 1]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 1]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -73,7 +73,7 @@ Table of Contents
      2.1.  Application Server Contact Information  . . . . . . . . .   4
      2.2.  Additional Claims . . . . . . . . . . . . . . . . . . . .   4
      2.3.  Example . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   3.  WebPush Authentication Scheme . . . . . . . . . . . . . . . .   6
+   3.  Vapid Authentication Scheme . . . . . . . . . . . . . . . . .   6
      3.1.  Token Parameter (t) . . . . . . . . . . . . . . . . . . .   6
      3.2.  Public Key Parameter (k)  . . . . . . . . . . . . . . . .   6
    4.  Subscription Restriction  . . . . . . . . . . . . . . . . . .   7
@@ -81,9 +81,9 @@ Table of Contents
      4.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   7
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-     6.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   8
-     6.2.  WebPush Authentication Scheme Parameters  . . . . . . . .   9
-     6.3.  p256ecdsa Parameter for Crypto-Key Header Field . . . . .   9
+     6.1.  Vapid Authentication Scheme . . . . . . . . . . . . . . .   8
+     6.2.  Vapid Authentication Scheme Parameters  . . . . . . . . .   9
+     6.3.  "vapid" Parameter for Crypto-Key Header Field . . . . . .   9
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 2]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 2]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -165,7 +165,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 3]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 3]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -198,7 +198,7 @@ Internet-Draft             Self Identification             November 2016
       from the time of the request.
 
    This JWT is included in an Authorization header field, using an auth-
-   scheme of "WebPush".  A push service MAY reject a request with a 403
+   scheme of "vapid".  A push service MAY reject a request with a 403
    (Forbidden) status code [RFC7235] if the JWT signature or its claims
    are invalid.
 
@@ -221,7 +221,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 4]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 4]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -234,7 +234,7 @@ Internet-Draft             Self Identification             November 2016
    An application server requests the delivery of a push message as
    described in [I-D.ietf-webpush-protocol].  If the application server
    wishes to self-identify, it includes an Authorization header field
-   with credentials that use the "WebPush" authentication scheme
+   with credentials that use the "vapid" authentication scheme
    (Section 3).
 
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
@@ -242,7 +242,7 @@ Internet-Draft             Self Identification             November 2016
    TTL: 30
    Content-Length: 136
    Content-Encoding: aes128gcm
-   Authorization: WebPush
+   Authorization: vapid
       t=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3
         B1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1ha
         Wx0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_H
@@ -277,15 +277,15 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 5]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 5]
 
 Internet-Draft             Self Identification             November 2016
 
 
-3.  WebPush Authentication Scheme
+3.  Vapid Authentication Scheme
 
-   A new "WebPush" HTTP authentication scheme [RFC7235] is defined.
-   This authentication scheme carries a signed JWT, as described in
+   A new "vapid" HTTP authentication scheme [RFC7235] is defined.  This
+   authentication scheme carries a signed JWT, as described in
    Section 2, plus the key that signed that authentication scheme.
 
    This authentication scheme is for origin-server authentication only.
@@ -299,20 +299,20 @@ Internet-Draft             Self Identification             November 2016
    header field.
 
    Two parameters are defined for this authentication scheme: "t" and
-   "k".  All unknown or unsupported parameters to "WebPush"
-   authentication credentials MUST be ignored.  The "realm" parameter is
-   ignored for this authentication scheme.
+   "k".  All unknown or unsupported parameters to "vapid" authentication
+   credentials MUST be ignored.  The "realm" parameter is ignored for
+   this authentication scheme.
 
 3.1.  Token Parameter (t)
 
-   The "t" parameter of the "WebPush" authentication scheme carries a
-   JWT as described in Section 2.
+   The "t" parameter of the "vapid" authentication scheme carries a JWT
+   as described in Section 2.
 
 3.2.  Public Key Parameter (k)
 
    In order for the push service to be able to validate the JWT, it
    needs to learn the public key of the application server.  A "k"
-   parameter is defined for the "WebPush" authentication scheme to carry
+   parameter is defined for the "vapid" authentication scheme to carry
    this information.
 
    The "k" parameter includes an elliptic curve digital signature
@@ -333,7 +333,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 6]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 6]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -369,8 +369,8 @@ Internet-Draft             Self Identification             November 2016
 
    POST /subscribe/ HTTP/1.1
    Host: push.example.net
-   Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
-                         F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
+   Crypto-Key: vapid=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                     F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 
                     Figure 3: Example Subscribe Request
 
@@ -389,7 +389,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 7]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 7]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -437,31 +437,31 @@ Internet-Draft             Self Identification             November 2016
 
 6.  IANA Considerations
 
-6.1.  WebPush Authentication Scheme
+6.1.  Vapid Authentication Scheme
 
-   This registers the "WebPush" authentication scheme in the "Hypertext
+   This registers the "vapid" authentication scheme in the "Hypertext
    Transfer Protocol (HTTP) Authentication Scheme Registry" established
    in [RFC7235].
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 8]
+Thomson & Beverloo        Expires May 11, 2017                  [Page 8]
 
 Internet-Draft             Self Identification             November 2016
 
 
-   Authentication Scheme Name:  WebPush
+   Authentication Scheme Name:  vapid
 
    Pointer to specification text:  Section 3 of this document
 
    Notes:  This scheme is origin-server only and does not define a
       challenge.
 
-6.2.  WebPush Authentication Scheme Parameters
+6.2.  Vapid Authentication Scheme Parameters
 
-   This creates a "WebPush Authentication Scheme Parameters" registry
-   for parameters to the "WebPush" authentication scheme.  This registry
-   is under the "WebPush Parameters" grouping.  The registry operates on
+   This creates a "Vapid Authentication Scheme Parameters" registry for
+   parameters to the "vapid" authentication scheme.  This registry is
+   under the "WebPush Parameters" grouping.  The registry operates on
    the "Specification Required" policy [RFC5226].
 
    Registrations MUST include the following information:
@@ -488,20 +488,20 @@ Internet-Draft             Self Identification             November 2016
    |               |                         | 3.2                     |
    +---------------+-------------------------+-------------------------+
 
-6.3.  p256ecdsa Parameter for Crypto-Key Header Field
+6.3.  "vapid" Parameter for Crypto-Key Header Field
 
-   This registers a "p256ecdsa" parameter for the Crypto-Key header
-   field in the "Hypertext Transfer Protocol (HTTP) Crypto-Key
-   Parameters" established in [I-D.ietf-httpbis-encryption-encoding].
+   This registers a "vapid" parameter for the Crypto-Key header field in
+   the "Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters"
+   established in [I-D.ietf-httpbis-encryption-encoding].
 
-   Parameter Name:  p256ecdsa
+   Parameter Name:  vapid
 
-   Purpose:  Conveys a public key for that is used to generate an ECDSA
-      signature.
-
+   Purpose:  An ECDSA public key for use in validating vapid tokens
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 9]
+
+
+Thomson & Beverloo        Expires May 11, 2017                  [Page 9]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -557,7 +557,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                 [Page 10]
+Thomson & Beverloo        Expires May 11, 2017                 [Page 10]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -613,7 +613,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                 [Page 11]
+Thomson & Beverloo        Expires May 11, 2017                 [Page 11]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -669,4 +669,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                 [Page 12]
+Thomson & Beverloo        Expires May 11, 2017                 [Page 12]
