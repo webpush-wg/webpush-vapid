@@ -144,7 +144,7 @@ number of claims as follows:
    "exp" claim MUST NOT be more than 24 hours from the time of the request.
 
 This JWT is included in an Authorization header field, using an auth-scheme of
-"WebPush".  A push service MAY reject a request with a 403 (Forbidden) status
+"vapid".  A push service MAY reject a request with a 403 (Forbidden) status
 code {{!RFC7235}} if the JWT signature or its claims are invalid.
 
 The JWT MUST use a JSON Web Signature (JWS) {{!RFC7515}}.  The signature MUST
@@ -172,7 +172,7 @@ field, the size of additional claims SHOULD be kept as small as possible.
 An application server requests the delivery of a push message as described in
 {{!I-D.ietf-webpush-protocol}}.  If the application server wishes to self-identify,
 it includes an Authorization header field with credentials that use the
-"WebPush" authentication scheme ({{auth}}).
+"vapid" authentication scheme ({{auth}}).
 
 ~~~
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
@@ -180,7 +180,7 @@ Host: push.example.net
 TTL: 30
 Content-Length: 136
 Content-Encoding: aes128gcm
-Authorization: WebPush
+Authorization: vapid
    t=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3
      B1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1ha
      Wx0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_H
@@ -214,9 +214,9 @@ JWK = { "crv":"P-256",
 {: #ex-decoded title="Decoded Example Values"}
 
 
-# WebPush Authentication Scheme {#auth}
+# Vapid Authentication Scheme {#auth}
 
-A new "WebPush" HTTP authentication scheme {{!RFC7235}} is defined.  This
+A new "vapid" HTTP authentication scheme {{!RFC7235}} is defined.  This
 authentication scheme carries a signed JWT, as described in {{jwt}}, plus the
 key that signed that authentication scheme.
 
@@ -230,7 +230,7 @@ a server.  Therefore, a challenge for this authentication scheme MUST NOT be
 sent in a WWW-Authenticate header field.
 
 Two parameters are defined for this authentication scheme: `t` and `k`.  All
-unknown or unsupported parameters to "WebPush" authentication credentials MUST
+unknown or unsupported parameters to "vapid" authentication credentials MUST
 be ignored.  The `realm` parameter is ignored for this authentication scheme.
 
 
@@ -241,7 +241,7 @@ used in other contexts if applicable.
 
 ## Token Parameter (t) {#token}
 
-The `t` parameter of the "WebPush" authentication scheme carries a JWT as
+The `t` parameter of the "vapid" authentication scheme carries a JWT as
 described in {{jwt}}.
 
 
@@ -249,7 +249,7 @@ described in {{jwt}}.
 
 In order for the push service to be able to validate the JWT, it needs to learn
 the public key of the application server.  A `k` parameter is defined for the
-"WebPush" authentication scheme to carry this information.
+"vapid" authentication scheme to carry this information.
 
 The `k` parameter includes an elliptic curve digital signature algorithm (ECDSA)
 public key {{FIPS186}} in uncompressed form {{X9.62}} that is encoded using
@@ -298,8 +298,8 @@ the key used in {{ex-push}}:
 ~~~
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
-                      F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
+Crypto-Key: vapid=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                  F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 ~~~
 {: #ex-restrict title="Example Subscribe Request"}
 
@@ -356,14 +356,14 @@ to cache the results of signature validation.
 
 # IANA Considerations {#iana}
 
-## WebPush Authentication Scheme
+## Vapid Authentication Scheme
 
-This registers the "WebPush" authentication scheme in the "Hypertext Transfer
+This registers the "vapid" authentication scheme in the "Hypertext Transfer
 Protocol (HTTP) Authentication Scheme Registry" established in {{!RFC7235}}.
 
 Authentication Scheme Name:
 
-: WebPush
+: vapid
 
 Pointer to specification text:
 
@@ -374,10 +374,10 @@ Notes:
 : This scheme is origin-server only and does not define a challenge.
 
 
-## WebPush Authentication Scheme Parameters
+## Vapid Authentication Scheme Parameters
 
-This creates a "WebPush Authentication Scheme Parameters" registry for
-parameters to the "WebPush" authentication scheme.  This registry is under the
+This creates a "Vapid Authentication Scheme Parameters" registry for
+parameters to the "vapid" authentication scheme.  This registry is under the
 "WebPush Parameters" grouping.  The registry operates on the "Specification
 Required" policy {{!RFC5226}}.
 
@@ -404,19 +404,19 @@ This registry initially contains the following entries:
 | k | ECDSA signing key | \[\[RFC-to-be]], {{key}} |
 
 
-## p256ecdsa Parameter for Crypto-Key Header Field
+## "vapid" Parameter for Crypto-Key Header Field
 
-This registers a `p256ecdsa` parameter for the Crypto-Key header field in the
+This registers a `vapid` parameter for the Crypto-Key header field in the
 "Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters" established in
 {{!I-D.ietf-httpbis-encryption-encoding}}.
 
 Parameter Name:
 
-: p256ecdsa
+: vapid
 
 Purpose:
 
-: Conveys a public key for that is used to generate an ECDSA signature.
+: An ECDSA public key for use in validating vapid tokens
 
 Reference:
 
