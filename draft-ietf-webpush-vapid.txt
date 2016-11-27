@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: May 8, 2017                                              Google
-                                                        November 4, 2016
+Expires: May 31, 2017                                             Google
+                                                       November 27, 2016
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 8, 2017.
+   This Internet-Draft will expire on May 31, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 1]
+Thomson & Beverloo        Expires May 31, 2017                  [Page 1]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -73,20 +73,22 @@ Table of Contents
      2.1.  Application Server Contact Information  . . . . . . . . .   4
      2.2.  Additional Claims . . . . . . . . . . . . . . . . . . . .   4
      2.3.  Example . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   3.  WebPush Authentication Scheme . . . . . . . . . . . . . . . .   5
-   4.  Public Key Representation . . . . . . . . . . . . . . . . . .   6
-   5.  Subscription Restriction  . . . . . . . . . . . . . . . . . .   6
-     5.1.  Creating a Restricted Push Subscription . . . . . . . . .   7
-     5.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   7
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-     7.1.  WebPush Authentication Scheme . . . . . . . . . . . . . .   9
-     7.2.  p256ecdsa Parameter for Crypto-Key Header Field . . . . .   9
-   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+   3.  Vapid Authentication Scheme . . . . . . . . . . . . . . . . .   6
+     3.1.  Token Parameter (t) . . . . . . . . . . . . . . . . . . .   6
+     3.2.  Public Key Parameter (k)  . . . . . . . . . . . . . . . .   6
+   4.  Subscription Restriction  . . . . . . . . . . . . . . . . . .   7
+     4.1.  Creating a Restricted Push Subscription . . . . . . . . .   7
+     4.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   8
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Vapid Authentication Scheme . . . . . . . . . . . . . . .   9
+     6.2.  Vapid Authentication Scheme Parameters  . . . . . . . . .   9
+     6.3.  "vapid" Parameter for Crypto-Key Header Field . . . . . .  10
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  11
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
 
 1.  Introduction
 
@@ -107,9 +109,7 @@ Table of Contents
 
 
 
-
-
-Thomson & Beverloo         Expires May 8, 2017                  [Page 2]
+Thomson & Beverloo        Expires May 31, 2017                  [Page 2]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -165,7 +165,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 3]
+Thomson & Beverloo        Expires May 31, 2017                  [Page 3]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -198,7 +198,7 @@ Internet-Draft             Self Identification             November 2016
       from the time of the request.
 
    This JWT is included in an Authorization header field, using an auth-
-   scheme of "WebPush".  A push service MAY reject a request with a 403
+   scheme of "vapid".  A push service MAY reject a request with a 403
    (Forbidden) status code [RFC7235] if the JWT signature or its claims
    are invalid.
 
@@ -221,7 +221,7 @@ Internet-Draft             Self Identification             November 2016
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                  [Page 4]
+Thomson & Beverloo        Expires May 31, 2017                  [Page 4]
 
 Internet-Draft             Self Identification             November 2016
 
@@ -234,53 +234,59 @@ Internet-Draft             Self Identification             November 2016
    An application server requests the delivery of a push message as
    described in [I-D.ietf-webpush-protocol].  If the application server
    wishes to self-identify, it includes an Authorization header field
-   with credentials that use the "WebPush" authentication scheme
-   (Section 3) and a Crypto-Key header field that includes its public
-   key (Section 4).
+   with credentials that use the "vapid" authentication scheme
+   (Section 3).
 
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
    Host: push.example.net
-   Content-Type: text/plain;charset=utf8
-   Content-Length: 36
-   Authorization: WebPush
-       eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3B
-       1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1haWx
-       0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_HLGk
-       MlMuCGSK2rpiUfnK9ojFwDXb1JrErtmysazNjjvW2L9OkSSHzvoD1oA
-   Crypto-Key: p256ecdsa=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
-                         F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
+   TTL: 30
+   Content-Length: 136
+   Content-Encoding: aes128gcm
+   Authorization: vapid
+      t=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJhdWQiOiJodHRwczovL3
+        B1c2guZXhhbXBsZS5uZXQiLCJleHAiOjE0NTM1MjM3NjgsInN1YiI6Im1ha
+        Wx0bzpwdXNoQGV4YW1wbGUuY29tIn0.i3CYb7t4xfxCDquptFOepC9GAu_H
+        LGkMlMuCGSK2rpiUfnK9ojFwDXb1JrErtmysazNjjvW2L9OkSSHzvoD1oA,
+      k=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxHF6YK5h4SDYic-dR
+        uU_RCPCfA5aq9ojSwk5Y2EmClBPs
 
-   iChYuI3jMzt3ir20P8r_jgRR-dSuN182x7iB
+   { encrypted push message }
 
             Figure 1: Requesting Push Message Delivery with JWT
 
-   Note that the header fields shown in Figure 1 don't include line
-   wrapping.  Extra whitespace is added to meet formatting constraints.
+   Note that the example header fields in this document include extra
+   line wrapping to meet formatting constraints.
 
-   The value of the Authorization header field is a base64url-encoded
-   JWT with the header and body shown in Figure 2.  This JWT would be
-   valid until 2016-01-21T01:53:25Z [RFC3339].
+   The "t" parameter of the Authorization header field contains a JWT;
+   the "k" parameter includes the base64url-encoded key that signed that
+   token.  The JWT input values and the JWK [RFC7517] corresponding to
+   the signing key are shown in Figure 2 with additional whitespace
+   added for readability purposes.  This JWT would be valid until
+   2016-01-21T01:53:25Z [RFC3339].
 
-   header = {"typ":"JWT","alg":"ES256"}
-   body = { "aud":"https://push.example.net",
-            "exp":1453341205,
-            "sub":"mailto:push@example.com" }
+   JWT header = { "typ": "JWT", "alg": "ES256" }
+   JWT body = { "aud": "https://push.example.net",
+                "exp": 1453341205,
+                "sub": "mailto:push@example.com" }
+   JWK = { "crv":"P-256",
+           "kty":"EC",
+           "x":"DUfHPKLVFQzVvnCPGyfucbECzPDa7rWbXriLcysAjEc",
+           "y":"F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 
-                   Figure 2: Example JWT Header and Body
-
-3.  WebPush Authentication Scheme
-
-   A new "WebPush" HTTP authentication scheme [RFC7235] is defined.
-   This authentication scheme carries a signed JWT, as described in
-   Section 2.
+                     Figure 2: Decoded Example Values
 
 
 
-
-Thomson & Beverloo         Expires May 8, 2017                  [Page 5]
+Thomson & Beverloo        Expires May 31, 2017                  [Page 5]
 
 Internet-Draft             Self Identification             November 2016
 
+
+3.  Vapid Authentication Scheme
+
+   A new "vapid" HTTP authentication scheme [RFC7235] is defined.  This
+   authentication scheme carries a signed JWT, as described in
+   Section 2, plus the key that signed that authentication scheme.
 
    This authentication scheme is for origin-server authentication only.
    Therefore, this authentication scheme MUST NOT be used with the
@@ -292,35 +298,55 @@ Internet-Draft             Self Identification             November 2016
    this authentication scheme MUST NOT be sent in a WWW-Authenticate
    header field.
 
-   All unknown or unsupported parameters to "WebPush" authentication
+   Two parameters are defined for this authentication scheme: "t" and
+   "k".  All unknown or unsupported parameters to "vapid" authentication
    credentials MUST be ignored.  The "realm" parameter is ignored for
    this authentication scheme.
 
-4.  Public Key Representation
+   This authentication scheme is intended for use by an application
+   server when using the Web Push protocol [I-D.ietf-webpush-protocol],
+   but it could be used in other contexts if applicable.
+
+3.1.  Token Parameter (t)
+
+   The "t" parameter of the "vapid" authentication scheme carries a JWT
+   as described in Section 2.
+
+3.2.  Public Key Parameter (k)
 
    In order for the push service to be able to validate the JWT, it
-   needs to learn the public key of the application server.  A
-   "p256ecdsa" parameter is defined for the Crypto-Key header field
-   [I-D.ietf-httpbis-encryption-encoding] to carry this information.
+   needs to learn the public key of the application server.  A "k"
+   parameter is defined for the "vapid" authentication scheme to carry
+   this information.
 
-   The "p256ecdsa" parameter includes an elliptic curve digital
-   signature algorithm (ECDSA) public key [FIPS186] in uncompressed form
-   [X9.62] that is encoded using the URL- and filename-safe variant of
-   base-64 [RFC4648] with padding removed.
+   The "k" parameter includes an elliptic curve digital signature
+   algorithm (ECDSA) public key [FIPS186] in uncompressed form [X9.62]
+   that is encoded using base64url encoding [RFC7515].
 
-   Note that with push message encryption [I-D.ietf-webpush-encryption],
-   this results in two values in the Crypto-Key header field, one with
-   the a "dh" key and another with a "p256ecdsa" key.
+   Note:  X9.62 encoding is used over JWK [RFC7517] for two reasons.  A
+      JWK does not have a canonical form, so X9.62 encoding makes it
+      easier for the push service to handle comparison of keys from
+      different sources.  Secondarily, the X9.62 encoding is also
+      considerably smaller.
+
+
+
+
+
+Thomson & Beverloo        Expires May 31, 2017                  [Page 6]
+
+Internet-Draft             Self Identification             November 2016
+
 
    Some implementations permit the same P-256 key to be used for signing
    and key exchange.  An application server MUST select a different
-   private key for the key exchange (i.e., "dh") and signing (i.e.,
-   "p256ecdsa").  Though a push service is not obligated to check either
-   parameter for every push message, a push service SHOULD reject push
-   messages that have identical values for these parameters with a 400
-   (Bad Request) status code.
+   private key for the key exchange [I-D.ietf-webpush-encryption] and
+   signing the authentication token.  Though a push service is not
+   obligated to check either parameter for every push message, a push
+   service SHOULD reject push messages that have identical values for
+   these parameters with a 400 (Bad Request) status code.
 
-5.  Subscription Restriction
+4.  Subscription Restriction
 
    The public key of the application server serves as a stable
    identifier for the server.  This key can be used to restrict a push
@@ -329,19 +355,10 @@ Internet-Draft             Self Identification             November 2016
    Subscription restriction reduces the reliance on endpoint secrecy by
    requiring proof of possession to be demonstrated by an application
    server when requesting delivery of a push message.  This provides an
-
-
-
-
-Thomson & Beverloo         Expires May 8, 2017                  [Page 6]
-
-Internet-Draft             Self Identification             November 2016
-
-
    additional level of protection against leaking of the details of the
    push subscription.
 
-5.1.  Creating a Restricted Push Subscription
+4.1.  Creating a Restricted Push Subscription
 
    The user agent includes the public key of the application server when
    requesting the creation of a push subscription.  This restricts use
@@ -349,28 +366,35 @@ Internet-Draft             Self Identification             November 2016
    provide proof of possession for the corresponding private key.
 
    This public key is then added to the request to create a push
-   subscription as described in Section 4.  The Crypto-Key header field
-   includes exactly one public key.  For example:
+   subscription as described in Section 3.2.  The Crypto-Key header
+   field includes exactly one ECDSA public key on the P-256 curve,
+   encoded in the uncompressed form [X9.62] and base64url [RFC7515].
+   The example in Figure 3 shows a restriction to the key used in
+   Figure 1:
 
    POST /subscribe/ HTTP/1.1
    Host: push.example.net
-   Crypto-Key: p256ecdsa=BBa22H8qaZ-iDMH9izb4qE72puwyvfjH2RxoQr5oiS4b
-                         KImoRwJm5xK9hLrbfIik20g31z8MpLFMCMr8y2cu6gY
+   Crypto-Key: vapid=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+                     F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
 
                     Figure 3: Example Subscribe Request
 
-   An application might use the Web Push API [API] to include this
-   information.  For example, the API might permit an application to
-   provide a public key as part of a new field on the
-   "PushSubscriptionOptions" dictionary.
+   An application might use the Web Push API [API] to provide the user
+   agent with a public key.
 
-   Note:  Allowing the inclusion of multiple keys when creating a
-      subscription would allow a subscription to be associated with
-      multiple application servers or application server instances.
-      This might be more flexible, but it also would require more state
-      to be maintained by the push service for each subscription.
 
-5.2.  Using Restricted Subscriptions
+
+
+
+
+
+
+Thomson & Beverloo        Expires May 31, 2017                  [Page 7]
+
+Internet-Draft             Self Identification             November 2016
+
+
+4.2.  Using Restricted Subscriptions
 
    When a push subscription has been associated with an application
    server, the request for push message delivery MUST include proof of
@@ -382,17 +406,8 @@ Internet-Draft             Self Identification             November 2016
    message that includes invalid credentials with a 403 (Forbidden)
    status code.  Credentials are invalid if:
 
-   o  either the authentication credentials or public key are not
-      included in the request,
-
-
-
-
-
-Thomson & Beverloo         Expires May 8, 2017                  [Page 7]
-
-Internet-Draft             Self Identification             November 2016
-
+   o  either the authentication token or public key are not included in
+      the request,
 
    o  the signature on the JWT cannot be successfully verified using the
       included public key,
@@ -404,20 +419,12 @@ Internet-Draft             Self Identification             November 2016
       (Audience) claim, or
 
    o  the public key used to sign the JWT doesn't match the one that was
-      included in the creation of the push message.
-
-   Note:  In theory, since the push service was given a public key, the
-      push message request could omit the public key.  On balance,
-      requiring the key keeps things simple and it allows push services
-      to compress the public key (by hashing it, for example).  In any
-      case, the relatively minor space savings aren't particularly
-      important on the connection between the application server and
-      push service.
+      included in the creation of the push subscription.
 
    A push service MUST NOT forward the JWT or public key to the user
    agent when delivering the push message.
 
-6.  Security Considerations
+5.  Security Considerations
 
    This authentication scheme is vulnerable to replay attacks if an
    attacker can acquire a valid JWT.  Applying narrow limits to the
@@ -433,58 +440,93 @@ Internet-Draft             Self Identification             November 2016
    Validation of a signature on the JWT requires a non-trivial amount of
    computation.  For something that might be used to identify legitimate
    requests under denial of service attack conditions, this is not
-   ideal.  Application servers are therefore encouraged to reuse a JWT,
-   which permits the push service to cache the results of signature
-   validation.
-
-7.  IANA Considerations
+   ideal.  Application servers are therefore encouraged to reuse tokens,
 
 
 
 
-
-
-
-Thomson & Beverloo         Expires May 8, 2017                  [Page 8]
+Thomson & Beverloo        Expires May 31, 2017                  [Page 8]
 
 Internet-Draft             Self Identification             November 2016
 
 
-7.1.  WebPush Authentication Scheme
+   which permits the push service to cache the results of signature
+   validation.
 
-   This registers the "WebPush" authentication scheme in the "Hypertext
+6.  IANA Considerations
+
+6.1.  Vapid Authentication Scheme
+
+   This registers the "vapid" authentication scheme in the "Hypertext
    Transfer Protocol (HTTP) Authentication Scheme Registry" established
    in [RFC7235].
 
-   Authentication Scheme Name:  WebPush
+   Authentication Scheme Name:  vapid
 
    Pointer to specification text:  Section 3 of this document
 
    Notes:  This scheme is origin-server only and does not define a
       challenge.
 
-7.2.  p256ecdsa Parameter for Crypto-Key Header Field
+6.2.  Vapid Authentication Scheme Parameters
 
-   This registers a "p256ecdsa" parameter for the Crypto-Key header
-   field in the "Hypertext Transfer Protocol (HTTP) Crypto-Key
-   Parameters" established in [I-D.ietf-httpbis-encryption-encoding].
+   This creates a "Vapid Authentication Scheme Parameters" registry for
+   parameters to the "vapid" authentication scheme.  This registry is
+   under the "WebPush Parameters" grouping.  The registry operates on
+   the "Specification Required" policy [RFC5226].
 
-   Parameter Name:  p256ecdsa
+   Registrations MUST include the following information:
 
-   Purpose:  Conveys a public key for that is used to generate an ECDSA
-      signature.
+   Parameter Name:  A name for the parameter, which conforms to the
+      "token" grammar [RFC7230]
+
+   Purpose (optional):  A brief identifying the purpose of the
+      parameter.
+
+   Specification:  A link to the specification that defines the format
+      and semantics of the parameter.
+
+   This registry initially contains the following entries:
+
+   +---------------+-------------------------+-------------------------+
+   | Parameter     | Purpose                 | Specification           |
+   | Name          |                         |                         |
+   +---------------+-------------------------+-------------------------+
+   | t             | JWT authentication      | [[RFC-to-be]], Section  |
+   |               | token                   | 3.1                     |
+   |               |                         |                         |
+   | k             | ECDSA signing key       | [[RFC-to-be]], Section  |
+   |               |                         | 3.2                     |
+   +---------------+-------------------------+-------------------------+
+
+
+
+Thomson & Beverloo        Expires May 31, 2017                  [Page 9]
+
+Internet-Draft             Self Identification             November 2016
+
+
+6.3.  "vapid" Parameter for Crypto-Key Header Field
+
+   This registers a "vapid" parameter for the Crypto-Key header field in
+   the "Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters"
+   established in [I-D.ietf-httpbis-encryption-encoding].
+
+   Parameter Name:  vapid
+
+   Purpose:  An ECDSA public key for use in validating vapid tokens
 
    Reference:  Section 4 of this document
 
-8.  Acknowledgements
+7.  Acknowledgements
 
    This document would have been much worse than it currently is if not
    for the contributions of Benjamin Bangert, JR Conlin, Chris Karlof,
    Costin Manolache, and others.
 
-9.  References
+8.  References
 
-9.1.  Normative References
+8.1.  Normative References
 
    [FIPS186]  National Institute of Standards and Technology (NIST),
               "Digital Signature Standard (DSS)", NIST PUB 186-4 , July
@@ -494,17 +536,6 @@ Internet-Draft             Self Identification             November 2016
               Thomson, M., "Encrypted Content-Encoding for HTTP", draft-
               ietf-httpbis-encryption-encoding-04 (work in progress),
               October 2016.
-
-
-
-
-
-
-
-Thomson & Beverloo         Expires May 8, 2017                  [Page 9]
-
-Internet-Draft             Self Identification             November 2016
-
 
    [I-D.ietf-webpush-protocol]
               Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
@@ -520,9 +551,21 @@ Internet-Draft             Self Identification             November 2016
               DOI 10.17487/RFC2818, May 2000,
               <http://www.rfc-editor.org/info/rfc2818>.
 
-   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
-              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
-              <http://www.rfc-editor.org/info/rfc4648>.
+
+
+
+
+
+
+Thomson & Beverloo        Expires May 31, 2017                 [Page 10]
+
+Internet-Draft             Self Identification             November 2016
+
+
+   [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
+              IANA Considerations Section in RFCs", BCP 26, RFC 5226,
+              DOI 10.17487/RFC5226, May 2008,
+              <http://www.rfc-editor.org/info/rfc5226>.
 
    [RFC6068]  Duerst, M., Masinter, L., and J. Zawinski, "The 'mailto'
               URI Scheme", RFC 6068, DOI 10.17487/RFC6068, October 2010,
@@ -531,6 +574,11 @@ Internet-Draft             Self Identification             November 2016
    [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
               DOI 10.17487/RFC6454, December 2011,
               <http://www.rfc-editor.org/info/rfc6454>.
+
+   [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Message Syntax and Routing",
+              RFC 7230, DOI 10.17487/RFC7230, June 2014,
+              <http://www.rfc-editor.org/info/rfc7230>.
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
@@ -553,16 +601,7 @@ Internet-Draft             Self Identification             November 2016
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
 
-
-
-
-
-Thomson & Beverloo         Expires May 8, 2017                 [Page 10]
-
-Internet-Draft             Self Identification             November 2016
-
-
-9.2.  Informative References
+8.2.  Informative References
 
    [API]      van Ouwerkerk, M. and M. Thomson, "Web Push API", 2015,
               <https://w3c.github.io/push-api/>.
@@ -572,9 +611,20 @@ Internet-Draft             Self Identification             November 2016
               ietf-webpush-encryption-06 (work in progress), October
               2016.
 
+
+
+Thomson & Beverloo        Expires May 31, 2017                 [Page 11]
+
+Internet-Draft             Self Identification             November 2016
+
+
    [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
               <http://www.rfc-editor.org/info/rfc3339>.
+
+   [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
+              DOI 10.17487/RFC7517, May 2015,
+              <http://www.rfc-editor.org/info/rfc7517>.
 
 Authors' Addresses
 
@@ -613,4 +663,10 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo         Expires May 8, 2017                 [Page 11]
+
+
+
+
+
+
+Thomson & Beverloo        Expires May 31, 2017                 [Page 12]
