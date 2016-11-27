@@ -8,5 +8,6 @@
 .refcache
 venv/
 issues.json
+.targets.mk
 draft-ietf-webpush-vapid.xml
 lib
