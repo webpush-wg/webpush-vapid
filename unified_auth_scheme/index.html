@@ -7,7 +7,8 @@
 
   <title>Voluntary Application Server Identification for Web Push</title>
 
-  <style type="text/css">/*<![CDATA[*/
+  
+<style type="text/css">/*<![CDATA[*/
 @viewport {
   zoom: 1.0;
   width: extend-to-zoom;
@@ -73,7 +74,11 @@ ul.toc li {
   padding-bottom: 5px;
   margin: 0;
 }
-ul.toc, ul.toc ul {
+ul.toc ul {
+  margin: 0;
+}
+/* xml2rfc nests ul directly inside ul which messes with the style badly */
+ul.toc, ul.toc>ul, ul.toc ul>ul {
   margin: 0 0 0 1.5em;
 }
 
@@ -208,6 +213,9 @@ ol, ul, li, p {
 li, p {
   margin-left: 0;
 }
+address {
+  font-style: normal;
+}
 
 .github-fork-ribbon-wrapper {
   display: none;
@@ -267,6 +275,7 @@ li, p {
   }
   /*]]>*/</style>
 
+
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Voluntary Identification"/>
@@ -298,7 +307,7 @@ li, p {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-7" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-27" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
 
@@ -322,12 +331,12 @@ li, p {
   <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 11, 2017</td>
+  <td class="left">Expires: May 31, 2017</td>
   <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 7, 2016</td>
+  <td class="right">November 27, 2016</td>
 </tr>
 
     	
@@ -347,7 +356,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 11, 2017.</p>
+<p>This Internet-Draft will expire on May 31, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -456,6 +465,7 @@ JWK = { "crv":"P-256",
 <p id="rfc.section.3.p.2">This authentication scheme is for origin-server authentication only.  Therefore, this authentication scheme MUST NOT be used with the Proxy-Authenticate or Proxy-Authorization header fields.</p>
 <p id="rfc.section.3.p.3">This authentication scheme does not require a challenge.  Clients are able to generate the Authorization header field without any additional information from a server.  Therefore, a challenge for this authentication scheme MUST NOT be sent in a WWW-Authenticate header field.</p>
 <p id="rfc.section.3.p.4">Two parameters are defined for this authentication scheme: <samp>t</samp> and <samp>k</samp>.  All unknown or unsupported parameters to &#8220;vapid&#8221; authentication credentials MUST be ignored.  The <samp>realm</samp> parameter is ignored for this authentication scheme.</p>
+<p id="rfc.section.3.p.5">This authentication scheme is intended for use by an application server when using the Web Push protocol <a href="#I-D.ietf-webpush-protocol">[I-D.ietf-webpush-protocol]</a>, but it could be used in other contexts if applicable.</p>
 <h2 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#token" id="token">Token Parameter (t)</a></h2>
 <p id="rfc.section.3.1.p.1">The <samp>t</samp> parameter of the &#8220;vapid&#8221; authentication scheme carries a JWT as described in <a href="#jwt">Section 2</a>.</p>
 <h2 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#key" id="key">Public Key Parameter (k)</a></h2>
@@ -465,7 +475,7 @@ JWK = { "crv":"P-256",
 
 <dl>
   <dt>Note:</dt>
-  <dd style="margin-left: 8">X9.62 encoding is used over JWK <a href="#RFC7517">[RFC7517]</a> for two reasons.  A JWK does not have a canonical form, so X9.62 encoding makes it easier for the push service to handle comparison of keys from different sources.  The X9.62 encoding is also considerably smaller.</dd>
+  <dd style="margin-left: 8">X9.62 encoding is used over JWK <a href="#RFC7517">[RFC7517]</a> for two reasons.  A JWK does not have a canonical form, so X9.62 encoding makes it easier for the push service to handle comparison of keys from different sources.  Secondarily, the X9.62 encoding is also considerably smaller.</dd>
 </dl>
 <p id="rfc.section.3.2.p.4">Some implementations permit the same P-256 key to be used for signing and key exchange.  An application server MUST select a different private key for the key exchange <a href="#I-D.ietf-webpush-encryption">[I-D.ietf-webpush-encryption]</a> and signing the authentication token.  Though a push service is not obligated to check either parameter for every push message, a push service SHOULD reject push messages that have identical values for these parameters with a 400 (Bad Request) status code.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#restrict" id="restrict">Subscription Restriction</a></h1>
@@ -729,6 +739,6 @@ Crypto-Key: vapid=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
   </address>
 </div>
 
-  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/webpush-wg/webpush-vapid">Fork me on GitHub</a></div></div>
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/{SLUG}">Fork me on GitHub</a></div></div>
 </body>
 </html>
