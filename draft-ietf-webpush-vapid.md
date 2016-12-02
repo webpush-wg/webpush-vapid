@@ -2,7 +2,6 @@
 title: Voluntary Application Server Identification for Web Push
 abbrev: Self Identification
 docname: draft-ietf-webpush-vapid-latest
-date: 2016
 category: std
 ipr: trust200902
 
@@ -289,17 +288,24 @@ the creation of a push subscription.  This restricts use of the resulting
 subscription to application servers that are able to provide proof of possession
 for the corresponding private key.
 
-This public key is then added to the request to create a push subscription as
-described in {{key}}.  The Crypto-Key header field includes exactly one ECDSA
-public key on the P-256 curve, encoded in the uncompressed form {{X9.62}} and
-base64url {{!RFC7515}}.  The example in {{ex-restrict}} shows a restriction to
-the key used in {{ex-push}}:
+The public key is then added to the request to create a push subscription.  The
+push subscription request is extended to include a body.  The body of the
+request is a JSON object as described in {{!RFC7159}}.  A "vapid" member is
+added to this JSON object, containing the public key on the P-256 curve, encoded
+in the uncompressed form {{X9.62}} and base64url encoded {{!RFC7515}}.  The MIME
+media type of the body is set to "application/json".
+
+The example in {{ex-restrict}} shows a restriction to the key used in
+{{ex-push}}.  Extra whitespace is added to to meet formatting constraints.
 
 ~~~
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Crypto-Key: vapid=BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
-                  F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs
+Content-Type: application/json;charset=utf-8
+Content-Length: 104
+
+{ "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
+            F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 ~~~
 {: #ex-restrict title="Example Subscribe Request"}
 
@@ -356,10 +362,9 @@ to cache the results of signature validation.
 
 # IANA Considerations {#iana}
 
-## Vapid Authentication Scheme
-
-This registers the "vapid" authentication scheme in the "Hypertext Transfer
-Protocol (HTTP) Authentication Scheme Registry" established in {{!RFC7235}}.
+This document registers the "vapid" authentication scheme in the "Hypertext
+Transfer Protocol (HTTP) Authentication Scheme Registry" established in
+{{!RFC7235}}.
 
 Authentication Scheme Name:
 
@@ -402,25 +407,6 @@ This registry initially contains the following entries:
 |:-|:-|:-|
 | t | JWT authentication token | \[\[RFC-to-be]], {{token}} |
 | k | ECDSA signing key | \[\[RFC-to-be]], {{key}} |
-
-
-## "vapid" Parameter for Crypto-Key Header Field
-
-This registers a `vapid` parameter for the Crypto-Key header field in the
-"Hypertext Transfer Protocol (HTTP) Crypto-Key Parameters" established in
-{{!I-D.ietf-httpbis-encryption-encoding}}.
-
-Parameter Name:
-
-: vapid
-
-Purpose:
-
-: An ECDSA public key for use in validating vapid tokens
-
-Reference:
-
-: {{restrict}} of this document
 
 
 # Acknowledgements {#ack}
