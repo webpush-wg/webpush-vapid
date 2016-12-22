@@ -217,7 +217,7 @@ JWK = { "crv":"P-256",
 
 A new "vapid" HTTP authentication scheme {{!RFC7235}} is defined.  This
 authentication scheme carries a signed JWT, as described in {{jwt}}, plus the
-key that signed that authentication scheme.
+key that signed that JWT.
 
 This authentication scheme is for origin-server authentication only.  Therefore,
 this authentication scheme MUST NOT be used with the Proxy-Authenticate or
@@ -231,7 +231,6 @@ sent in a WWW-Authenticate header field.
 Two parameters are defined for this authentication scheme: `t` and `k`.  All
 unknown or unsupported parameters to "vapid" authentication credentials MUST
 be ignored.  The `realm` parameter is ignored for this authentication scheme.
-
 
 This authentication scheme is intended for use by an application server when
 using the Web Push protocol {{?RFC8030}}, but it could be
