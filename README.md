@@ -3,7 +3,7 @@
 This is the working area for the webpush working group internet-draft, "Voluntary Application Server Identification for Web Push".
 
 * [Editor's copy](https://webpush-wg.github.io/webpush-vapid/)
-* [Most Recent Draft] (https://tools.ietf.org/html/draft-ietf-webpush-vapid)
+* [Most Recent Draft](https://tools.ietf.org/html/draft-ietf-webpush-vapid)
 
 
 ## Building the Draft
