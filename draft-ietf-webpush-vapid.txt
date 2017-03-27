@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: June 5, 2017                                             Google
-                                                       December 02, 2016
+Expires: September 28, 2017                                       Google
+                                                          March 27, 2017
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,11 +39,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 5, 2017.
+   This Internet-Draft will expire on September 28, 2017.
 
 Copyright Notice
 
-   Copyright (c) 2016 IETF Trust and the persons identified as the
+   Copyright (c) 2017 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 1]
+Thomson & Beverloo     Expires September 28, 2017               [Page 1]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 2]
+Thomson & Beverloo     Expires September 28, 2017               [Page 2]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    An unfortunate consequence of this design is that a push service is
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 3]
+Thomson & Beverloo     Expires September 28, 2017               [Page 3]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    The terms "push message", "push service", "push subscription",
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 4]
+Thomson & Beverloo     Expires September 28, 2017               [Page 4]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    is in a header field, the size of additional claims SHOULD be kept as
@@ -277,9 +277,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 5]
+Thomson & Beverloo     Expires September 28, 2017               [Page 5]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
 3.  Vapid Authentication Scheme
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 6]
+Thomson & Beverloo     Expires September 28, 2017               [Page 6]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    Some implementations permit the same P-256 key to be used for signing
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 7]
+Thomson & Beverloo     Expires September 28, 2017               [Page 7]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    An application might use the Web Push API [API] to provide the user
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 8]
+Thomson & Beverloo     Expires September 28, 2017               [Page 8]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    requests under denial of service attack conditions, this is not
@@ -501,9 +501,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                  [Page 9]
+Thomson & Beverloo     Expires September 28, 2017               [Page 9]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
 7.  Acknowledgements
@@ -557,9 +557,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                 [Page 10]
+Thomson & Beverloo     Expires September 28, 2017              [Page 10]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
@@ -595,8 +595,8 @@ Internet-Draft             Self Identification             December 2016
 
    [I-D.ietf-webpush-encryption]
               Thomson, M., "Message Encryption for Web Push", draft-
-              ietf-webpush-encryption-06 (work in progress), October
-              2016.
+              ietf-webpush-encryption-08 (work in progress), February
+              2017.
 
    [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
@@ -613,9 +613,9 @@ Internet-Draft             Self Identification             December 2016
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                 [Page 11]
+Thomson & Beverloo     Expires September 28, 2017              [Page 11]
 
-Internet-Draft             Self Identification             December 2016
+Internet-Draft             Self Identification                March 2017
 
 
 Authors' Addresses
@@ -669,4 +669,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo        Expires June 5, 2017                 [Page 12]
+Thomson & Beverloo     Expires September 28, 2017              [Page 12]
