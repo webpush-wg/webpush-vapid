@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: September 28, 2017                                       Google
-                                                          March 27, 2017
+Expires: November 7, 2017                                         Google
+                                                            May 06, 2017
 
 
         Voluntary Application Server Identification for Web Push
@@ -18,7 +18,7 @@ Abstract
    service using the described technique.  This identification
    information can be used by the push service to attribute requests
    that are made by the same application server to a single entity.
-   This can used to reduce the secrecy for push subscription URLs by
+   This can be used to reduce the secrecy for push subscription URLs by
    being able to restrict subscriptions to a specific application
    server.  An application server is further able to include additional
    information that the operator of a push service can use to contact
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 28, 2017.
+   This Internet-Draft will expire on November 7, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo     Expires September 28, 2017               [Page 1]
+Thomson & Beverloo      Expires November 7, 2017                [Page 1]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -90,9 +90,9 @@ Table of Contents
 
 1.  Introduction
 
-   The Web Push protocol [I-D.ietf-webpush-protocol] describes how an
-   application server is able to request that a push service deliver a
-   push message to a user agent.
+   The Web Push protocol [RFC8030] describes how an application server
+   is able to request that a push service deliver a push message to a
+   user agent.
 
    As a consequence of the expected deployment architecture, there is no
    basis for an application server to be known to a push service prior
@@ -101,21 +101,19 @@ Table of Contents
    unwanted constraint on the interactions between user agents and
    application servers, who are the ultimate users of a push service.
    That constraint would also degrade the privacy-preserving properties
-   the protocol provides.  For these reasons,
-   [I-D.ietf-webpush-protocol] does not define a mandatory system for
-   authentication of application servers.
-
-
-
-
-
-Thomson & Beverloo     Expires September 28, 2017               [Page 2]
-
-Internet-Draft             Self Identification                March 2017
-
+   the protocol provides.  For these reasons, [RFC8030] does not define
+   a mandatory system for authentication of application servers.
 
    An unfortunate consequence of this design is that a push service is
    exposed to a greater risk of denial of service attack.  While
+
+
+
+Thomson & Beverloo      Expires November 7, 2017                [Page 2]
+
+Internet-Draft             Self Identification                  May 2017
+
+
    requests from application servers can be indirectly attributed to
    user agents, this is not always efficient or even sufficient.
    Providing more information about the application server directly to a
@@ -161,18 +159,16 @@ Internet-Draft             Self Identification                March 2017
    document.  It's not shouting, when they are capitalized, they have
    the special meaning described in [RFC2119].
 
-
-
-
-
-Thomson & Beverloo     Expires September 28, 2017               [Page 3]
-
-Internet-Draft             Self Identification                March 2017
-
-
    The terms "push message", "push service", "push subscription",
    "application server", and "user agent" are used as defined in
-   [I-D.ietf-webpush-protocol].
+   [RFC8030].
+
+
+
+Thomson & Beverloo      Expires November 7, 2017                [Page 3]
+
+Internet-Draft             Self Identification                  May 2017
+
 
 2.  Application Server Self-Identification
 
@@ -193,9 +189,9 @@ Internet-Draft             Self Identification                March 2017
       that share the same origin.
 
    o  An "exp" (Expiry) claim MUST be included with the time after which
-      the token expires.  This limits the time that a token over which a
-      token is valid.  An "exp" claim MUST NOT be more than 24 hours
-      from the time of the request.
+      the token expires.  This limits the time over which a token is
+      valid.  An "exp" claim MUST NOT be more than 24 hours from the
+      time of the request.
 
    This JWT is included in an Authorization header field, using an auth-
    scheme of "vapid".  A push service MAY reject a request with a 403
@@ -217,25 +213,25 @@ Internet-Draft             Self Identification                March 2017
 
    An application server MAY include additional claims using public or
    private names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT
-
-
-
-
-Thomson & Beverloo     Expires September 28, 2017               [Page 4]
-
-Internet-Draft             Self Identification                March 2017
-
-
    is in a header field, the size of additional claims SHOULD be kept as
    small as possible.
+
+
+
+
+
+
+Thomson & Beverloo      Expires November 7, 2017                [Page 4]
+
+Internet-Draft             Self Identification                  May 2017
+
 
 2.3.  Example
 
    An application server requests the delivery of a push message as
-   described in [I-D.ietf-webpush-protocol].  If the application server
-   wishes to self-identify, it includes an Authorization header field
-   with credentials that use the "vapid" authentication scheme
-   (Section 3).
+   described in [RFC8030].  If the application server wishes to self-
+   identify, it includes an Authorization header field with credentials
+   that use the "vapid" authentication scheme (Section 3).
 
    POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
    Host: push.example.net
@@ -277,9 +273,13 @@ Internet-Draft             Self Identification                March 2017
 
 
 
-Thomson & Beverloo     Expires September 28, 2017               [Page 5]
+
+
+
+
+Thomson & Beverloo      Expires November 7, 2017                [Page 5]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
 3.  Vapid Authentication Scheme
@@ -304,8 +304,8 @@ Internet-Draft             Self Identification                March 2017
    this authentication scheme.
 
    This authentication scheme is intended for use by an application
-   server when using the Web Push protocol [I-D.ietf-webpush-protocol],
-   but it could be used in other contexts if applicable.
+   server when using the Web Push protocol [RFC8030], but it could be
+   used in other contexts if applicable.
 
 3.1.  Token Parameter (t)
 
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification                March 2017
 
 
 
-Thomson & Beverloo     Expires September 28, 2017               [Page 6]
+Thomson & Beverloo      Expires November 7, 2017                [Page 6]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
    Some implementations permit the same P-256 key to be used for signing
@@ -374,8 +374,7 @@ Internet-Draft             Self Identification                March 2017
    body is set to "application/json".
 
    The example in Figure 3 shows a restriction to the key used in
-   Figure 1.  Extra whitespace is added to to meet formatting
-   constraints.
+   Figure 1.  Extra whitespace is added to meet formatting constraints.
 
    POST /subscribe/ HTTP/1.1
    Host: push.example.net
@@ -389,9 +388,10 @@ Internet-Draft             Self Identification                March 2017
 
 
 
-Thomson & Beverloo     Expires September 28, 2017               [Page 7]
+
+Thomson & Beverloo      Expires November 7, 2017                [Page 7]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
    An application might use the Web Push API [API] to provide the user
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification                March 2017
 
 
 
-Thomson & Beverloo     Expires September 28, 2017               [Page 8]
+Thomson & Beverloo      Expires November 7, 2017                [Page 8]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
    requests under denial of service attack conditions, this is not
@@ -470,10 +470,10 @@ Internet-Draft             Self Identification                March 2017
 
 6.1.  Vapid Authentication Scheme Parameters
 
-   This creates a "Vapid Authentication Scheme Parameters" registry for
-   parameters to the "vapid" authentication scheme.  This registry is
-   under the "WebPush Parameters" grouping.  The registry operates on
-   the "Specification Required" policy [RFC5226].
+   This document creates a "Vapid Authentication Scheme Parameters"
+   registry for parameters to the "vapid" authentication scheme.  This
+   registry is under the "WebPush Parameters" grouping.  The registry
+   operates on the "Specification Required" policy [RFC5226].
 
    Registrations MUST include the following information:
 
@@ -501,9 +501,9 @@ Internet-Draft             Self Identification                March 2017
 
 
 
-Thomson & Beverloo     Expires September 28, 2017               [Page 9]
+Thomson & Beverloo      Expires November 7, 2017                [Page 9]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
 7.  Acknowledgements
@@ -519,11 +519,6 @@ Internet-Draft             Self Identification                March 2017
    [FIPS186]  National Institute of Standards and Technology (NIST),
               "Digital Signature Standard (DSS)", NIST PUB 186-4 , July
               2013.
-
-   [I-D.ietf-webpush-protocol]
-              Thomson, M., Damaggio, E., and B. Raymor, "Generic Event
-              Delivery Using HTTP Push", draft-ietf-webpush-protocol-12
-              (work in progress), October 2016.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -551,21 +546,21 @@ Internet-Draft             Self Identification                March 2017
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
               2014, <http://www.rfc-editor.org/info/rfc7159>.
 
-
-
-
-
-
-
-Thomson & Beverloo     Expires September 28, 2017              [Page 10]
-
-Internet-Draft             Self Identification                March 2017
-
-
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <http://www.rfc-editor.org/info/rfc7230>.
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires November 7, 2017               [Page 10]
+
+Internet-Draft             Self Identification                  May 2017
+
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
@@ -583,6 +578,11 @@ Internet-Draft             Self Identification                March 2017
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <http://www.rfc-editor.org/info/rfc7519>.
+
+   [RFC8030]  Thomson, M., Damaggio, E., and B. Raymor, Ed., "Generic
+              Event Delivery Using HTTP Push", RFC 8030,
+              DOI 10.17487/RFC8030, December 2016,
+              <http://www.rfc-editor.org/info/rfc8030>.
 
    [X9.62]    ANSI, "Public Key Cryptography For The Financial Services
               Industry: The Elliptic Curve Digital Signature Algorithm
@@ -613,9 +613,9 @@ Internet-Draft             Self Identification                March 2017
 
 
 
-Thomson & Beverloo     Expires September 28, 2017              [Page 11]
+Thomson & Beverloo      Expires November 7, 2017               [Page 11]
 
-Internet-Draft             Self Identification                March 2017
+Internet-Draft             Self Identification                  May 2017
 
 
 Authors' Addresses
@@ -669,4 +669,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo     Expires September 28, 2017              [Page 12]
+Thomson & Beverloo      Expires November 7, 2017               [Page 12]
