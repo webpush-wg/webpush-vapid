@@ -50,7 +50,7 @@ informative:
 An application server can voluntarily identify itself to a push service using
 the described technique.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
-to a single entity.  This can used to reduce the secrecy for push subscription
+to a single entity.  This can be used to reduce the secrecy for push subscription
 URLs by being able to restrict subscriptions to a specific application server.
 An application server is further able to include additional information that the
 operator of a push service can use to contact the operator of the application
@@ -61,7 +61,7 @@ server.
 
 # Introduction
 
-The Web Push protocol {{!I-D.ietf-webpush-protocol}} describes how an application
+The Web Push protocol {{!RFC8030}} describes how an application
 server is able to request that a push service deliver a push message to a user
 agent.
 
@@ -71,7 +71,7 @@ of a push message.  Requiring that the push service be able to authenticate
 application servers places an unwanted constraint on the interactions between
 user agents and application servers, who are the ultimate users of a push
 service.  That constraint would also degrade the privacy-preserving properties
-the protocol provides.  For these reasons, {{!I-D.ietf-webpush-protocol}} does not
+the protocol provides.  For these reasons, {{!RFC8030}} does not
 define a mandatory system for authentication of application servers.
 
 An unfortunate consequence of this design is that a push service is exposed to a
@@ -118,7 +118,7 @@ It's not shouting, when they are capitalized, they have the special meaning
 described in {{!RFC2119}}.
 
 The terms "push message", "push service", "push subscription", "application
-server", and "user agent" are used as defined in {{!I-D.ietf-webpush-protocol}}.
+server", and "user agent" are used as defined in {{!RFC8030}}.
 
 
 # Application Server Self-Identification {#jwt}
@@ -139,8 +139,8 @@ number of claims as follows:
    reusable for all push resource URLs that share the same origin.
 
  * An "exp" (Expiry) claim MUST be included with the time after which the token
-   expires.  This limits the time that a token over which a token is valid.  An
-   "exp" claim MUST NOT be more than 24 hours from the time of the request.
+   expires.  This limits the time over which a token is valid.  An "exp" claim
+   MUST NOT be more than 24 hours from the time of the request.
 
 This JWT is included in an Authorization header field, using an auth-scheme of
 "vapid".  A push service MAY reject a request with a 403 (Forbidden) status
@@ -169,7 +169,7 @@ field, the size of additional claims SHOULD be kept as small as possible.
 ## Example
 
 An application server requests the delivery of a push message as described in
-{{!I-D.ietf-webpush-protocol}}.  If the application server wishes to self-identify,
+{{!RFC8030}}.  If the application server wishes to self-identify,
 it includes an Authorization header field with credentials that use the
 "vapid" authentication scheme ({{auth}}).
 
@@ -234,7 +234,7 @@ be ignored.  The `realm` parameter is ignored for this authentication scheme.
 
 
 This authentication scheme is intended for use by an application server when
-using the Web Push protocol {{?I-D.ietf-webpush-protocol}}, but it could be
+using the Web Push protocol {{?RFC8030}}, but it could be
 used in other contexts if applicable.
 
 
@@ -296,7 +296,7 @@ in the uncompressed form {{X9.62}} and base64url encoded {{!RFC7515}}.  The MIME
 media type of the body is set to "application/json".
 
 The example in {{ex-restrict}} shows a restriction to the key used in
-{{ex-push}}.  Extra whitespace is added to to meet formatting constraints.
+{{ex-push}}.  Extra whitespace is added to meet formatting constraints.
 
 ~~~
 POST /subscribe/ HTTP/1.1
@@ -381,7 +381,7 @@ Notes:
 
 ## Vapid Authentication Scheme Parameters
 
-This creates a "Vapid Authentication Scheme Parameters" registry for
+This document creates a "Vapid Authentication Scheme Parameters" registry for
 parameters to the "vapid" authentication scheme.  This registry is under the
 "WebPush Parameters" grouping.  The registry operates on the "Specification
 Required" policy {{!RFC5226}}.
