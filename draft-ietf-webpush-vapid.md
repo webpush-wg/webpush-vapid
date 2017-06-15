@@ -340,6 +340,10 @@ Credentials are invalid if:
 A push service MUST NOT forward the JWT or public key to the user agent when
 delivering the push message.
 
+An application server that needs to replace its signing key needs to create a
+new subscription that is restricted to the updated key.  Application servers
+need to remember the key that was used when creating a given subscription.
+
 
 # Security Considerations {#security}
 
