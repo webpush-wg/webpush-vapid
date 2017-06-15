@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: November 7, 2017                                         Google
-                                                            May 06, 2017
+Expires: December 17, 2017                                        Google
+                                                           June 15, 2017
 
 
         Voluntary Application Server Identification for Web Push
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 7, 2017.
+   This Internet-Draft will expire on December 17, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 1]
+Thomson & Beverloo      Expires December 17, 2017               [Page 1]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 2]
+Thomson & Beverloo      Expires December 17, 2017               [Page 2]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
    requests from application servers can be indirectly attributed to
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification                  May 2017
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 3]
+Thomson & Beverloo      Expires December 17, 2017               [Page 3]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
 2.  Application Server Self-Identification
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification                  May 2017
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 4]
+Thomson & Beverloo      Expires December 17, 2017               [Page 4]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
 2.3.  Example
@@ -277,16 +277,16 @@ Internet-Draft             Self Identification                  May 2017
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 5]
+Thomson & Beverloo      Expires December 17, 2017               [Page 5]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
 3.  Vapid Authentication Scheme
 
    A new "vapid" HTTP authentication scheme [RFC7235] is defined.  This
    authentication scheme carries a signed JWT, as described in
-   Section 2, plus the key that signed that authentication scheme.
+   Section 2, plus the key that signed that JWT.
 
    This authentication scheme is for origin-server authentication only.
    Therefore, this authentication scheme MUST NOT be used with the
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification                  May 2017
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 6]
+Thomson & Beverloo      Expires December 17, 2017               [Page 6]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
    Some implementations permit the same P-256 key to be used for signing
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification                  May 2017
 
 
 
-Thomson & Beverloo      Expires November 7, 2017                [Page 7]
+Thomson & Beverloo      Expires December 17, 2017               [Page 7]
 
-Internet-Draft             Self Identification                  May 2017
+Internet-Draft             Self Identification                 June 2017
 
 
    An application might use the Web Push API [API] to provide the user
@@ -427,6 +427,11 @@ Internet-Draft             Self Identification                  May 2017
    A push service MUST NOT forward the JWT or public key to the user
    agent when delivering the push message.
 
+   An application server that needs to replace its signing key needs to
+   create a new subscription that is restricted to the updated key.
+   Application servers need to remember the key that was used when
+   creating a given subscription.
+
 5.  Security Considerations
 
    This authentication scheme is vulnerable to replay attacks if an
@@ -437,19 +442,19 @@ Internet-Draft             Self Identification                  May 2017
 
    An application server might offer falsified contact information.  A
    push service operator therefore cannot use the presence of
+
+
+
+Thomson & Beverloo      Expires December 17, 2017               [Page 8]
+
+Internet-Draft             Self Identification                 June 2017
+
+
    unvalidated contact information as input to any security-critical
    decision-making process.
 
    Validation of a signature on the JWT requires a non-trivial amount of
    computation.  For something that might be used to identify legitimate
-
-
-
-Thomson & Beverloo      Expires November 7, 2017                [Page 8]
-
-Internet-Draft             Self Identification                  May 2017
-
-
    requests under denial of service attack conditions, this is not
    ideal.  Application servers are therefore encouraged to reuse tokens,
    which permits the push service to cache the results of signature
@@ -488,6 +493,19 @@ Internet-Draft             Self Identification                  May 2017
 
    This registry initially contains the following entries:
 
+
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires December 17, 2017               [Page 9]
+
+Internet-Draft             Self Identification                 June 2017
+
+
    +---------------+-------------------------+-------------------------+
    | Parameter     | Purpose                 | Specification           |
    | Name          |                         |                         |
@@ -498,13 +516,6 @@ Internet-Draft             Self Identification                  May 2017
    | k             | ECDSA signing key       | [[RFC-to-be]], Section  |
    |               |                         | 3.2                     |
    +---------------+-------------------------+-------------------------+
-
-
-
-Thomson & Beverloo      Expires November 7, 2017                [Page 9]
-
-Internet-Draft             Self Identification                  May 2017
-
 
 7.  Acknowledgements
 
@@ -542,6 +553,15 @@ Internet-Draft             Self Identification                  May 2017
               DOI 10.17487/RFC6454, December 2011,
               <http://www.rfc-editor.org/info/rfc6454>.
 
+
+
+
+
+Thomson & Beverloo      Expires December 17, 2017              [Page 10]
+
+Internet-Draft             Self Identification                 June 2017
+
+
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
               2014, <http://www.rfc-editor.org/info/rfc7159>.
@@ -550,17 +570,6 @@ Internet-Draft             Self Identification                  May 2017
               Protocol (HTTP/1.1): Message Syntax and Routing",
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <http://www.rfc-editor.org/info/rfc7230>.
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires November 7, 2017               [Page 10]
-
-Internet-Draft             Self Identification                  May 2017
-
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
@@ -602,21 +611,16 @@ Internet-Draft             Self Identification                  May 2017
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
               <http://www.rfc-editor.org/info/rfc3339>.
 
+
+
+Thomson & Beverloo      Expires December 17, 2017              [Page 11]
+
+Internet-Draft             Self Identification                 June 2017
+
+
    [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
               DOI 10.17487/RFC7517, May 2015,
               <http://www.rfc-editor.org/info/rfc7517>.
-
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires November 7, 2017               [Page 11]
-
-Internet-Draft             Self Identification                  May 2017
-
 
 Authors' Addresses
 
@@ -665,8 +669,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Thomson & Beverloo      Expires November 7, 2017               [Page 12]
+Thomson & Beverloo      Expires December 17, 2017              [Page 12]
