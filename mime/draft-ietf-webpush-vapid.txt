@@ -87,7 +87,7 @@ Table of Contents
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  11
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  12
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  13
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
@@ -374,8 +374,25 @@ Internet-Draft             Self Identification                 June 2017
    is set to "application/webpush-options+json" (see Section 6.3 for
    registration of this media type).
 
+   A push service MUST ignore the body of a request that uses a
+   different media type.  For the "application/webpush-options+json"
+   media type, a push service MUST ignore any members on this object
+   that it does not understand.
+
    The example in Figure 3 shows a restriction to the key used in
    Figure 1.  Extra whitespace is added to meet formatting constraints.
+
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires December 18, 2017               [Page 7]
+
+Internet-Draft             Self Identification                 June 2017
+
 
    POST /subscribe/ HTTP/1.1
    Host: push.example.net
@@ -386,13 +403,6 @@ Internet-Draft             Self Identification                 June 2017
                F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 
                     Figure 3: Example Subscribe Request
-
-
-
-Thomson & Beverloo      Expires December 18, 2017               [Page 7]
-
-Internet-Draft             Self Identification                 June 2017
-
 
    An application might use the Web Push API [API] to provide the user
    agent with a public key.
@@ -432,6 +442,14 @@ Internet-Draft             Self Identification                 June 2017
    This authentication scheme is vulnerable to replay attacks if an
    attacker can acquire a valid JWT.  Applying narrow limits to the
    period over which a replayable token can be reused limits the
+
+
+
+Thomson & Beverloo      Expires December 18, 2017               [Page 8]
+
+Internet-Draft             Self Identification                 June 2017
+
+
    potential value of a stolen token to an attacker and can increase the
    difficulty of stealing a token.
 
@@ -442,14 +460,6 @@ Internet-Draft             Self Identification                 June 2017
 
    Validation of a signature on the JWT requires a non-trivial amount of
    computation.  For something that might be used to identify legitimate
-
-
-
-Thomson & Beverloo      Expires December 18, 2017               [Page 8]
-
-Internet-Draft             Self Identification                 June 2017
-
-
    requests under denial of service attack conditions, this is not
    ideal.  Application servers are therefore encouraged to reuse tokens,
    which permits the push service to cache the results of signature
@@ -488,16 +498,6 @@ Internet-Draft             Self Identification                 June 2017
    Purpose (optional):  A brief identifying the purpose of the
       parameter.
 
-   Specification:  A link to the specification that defines the format
-      and semantics of the parameter.
-
-   This registry initially contains the following entries:
-
-
-
-
-
-
 
 
 
@@ -505,6 +505,11 @@ Thomson & Beverloo      Expires December 18, 2017               [Page 9]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   Specification:  A link to the specification that defines the format
+      and semantics of the parameter.
+
+   This registry initially contains the following entries:
 
    +---------------+-------------------------+-------------------------+
    | Parameter     | Purpose                 | Specification           |
@@ -550,17 +555,16 @@ Internet-Draft             Self Identification                 June 2017
 
       Deprecated alias names for this type:  n/a
 
-      Magic number(s):  n/a
-
-      File extension(s):  .json
-
-
 
 
 Thomson & Beverloo      Expires December 18, 2017              [Page 10]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+      Magic number(s):  n/a
+
+      File extension(s):  .json
 
       Macintosh file type code(s):  TEXT
 
@@ -607,16 +611,16 @@ Internet-Draft             Self Identification                 June 2017
               URI Scheme", RFC 6068, DOI 10.17487/RFC6068, October 2010,
               <http://www.rfc-editor.org/info/rfc6068>.
 
-   [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
-              DOI 10.17487/RFC6454, December 2011,
-              <http://www.rfc-editor.org/info/rfc6454>.
-
 
 
 Thomson & Beverloo      Expires December 18, 2017              [Page 11]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
+              DOI 10.17487/RFC6454, December 2011,
+              <http://www.rfc-editor.org/info/rfc6454>.
 
    [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
               Specifications and Registration Procedures", BCP 13,
@@ -658,10 +662,6 @@ Internet-Draft             Self Identification                 June 2017
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
 
-8.2.  Informative References
-
-   [API]      van Ouwerkerk, M. and M. Thomson, "Web Push API", 2015,
-              <https://w3c.github.io/push-api/>.
 
 
 
@@ -673,6 +673,11 @@ Thomson & Beverloo      Expires December 18, 2017              [Page 12]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+8.2.  Informative References
+
+   [API]      van Ouwerkerk, M. and M. Thomson, "Web Push API", 2015,
+              <https://w3c.github.io/push-api/>.
 
    [I-D.ietf-webpush-encryption]
               Thomson, M., "Message Encryption for Web Push", draft-
@@ -699,11 +704,6 @@ Authors' Addresses
    Google
 
    Email: beverloo@google.com
-
-
-
-
-
 
 
 

@@ -525,7 +525,8 @@ JWK = { "crv":"P-256",
 </h2>
 <p id="rfc.section.4.1.p.1">The user agent includes the public key of the application server when requesting the creation of a push subscription.  This restricts use of the resulting subscription to application servers that are able to provide proof of possession for the corresponding private key.</p>
 <p id="rfc.section.4.1.p.2">The public key is then added to the request to create a push subscription.  The push subscription request is extended to include a body.  The body of the request is a JSON object as described in <a href="#RFC7159" class="xref">[RFC7159]</a>.  A &#8220;vapid&#8221; member is added to this JSON object, containing the public key on the P-256 curve, encoded in the uncompressed form <a href="#X9.62" class="xref">[X9.62]</a> and base64url encoded <a href="#RFC7515" class="xref">[RFC7515]</a>.  The media type of the body is set to &#8220;application/webpush-options+json&#8221; (see <a href="#mime" class="xref">Section 6.3</a> for registration of this media type).</p>
-<p id="rfc.section.4.1.p.3">The example in <a href="#ex-restrict" class="xref">Figure 3</a> shows a restriction to the key used in <a href="#ex-push" class="xref">Figure 1</a>.  Extra whitespace is added to meet formatting constraints.</p>
+<p id="rfc.section.4.1.p.3">A push service MUST ignore the body of a request that uses a different media type.  For the &#8220;application/webpush-options+json&#8221; media type, a push service MUST ignore any members on this object that it does not understand.</p>
+<p id="rfc.section.4.1.p.4">The example in <a href="#ex-restrict" class="xref">Figure 3</a> shows a restriction to the key used in <a href="#ex-push" class="xref">Figure 1</a>.  Extra whitespace is added to meet formatting constraints.</p>
 <div id="rfc.figure.3"></div>
 <div id="ex-restrict"></div>
 <pre>
@@ -538,7 +539,7 @@ Content-Length: 104
             F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 </pre>
 <p class="figure">Figure 3: Example Subscribe Request</p>
-<p id="rfc.section.4.1.p.4">An application might use the Web Push API <a href="#API" class="xref">[API]</a> to provide the user agent with a public key.</p>
+<p id="rfc.section.4.1.p.5">An application might use the Web Push API <a href="#API" class="xref">[API]</a> to provide the user agent with a public key.</p>
 <h2 id="rfc.section.4.2">
 <a href="#rfc.section.4.2">4.2.</a> <a href="#using-restricted-subscriptions" id="using-restricted-subscriptions">Using Restricted Subscriptions</a>
 </h2>
