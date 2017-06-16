@@ -296,6 +296,10 @@ in the uncompressed form {{X9.62}} and base64url encoded {{!RFC7515}}.  The
 media type of the body is set to "application/webpush-options+json" (see
 {{mime}} for registration of this media type).
 
+A push service MUST ignore the body of a request that uses a different media
+type.  For the "application/webpush-options+json" media type, a push service
+MUST ignore any members on this object that it does not understand.
+
 The example in {{ex-restrict}} shows a restriction to the key used in
 {{ex-push}}.  Extra whitespace is added to meet formatting constraints.
 
