@@ -416,4 +416,4 @@ This registry initially contains the following entries:
 
 This document would have been much worse than it currently is if not for the
 contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache,
-and others.
+Adam Roach, and others.
