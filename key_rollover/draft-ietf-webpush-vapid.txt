@@ -460,6 +460,13 @@ Internet-Draft             Self Identification                 June 2017
    which permits the push service to cache the results of signature
    validation.
 
+   An application server that changes its signing key breaks linkability
+   between push messages that it sends under the different keys.  A push
+   service that relies on a consistent identity for application servers
+   might categorize requests made with new keys differently.  Gradual
+   migration to a new signing key reduces the chances that requests that
+   use the new key will be categorized as abusive.
+
 6.  IANA Considerations
 
    This document registers the "vapid" authentication scheme in the
@@ -491,13 +498,6 @@ Internet-Draft             Self Identification                 June 2017
    Specification:  A link to the specification that defines the format
       and semantics of the parameter.
 
-   This registry initially contains the following entries:
-
-
-
-
-
-
 
 
 
@@ -505,6 +505,8 @@ Thomson & Beverloo      Expires December 18, 2017               [Page 9]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   This registry initially contains the following entries:
 
    +---------------+-------------------------+-------------------------+
    | Parameter     | Purpose                 | Specification           |
@@ -552,8 +554,6 @@ Internet-Draft             Self Identification                 June 2017
    [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
               DOI 10.17487/RFC6454, December 2011,
               <http://www.rfc-editor.org/info/rfc6454>.
-
-
 
 
 
