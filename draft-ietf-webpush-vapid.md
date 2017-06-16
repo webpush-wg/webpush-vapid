@@ -292,8 +292,9 @@ The public key is then added to the request to create a push subscription.  The
 push subscription request is extended to include a body.  The body of the
 request is a JSON object as described in {{!RFC7159}}.  A "vapid" member is
 added to this JSON object, containing the public key on the P-256 curve, encoded
-in the uncompressed form {{X9.62}} and base64url encoded {{!RFC7515}}.  The MIME
-media type of the body is set to "application/json".
+in the uncompressed form {{X9.62}} and base64url encoded {{!RFC7515}}.  The
+media type of the body is set to "application/webpush-options+json" (see
+{{mime}} for registration of this media type).
 
 The example in {{ex-restrict}} shows a restriction to the key used in
 {{ex-push}}.  Extra whitespace is added to meet formatting constraints.
@@ -301,7 +302,7 @@ The example in {{ex-restrict}} shows a restriction to the key used in
 ~~~
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Content-Type: application/json;charset=utf-8
+Content-Type: application/webpush-optjons+json;charset=utf-8
 Content-Length: 104
 
 { "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
@@ -362,6 +363,12 @@ to cache the results of signature validation.
 
 # IANA Considerations {#iana}
 
+This document registers a new authentication scheme, a registry for parameters
+of that scheme, and media type for push options.
+
+
+## Vapid Authentication Scheme Registration
+
 This document registers the "vapid" authentication scheme in the "Hypertext
 Transfer Protocol (HTTP) Authentication Scheme Registry" established in
 {{!RFC7235}}.
@@ -406,7 +413,91 @@ This registry initially contains the following entries:
 | Parameter Name | Purpose | Specification |
 |:-|:-|:-|
 | t | JWT authentication token | \[\[RFC-to-be]], {{token}} |
-| k | ECDSA signing key | \[\[RFC-to-be]], {{key}} |
+| k | signing key | \[\[RFC-to-be]], {{key}} |
+
+
+## application/webpush-options+json Media Type Registration {#mime}
+
+This document registers the "application/webpush-options+json" media type in the
+"Media Types" registry following the process described in {{!RFC6838}}.
+
+Type name:
+
+: application
+
+Subtype name:
+
+: webpush-options+json
+
+Required parameters:
+
+: n/a
+
+Optional parameters:
+
+: n/a
+
+Encoding considerations:
+
+: binary
+
+Security considerations:
+
+: See {{!RFC7159}} for security considerations specific to JSON.
+
+Interoperability considerations:
+
+: See {{!RFC7159}} for interoperability considerations specific to JSON.
+
+Published specification:
+
+: This document.
+
+Applications that use this media type:
+
+: Web browsers, via the Web Push Protocol {{!RFC8030}}.
+
+Fragment identifier considerations:
+
+: None, see {{!RFC7159}}.
+
+Additional information:
+
+: Deprecated alias names for this type:
+
+  : n/a
+
+  Magic number(s):
+
+  : n/a
+
+  File extension(s):
+
+  : .json
+
+  Macintosh file type code(s):
+
+  : TEXT
+
+Person & email address to contact for further information:
+
+: Martin Thomson (martin.thomson@gmail.com)
+
+Intended usage:
+
+: LIMITED USE
+
+Restrictions on usage:
+
+: For use with the Web Push Protocol {{!RFC8030}}.
+
+Author:
+
+: See "Authors' Addresses" section of this document.
+
+Change controller:
+
+: Internet Engineering Task Force
 
 
 # Acknowledgements {#ack}
