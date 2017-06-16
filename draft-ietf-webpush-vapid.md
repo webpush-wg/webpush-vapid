@@ -166,6 +166,15 @@ names (see Sections 4.2 and 4.3 of {{!RFC7519}}).  Since the JWT is in a header
 field, the size of additional claims SHOULD be kept as small as possible.
 
 
+## Cryptographic Agility
+
+The "vapid" authentication scheme is used to identify the specific profile of
+JWT defined in this document.  A different authentication scheme is needed to
+update the signature algorithm or other parameters.  This ensures that existing
+mechanisms for negotiating authentication scheme can be used rather than
+defining new parameter negotiation mechanisms.
+
+
 ## Example
 
 An application server requests the delivery of a push message as described in
