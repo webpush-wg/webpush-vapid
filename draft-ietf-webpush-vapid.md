@@ -1,5 +1,5 @@
 ---
-title: Voluntary Application Server Identification for Web Push
+title: Voluntary Application Server Identification (VAPID) for Web Push
 abbrev: Self Identification
 docname: draft-ietf-webpush-vapid-latest
 category: std
