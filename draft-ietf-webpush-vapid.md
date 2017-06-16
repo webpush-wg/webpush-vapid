@@ -363,6 +363,13 @@ under denial of service attack conditions, this is not ideal.  Application
 servers are therefore encouraged to reuse tokens, which permits the push service
 to cache the results of signature validation.
 
+An application server that changes its signing key breaks linkability between
+push messages that it sends under the different keys.  A push service that
+relies on a consistent identity for application servers might categorize
+requests made with new keys differently.  Gradual migration to a new signing key
+reduces the chances that requests that use the new key will be categorized as
+abusive.
+
 
 # IANA Considerations {#iana}
 
