@@ -50,14 +50,13 @@ informative:
 
 --- abstract
 
-An application server can voluntarily identify itself to a push service using
-the described technique.  This identification information can be used by the
+An application server can use the method described to voluntarily identify
+itself to a push service.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
-to a single entity.  This can be used to reduce the secrecy for push subscription
-URLs by being able to restrict subscriptions to a specific application server.
-An application server is further able to include additional information that the
-operator of a push service can use to contact the operator of the application
-server.
+to a single entity.  An application server can include additional information
+that the operator of a push service can use to contact the operator of the
+application server.  This identification information can be used to restrict the
+use of a push subscription a single application server.
 
 
 --- middle
