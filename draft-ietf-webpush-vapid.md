@@ -201,12 +201,12 @@ The `t` parameter of the Authorization header field contains a JWT; the `k`
 parameter includes the base64url-encoded key that signed that token.  The JWT
 input values and the JWK {{?RFC7517}} corresponding to the signing key are shown
 in {{ex-decoded}} with additional whitespace added for readability purposes.
-This JWT would be valid until 2016-01-21T01:53:25Z {{?RFC3339}}.
+This JWT would be valid until 2016-01-23T04:36:08Z {{?RFC3339}}.
 
 ~~~
 JWT header = { "typ": "JWT", "alg": "ES256" }
 JWT body = { "aud": "https://push.example.net",
-             "exp": 1453341205,
+             "exp": 1453523768,
              "sub": "mailto:push@example.com" }
 JWK = { "crv":"P-256",
         "kty":"EC",
