@@ -37,12 +37,15 @@ normative:
 
 informative:
   API:
-    title: "Web Push API"
+    title: "Push API"
     author:
-      - ins: M. van Ouwerkerk
+      - ins: P. Beverloo
       - ins: M. Thomson
+      - ins: M. van Ouwerkerk
+      - ins: B. Sullivan
+      - ins: E. Fullea
     target: "https://w3c.github.io/push-api/"
-    date: 2015
+    date: 2017-05
 
 
 --- abstract
