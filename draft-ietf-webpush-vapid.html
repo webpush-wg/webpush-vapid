@@ -283,7 +283,8 @@ address {
 <link href="#rfc.section.2" rel="Chapter" title="2 Application Server Self-Identification">
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Application Server Contact Information">
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 Additional Claims">
-<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Example">
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Cryptographic Agility">
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Example">
 <link href="#rfc.section.3" rel="Chapter" title="3 Vapid Authentication Scheme">
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Token Parameter (t)">
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Public Key Parameter (k)">
@@ -305,7 +306,7 @@ address {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-6-16" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-6-18" />
   <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can be used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
   <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can be used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
 
@@ -329,12 +330,12 @@ address {
 <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-<td class="left">Expires: December 18, 2017</td>
+<td class="left">Expires: December 20, 2017</td>
 <td class="right">Google</td>
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">June 16, 2017</td>
+<td class="right">June 18, 2017</td>
 </tr>
 
     	
@@ -350,7 +351,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 18, 2017.</p>
+<p>This Internet-Draft will expire on December 20, 2017.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -372,7 +373,9 @@ address {
 </li>
 <li>2.2.   <a href="#rfc.section.2.2">Additional Claims</a>
 </li>
-<li>2.3.   <a href="#rfc.section.2.3">Example</a>
+<li>2.3.   <a href="#rfc.section.2.3">Cryptographic Agility</a>
+</li>
+<li>2.4.   <a href="#rfc.section.2.4">Example</a>
 </li>
 </ul><li>3.   <a href="#rfc.section.3">Vapid Authentication Scheme</a>
 </li>
@@ -448,9 +451,13 @@ address {
 </h2>
 <p id="rfc.section.2.2.p.1">An application server MAY include additional claims using public or private names (see Sections 4.2 and 4.3 of <a href="#RFC7519" class="xref">[RFC7519]</a>).  Since the JWT is in a header field, the size of additional claims SHOULD be kept as small as possible.</p>
 <h2 id="rfc.section.2.3">
-<a href="#rfc.section.2.3">2.3.</a> <a href="#example" id="example">Example</a>
+<a href="#rfc.section.2.3">2.3.</a> <a href="#cryptographic-agility" id="cryptographic-agility">Cryptographic Agility</a>
 </h2>
-<p id="rfc.section.2.3.p.1">An application server requests the delivery of a push message as described in <a href="#RFC8030" class="xref">[RFC8030]</a>.  If the application server wishes to self-identify, it includes an Authorization header field with credentials that use the &#8220;vapid&#8221; authentication scheme (<a href="#auth" class="xref">Section 3</a>).</p>
+<p id="rfc.section.2.3.p.1">The &#8220;vapid&#8221; authentication scheme is used to identify the specific profile of JWT defined in this document.  A different authentication scheme is needed to update the signature algorithm or other parameters.  This ensures that existing mechanisms for negotiating authentication scheme can be used rather than defining new parameter negotiation mechanisms.</p>
+<h2 id="rfc.section.2.4">
+<a href="#rfc.section.2.4">2.4.</a> <a href="#example" id="example">Example</a>
+</h2>
+<p id="rfc.section.2.4.p.1">An application server requests the delivery of a push message as described in <a href="#RFC8030" class="xref">[RFC8030]</a>.  If the application server wishes to self-identify, it includes an Authorization header field with credentials that use the &#8220;vapid&#8221; authentication scheme (<a href="#auth" class="xref">Section 3</a>).</p>
 <div id="rfc.figure.1"></div>
 <div id="ex-push"></div>
 <pre>
@@ -470,8 +477,8 @@ Authorization: vapid
 { encrypted push message }
 </pre>
 <p class="figure">Figure 1: Requesting Push Message Delivery with JWT</p>
-<p id="rfc.section.2.3.p.2">Note that the example header fields in this document include extra line wrapping to meet formatting constraints.</p>
-<p id="rfc.section.2.3.p.3">The <samp>t</samp> parameter of the Authorization header field contains a JWT; the <samp>k</samp> parameter includes the base64url-encoded key that signed that token.  The JWT input values and the JWK <a href="#RFC7517" class="xref">[RFC7517]</a> corresponding to the signing key are shown in <a href="#ex-decoded" class="xref">Figure 2</a> with additional whitespace added for readability purposes.  This JWT would be valid until 2016-01-21T01:53:25Z <a href="#RFC3339" class="xref">[RFC3339]</a>.</p>
+<p id="rfc.section.2.4.p.2">Note that the example header fields in this document include extra line wrapping to meet formatting constraints.</p>
+<p id="rfc.section.2.4.p.3">The <samp>t</samp> parameter of the Authorization header field contains a JWT; the <samp>k</samp> parameter includes the base64url-encoded key that signed that token.  The JWT input values and the JWK <a href="#RFC7517" class="xref">[RFC7517]</a> corresponding to the signing key are shown in <a href="#ex-decoded" class="xref">Figure 2</a> with additional whitespace added for readability purposes.  This JWT would be valid until 2016-01-21T01:53:25Z <a href="#RFC3339" class="xref">[RFC3339]</a>.</p>
 <div id="rfc.figure.2"></div>
 <div id="ex-decoded"></div>
 <pre>
