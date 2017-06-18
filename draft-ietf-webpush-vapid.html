@@ -293,7 +293,9 @@ address {
 <link href="#rfc.section.4.2" rel="Chapter" title="4.2 Using Restricted Subscriptions">
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations">
 <link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations">
-<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Vapid Authentication Scheme Parameters">
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Vapid Authentication Scheme Registration">
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Vapid Authentication Scheme Parameters">
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 application/webpush-options+json Media Type Registration">
 <link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgements">
 <link href="#rfc.references" rel="Chapter" title="8 References">
 <link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References">
@@ -393,7 +395,11 @@ address {
 </li>
 <li>6.   <a href="#rfc.section.6">IANA Considerations</a>
 </li>
-<ul><li>6.1.   <a href="#rfc.section.6.1">Vapid Authentication Scheme Parameters</a>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Vapid Authentication Scheme Registration</a>
+</li>
+<li>6.2.   <a href="#rfc.section.6.2">Vapid Authentication Scheme Parameters</a>
+</li>
+<li>6.3.   <a href="#rfc.section.6.3">application/webpush-options+json Media Type Registration</a>
 </li>
 </ul><li>7.   <a href="#rfc.section.7">Acknowledgements</a>
 </li>
@@ -525,21 +531,22 @@ JWK = { "crv":"P-256",
 <a href="#rfc.section.4.1">4.1.</a> <a href="#creating-a-restricted-push-subscription" id="creating-a-restricted-push-subscription">Creating a Restricted Push Subscription</a>
 </h2>
 <p id="rfc.section.4.1.p.1">The user agent includes the public key of the application server when requesting the creation of a push subscription.  This restricts use of the resulting subscription to application servers that are able to provide proof of possession for the corresponding private key.</p>
-<p id="rfc.section.4.1.p.2">The public key is then added to the request to create a push subscription.  The push subscription request is extended to include a body.  The body of the request is a JSON object as described in <a href="#RFC7159" class="xref">[RFC7159]</a>.  A &#8220;vapid&#8221; member is added to this JSON object, containing the public key on the P-256 curve, encoded in the uncompressed form <a href="#X9.62" class="xref">[X9.62]</a> and base64url encoded <a href="#RFC7515" class="xref">[RFC7515]</a>.  The MIME media type of the body is set to &#8220;application/json&#8221;.</p>
-<p id="rfc.section.4.1.p.3">The example in <a href="#ex-restrict" class="xref">Figure 3</a> shows a restriction to the key used in <a href="#ex-push" class="xref">Figure 1</a>.  Extra whitespace is added to meet formatting constraints.</p>
+<p id="rfc.section.4.1.p.2">The public key is then added to the request to create a push subscription.  The push subscription request is extended to include a body.  The body of the request is a JSON object as described in <a href="#RFC7159" class="xref">[RFC7159]</a>.  A &#8220;vapid&#8221; member is added to this JSON object, containing the public key on the P-256 curve, encoded in the uncompressed form <a href="#X9.62" class="xref">[X9.62]</a> and base64url encoded <a href="#RFC7515" class="xref">[RFC7515]</a>.  The media type of the body is set to &#8220;application/webpush-options+json&#8221; (see <a href="#mime" class="xref">Section 6.3</a> for registration of this media type).</p>
+<p id="rfc.section.4.1.p.3">A push service MUST ignore the body of a request that uses a different media type.  For the &#8220;application/webpush-options+json&#8221; media type, a push service MUST ignore any members on this object that it does not understand.</p>
+<p id="rfc.section.4.1.p.4">The example in <a href="#ex-restrict" class="xref">Figure 3</a> shows a restriction to the key used in <a href="#ex-push" class="xref">Figure 1</a>.  Extra whitespace is added to meet formatting constraints.</p>
 <div id="rfc.figure.3"></div>
 <div id="ex-restrict"></div>
 <pre>
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Content-Type: application/json;charset=utf-8
+Content-Type: application/webpush-optjons+json;charset=utf-8
 Content-Length: 104
 
 { "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
             F6YK5h4SDYic-dRuU_RCPCfA5aq9ojSwk5Y2EmClBPs" }
 </pre>
 <p class="figure">Figure 3: Example Subscribe Request</p>
-<p id="rfc.section.4.1.p.4">An application might use the Web Push API <a href="#API" class="xref">[API]</a> to provide the user agent with a public key.</p>
+<p id="rfc.section.4.1.p.5">An application might use the Web Push API <a href="#API" class="xref">[API]</a> to provide the user agent with a public key.</p>
 <h2 id="rfc.section.4.2">
 <a href="#rfc.section.4.2">4.2.</a> <a href="#using-restricted-subscriptions" id="using-restricted-subscriptions">Using Restricted Subscriptions</a>
 </h2>
@@ -566,7 +573,11 @@ Content-Length: 104
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#iana" id="iana">IANA Considerations</a>
 </h1>
-<p id="rfc.section.6.p.1">This document registers the &#8220;vapid&#8221; authentication scheme in the &#8220;Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry&#8221; established in <a href="#RFC7235" class="xref">[RFC7235]</a>.</p>
+<p id="rfc.section.6.p.1">This document registers a new authentication scheme, a registry for parameters of that scheme, and media type for push options.</p>
+<h2 id="rfc.section.6.1">
+<a href="#rfc.section.6.1">6.1.</a> <a href="#vapid-authentication-scheme-registration" id="vapid-authentication-scheme-registration">Vapid Authentication Scheme Registration</a>
+</h2>
+<p id="rfc.section.6.1.p.1">This document registers the &#8220;vapid&#8221; authentication scheme in the &#8220;Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry&#8221; established in <a href="#RFC7235" class="xref">[RFC7235]</a>.</p>
 <p></p>
 
 <dl>
@@ -578,11 +589,11 @@ Content-Length: 104
 <dt>Notes:</dt>
 <dd style="margin-left: 8">This scheme is origin-server only and does not define a challenge.</dd>
 </dl>
-<h2 id="rfc.section.6.1">
-<a href="#rfc.section.6.1">6.1.</a> <a href="#vapid-authentication-scheme-parameters" id="vapid-authentication-scheme-parameters">Vapid Authentication Scheme Parameters</a>
+<h2 id="rfc.section.6.2">
+<a href="#rfc.section.6.2">6.2.</a> <a href="#vapid-authentication-scheme-parameters" id="vapid-authentication-scheme-parameters">Vapid Authentication Scheme Parameters</a>
 </h2>
-<p id="rfc.section.6.1.p.1">This document creates a &#8220;Vapid Authentication Scheme Parameters&#8221; registry for parameters to the &#8220;vapid&#8221; authentication scheme.  This registry is under the &#8220;WebPush Parameters&#8221; grouping.  The registry operates on the &#8220;Specification Required&#8221; policy <a href="#RFC5226" class="xref">[RFC5226]</a>.</p>
-<p id="rfc.section.6.1.p.2">Registrations MUST include the following information:</p>
+<p id="rfc.section.6.2.p.1">This document creates a &#8220;Vapid Authentication Scheme Parameters&#8221; registry for parameters to the &#8220;vapid&#8221; authentication scheme.  This registry is under the &#8220;WebPush Parameters&#8221; grouping.  The registry operates on the &#8220;Specification Required&#8221; policy <a href="#RFC5226" class="xref">[RFC5226]</a>.</p>
+<p id="rfc.section.6.2.p.2">Registrations MUST include the following information:</p>
 <p></p>
 
 <dl>
@@ -594,7 +605,7 @@ Content-Length: 104
 <dt>Specification:</dt>
 <dd style="margin-left: 8">A link to the specification that defines the format and semantics of the parameter.</dd>
 </dl>
-<p id="rfc.section.6.1.p.4">This registry initially contains the following entries:</p>
+<p id="rfc.section.6.2.p.4">This registry initially contains the following entries:</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
 <thead><tr>
 <th class="left">Parameter Name</th>
@@ -610,12 +621,64 @@ Content-Length: 104
 </tr>
 <tr>
 <td class="left">k</td>
-<td class="left">ECDSA signing key</td>
+<td class="left">signing key</td>
 <td class="left">[[RFC-to-be]], <a href="#key" class="xref">Section 3.2</a>
 </td>
 </tr>
 </tbody>
 </table>
+<h2 id="rfc.section.6.3">
+<a href="#rfc.section.6.3">6.3.</a> <a href="#mime" id="mime">application/webpush-options+json Media Type Registration</a>
+</h2>
+<p id="rfc.section.6.3.p.1">This document registers the &#8220;application/webpush-options+json&#8221; media type in the &#8220;Media Types&#8221; registry following the process described in <a href="#RFC6838" class="xref">[RFC6838]</a>.</p>
+<p></p>
+
+<dl>
+<dt>Type name:</dt>
+<dd style="margin-left: 8">application</dd>
+<dt>Subtype name:</dt>
+<dd style="margin-left: 8">webpush-options+json</dd>
+<dt>Required parameters:</dt>
+<dd style="margin-left: 8">n/a</dd>
+<dt>Optional parameters:</dt>
+<dd style="margin-left: 8">n/a</dd>
+<dt>Encoding considerations:</dt>
+<dd style="margin-left: 8">binary</dd>
+<dt>Security considerations:</dt>
+<dd style="margin-left: 8">See <a href="#RFC7159" class="xref">[RFC7159]</a> for security considerations specific to JSON.</dd>
+<dt>Interoperability considerations:</dt>
+<dd style="margin-left: 8">See <a href="#RFC7159" class="xref">[RFC7159]</a> for interoperability considerations specific to JSON.</dd>
+<dt>Published specification:</dt>
+<dd style="margin-left: 8">This document.</dd>
+<dt>Applications that use this media type:</dt>
+<dd style="margin-left: 8">Web browsers, via the Web Push Protocol <a href="#RFC8030" class="xref">[RFC8030]</a>.</dd>
+<dt>Fragment identifier considerations:</dt>
+<dd style="margin-left: 8">None, see <a href="#RFC7159" class="xref">[RFC7159]</a>.</dd>
+<dt>Additional information:</dt>
+<dd style="margin-left: 8">
+<dl>
+<dt>Deprecated alias names for this type:</dt>
+<dd style="margin-left: 8">n/a</dd>
+<dt>Magic number(s):</dt>
+<dd style="margin-left: 8">n/a</dd>
+<dt>File extension(s):</dt>
+<dd style="margin-left: 8">.json</dd>
+<dt>Macintosh file type code(s):</dt>
+<dd style="margin-left: 8">TEXT</dd>
+</dl>
+<p> </p>
+</dd>
+<dt>Person &amp; email address to contact for further information:</dt>
+<dd style="margin-left: 8">Martin Thomson (martin.thomson@gmail.com)</dd>
+<dt>Intended usage:</dt>
+<dd style="margin-left: 8">LIMITED USE</dd>
+<dt>Restrictions on usage:</dt>
+<dd style="margin-left: 8">For use with the Web Push Protocol <a href="#RFC8030" class="xref">[RFC8030]</a>.</dd>
+<dt>Author:</dt>
+<dd style="margin-left: 8">See &#8220;Authors&#8217; Addresses&#8221; section of this document.</dd>
+<dt>Change controller:</dt>
+<dd style="margin-left: 8">Internet Engineering Task Force</dd>
+</dl>
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> <a href="#ack" id="ack">Acknowledgements</a>
 </h1>
@@ -654,6 +717,11 @@ Content-Length: 104
 <td class="reference"><b id="RFC6454">[RFC6454]</b></td>
 <td class="top">
 <a>Barth, A.</a>, "<a href="http://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>", RFC 6454, DOI 10.17487/RFC6454, December 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6838">[RFC6838]</b></td>
+<td class="top">
+<a>Freed, N.</a>, <a>Klensin, J.</a> and <a>T. Hansen</a>, "<a href="http://tools.ietf.org/html/rfc6838">Media Type Specifications and Registration Procedures</a>", BCP 13, RFC 6838, DOI 10.17487/RFC6838, January 2013.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC7159">[RFC7159]</b></td>

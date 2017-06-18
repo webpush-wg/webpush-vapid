@@ -81,12 +81,14 @@ Table of Contents
      4.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   8
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-     6.1.  Vapid Authentication Scheme Parameters  . . . . . . . . .   9
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  12
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
+     6.1.  Vapid Authentication Scheme Registration  . . . . . . . .   9
+     6.2.  Vapid Authentication Scheme Parameters  . . . . . . . . .  10
+     6.3.  application/webpush-options+json Media Type Registration   10
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  12
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  13
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
 
@@ -104,8 +106,6 @@ Table of Contents
    the protocol provides.  For these reasons, [RFC8030] does not define
    a mandatory system for authentication of application servers.
 
-   An unfortunate consequence of this design is that a push service is
-   exposed to a greater risk of denial of service attack.  While
 
 
 
@@ -114,6 +114,8 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 2]
 Internet-Draft             Self Identification                 June 2017
 
 
+   An unfortunate consequence of this design is that a push service is
+   exposed to a greater risk of denial of service attack.  While
    requests from application servers can be indirectly attributed to
    user agents, this is not always efficient or even sufficient.
    Providing more information about the application server directly to a
@@ -159,9 +161,7 @@ Internet-Draft             Self Identification                 June 2017
    document.  It's not shouting, when they are capitalized, they have
    the special meaning described in [RFC2119].
 
-   The terms "push message", "push service", "push subscription",
-   "application server", and "user agent" are used as defined in
-   [RFC8030].
+
 
 
 
@@ -169,6 +169,10 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 3]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   The terms "push message", "push service", "push subscription",
+   "application server", and "user agent" are used as defined in
+   [RFC8030].
 
 2.  Application Server Self-Identification
 
@@ -213,10 +217,6 @@ Internet-Draft             Self Identification                 June 2017
 
    An application server MAY include additional claims using public or
    private names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT
-   is in a header field, the size of additional claims SHOULD be kept as
-   small as possible.
-
-
 
 
 
@@ -225,6 +225,9 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 4]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   is in a header field, the size of additional claims SHOULD be kept as
+   small as possible.
 
 2.3.  Cryptographic Agility
 
@@ -268,9 +271,6 @@ Internet-Draft             Self Identification                 June 2017
    the signing key are shown in Figure 2 with additional whitespace
    added for readability purposes.  This JWT would be valid until
    2016-01-23T04:36:08Z [RFC3339].
-
-
-
 
 
 
@@ -380,12 +380,12 @@ Internet-Draft             Self Identification                 June 2017
    body.  The body of the request is a JSON object as described in
    [RFC7159].  A "vapid" member is added to this JSON object, containing
    the public key on the P-256 curve, encoded in the uncompressed form
-   [X9.62] and base64url encoded [RFC7515].  The MIME media type of the
-   body is set to "application/json".
+   [X9.62] and base64url encoded [RFC7515].  The media type of the body
+   is set to "application/webpush-options+json" (see Section 6.3 for
+   registration of this media type).
 
-   The example in Figure 3 shows a restriction to the key used in
-   Figure 1.  Extra whitespace is added to meet formatting constraints.
-
+   A push service MUST ignore the body of a request that uses a
+   different media type.  For the "application/webpush-options+json"
 
 
 
@@ -394,9 +394,15 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 7]
 Internet-Draft             Self Identification                 June 2017
 
 
+   media type, a push service MUST ignore any members on this object
+   that it does not understand.
+
+   The example in Figure 3 shows a restriction to the key used in
+   Figure 1.  Extra whitespace is added to meet formatting constraints.
+
    POST /subscribe/ HTTP/1.1
    Host: push.example.net
-   Content-Type: application/json;charset=utf-8
+   Content-Type: application/webpush-optjons+json;charset=utf-8
    Content-Length: 104
 
    { "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
@@ -437,18 +443,17 @@ Internet-Draft             Self Identification                 June 2017
    A push service MUST NOT forward the JWT or public key to the user
    agent when delivering the push message.
 
-   An application server that needs to replace its signing key needs to
-   create a new subscription that is restricted to the updated key.
-   Application servers need to remember the key that was used when
-   creating a given subscription.
-
-
 
 
 Thomson & Beverloo      Expires December 20, 2017               [Page 8]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   An application server that needs to replace its signing key needs to
+   create a new subscription that is restricted to the updated key.
+   Application servers need to remember the key that was used when
+   creating a given subscription.
 
 5.  Security Considerations
 
@@ -479,6 +484,11 @@ Internet-Draft             Self Identification                 June 2017
 
 6.  IANA Considerations
 
+   This document registers a new authentication scheme, a registry for
+   parameters of that scheme, and media type for push options.
+
+6.1.  Vapid Authentication Scheme Registration
+
    This document registers the "vapid" authentication scheme in the
    "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry"
    established in [RFC7235].
@@ -487,17 +497,7 @@ Internet-Draft             Self Identification                 June 2017
 
    Pointer to specification text:  Section 3 of this document
 
-   Notes:  This scheme is origin-server only and does not define a
-      challenge.
 
-6.1.  Vapid Authentication Scheme Parameters
-
-   This document creates a "Vapid Authentication Scheme Parameters"
-   registry for parameters to the "vapid" authentication scheme.  This
-   registry is under the "WebPush Parameters" grouping.  The registry
-   operates on the "Specification Required" policy [RFC5226].
-
-   Registrations MUST include the following information:
 
 
 
@@ -505,6 +505,18 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 9]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   Notes:  This scheme is origin-server only and does not define a
+      challenge.
+
+6.2.  Vapid Authentication Scheme Parameters
+
+   This document creates a "Vapid Authentication Scheme Parameters"
+   registry for parameters to the "vapid" authentication scheme.  This
+   registry is under the "WebPush Parameters" grouping.  The registry
+   operates on the "Specification Required" policy [RFC5226].
+
+   Registrations MUST include the following information:
 
    Parameter Name:  A name for the parameter, which conforms to the
       "token" grammar [RFC7230]
@@ -524,9 +536,67 @@ Internet-Draft             Self Identification                 June 2017
    | t             | JWT authentication      | [[RFC-to-be]], Section  |
    |               | token                   | 3.1                     |
    |               |                         |                         |
-   | k             | ECDSA signing key       | [[RFC-to-be]], Section  |
+   | k             | signing key             | [[RFC-to-be]], Section  |
    |               |                         | 3.2                     |
    +---------------+-------------------------+-------------------------+
+
+6.3.  application/webpush-options+json Media Type Registration
+
+   This document registers the "application/webpush-options+json" media
+   type in the "Media Types" registry following the process described in
+   [RFC6838].
+
+   Type name:  application
+
+   Subtype name:  webpush-options+json
+
+   Required parameters:  n/a
+
+   Optional parameters:  n/a
+
+
+
+
+Thomson & Beverloo      Expires December 20, 2017              [Page 10]
+
+Internet-Draft             Self Identification                 June 2017
+
+
+   Encoding considerations:  binary
+
+   Security considerations:  See [RFC7159] for security considerations
+      specific to JSON.
+
+   Interoperability considerations:  See [RFC7159] for interoperability
+      considerations specific to JSON.
+
+   Published specification:  This document.
+
+   Applications that use this media type:  Web browsers, via the Web
+      Push Protocol [RFC8030].
+
+   Fragment identifier considerations:  None, see [RFC7159].
+
+   Additional information:
+
+      Deprecated alias names for this type:  n/a
+
+      Magic number(s):  n/a
+
+      File extension(s):  .json
+
+      Macintosh file type code(s):  TEXT
+
+   Person & email address to contact for further information:  Martin
+      Thomson (martin.thomson@gmail.com)
+
+   Intended usage:  LIMITED USE
+
+   Restrictions on usage:  For use with the Web Push Protocol [RFC8030].
+
+   Author:  See "Authors' Addresses" section of this document.
+
+   Change controller:  Internet Engineering Task Force
 
 7.  Acknowledgements
 
@@ -535,6 +605,18 @@ Internet-Draft             Self Identification                 June 2017
    Costin Manolache, Adam Roach, and others.
 
 8.  References
+
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires December 20, 2017              [Page 11]
+
+Internet-Draft             Self Identification                 June 2017
+
 
 8.1.  Normative References
 
@@ -551,17 +633,6 @@ Internet-Draft             Self Identification                 June 2017
               DOI 10.17487/RFC2818, May 2000,
               <http://www.rfc-editor.org/info/rfc2818>.
 
-
-
-
-
-
-
-Thomson & Beverloo      Expires December 20, 2017              [Page 10]
-
-Internet-Draft             Self Identification                 June 2017
-
-
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               DOI 10.17487/RFC5226, May 2008,
@@ -574,6 +645,11 @@ Internet-Draft             Self Identification                 June 2017
    [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
               DOI 10.17487/RFC6454, December 2011,
               <http://www.rfc-editor.org/info/rfc6454>.
+
+   [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
+              Specifications and Registration Procedures", BCP 13,
+              RFC 6838, DOI 10.17487/RFC6838, January 2013,
+              <http://www.rfc-editor.org/info/rfc6838>.
 
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
@@ -588,6 +664,15 @@ Internet-Draft             Self Identification                 June 2017
               Protocol (HTTP/1.1): Authentication", RFC 7235,
               DOI 10.17487/RFC7235, June 2014,
               <http://www.rfc-editor.org/info/rfc7235>.
+
+
+
+
+
+Thomson & Beverloo      Expires December 20, 2017              [Page 12]
+
+Internet-Draft             Self Identification                 June 2017
+
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
@@ -609,14 +694,6 @@ Internet-Draft             Self Identification                 June 2017
    [X9.62]    ANSI, "Public Key Cryptography For The Financial Services
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
-
-
-
-
-Thomson & Beverloo      Expires December 20, 2017              [Page 11]
-
-Internet-Draft             Self Identification                 June 2017
-
 
 8.2.  Informative References
 
@@ -645,6 +722,14 @@ Authors' Addresses
    Email: martin.thomson@gmail.com
 
 
+
+
+
+Thomson & Beverloo      Expires December 20, 2017              [Page 13]
+
+Internet-Draft             Self Identification                 June 2017
+
+
    Peter Beverloo
    Google
 
@@ -669,4 +754,31 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo      Expires December 20, 2017              [Page 12]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires December 20, 2017              [Page 14]
