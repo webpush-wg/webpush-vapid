@@ -562,6 +562,7 @@ Content-Length: 104
 <p id="rfc.section.5.p.1">This authentication scheme is vulnerable to replay attacks if an attacker can acquire a valid JWT.  Applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.</p>
 <p id="rfc.section.5.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
 <p id="rfc.section.5.p.3">Validation of a signature on the JWT requires a non-trivial amount of computation.  For something that might be used to identify legitimate requests under denial of service attack conditions, this is not ideal.  Application servers are therefore encouraged to reuse tokens, which permits the push service to cache the results of signature validation.</p>
+<p id="rfc.section.5.p.4">An application server that changes its signing key breaks linkability between push messages that it sends under the different keys.  A push service that relies on a consistent identity for application servers might categorize requests made with new keys differently.  Gradual migration to a new signing key reduces the chances that requests that use the new key will be categorized as abusive.</p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#iana" id="iana">IANA Considerations</a>
 </h1>

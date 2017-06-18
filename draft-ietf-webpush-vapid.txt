@@ -85,7 +85,7 @@ Table of Contents
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  11
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  12
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
 
 1.  Introduction
@@ -470,6 +470,13 @@ Internet-Draft             Self Identification                 June 2017
    which permits the push service to cache the results of signature
    validation.
 
+   An application server that changes its signing key breaks linkability
+   between push messages that it sends under the different keys.  A push
+   service that relies on a consistent identity for application servers
+   might categorize requests made with new keys differently.  Gradual
+   migration to a new signing key reduces the chances that requests that
+   use the new key will be categorized as abusive.
+
 6.  IANA Considerations
 
    This document registers the "vapid" authentication scheme in the
@@ -492,19 +499,18 @@ Internet-Draft             Self Identification                 June 2017
 
    Registrations MUST include the following information:
 
-   Parameter Name:  A name for the parameter, which conforms to the
-      "token" grammar [RFC7230]
-
-   Purpose (optional):  A brief identifying the purpose of the
-      parameter.
-
-
 
 
 Thomson & Beverloo      Expires December 20, 2017               [Page 9]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   Parameter Name:  A name for the parameter, which conforms to the
+      "token" grammar [RFC7230]
+
+   Purpose (optional):  A brief identifying the purpose of the
+      parameter.
 
    Specification:  A link to the specification that defines the format
       and semantics of the parameter.
@@ -545,14 +551,8 @@ Internet-Draft             Self Identification                 June 2017
               DOI 10.17487/RFC2818, May 2000,
               <http://www.rfc-editor.org/info/rfc2818>.
 
-   [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
-              IANA Considerations Section in RFCs", BCP 26, RFC 5226,
-              DOI 10.17487/RFC5226, May 2008,
-              <http://www.rfc-editor.org/info/rfc5226>.
 
-   [RFC6068]  Duerst, M., Masinter, L., and J. Zawinski, "The 'mailto'
-              URI Scheme", RFC 6068, DOI 10.17487/RFC6068, October 2010,
-              <http://www.rfc-editor.org/info/rfc6068>.
+
 
 
 
@@ -561,6 +561,15 @@ Thomson & Beverloo      Expires December 20, 2017              [Page 10]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+   [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
+              IANA Considerations Section in RFCs", BCP 26, RFC 5226,
+              DOI 10.17487/RFC5226, May 2008,
+              <http://www.rfc-editor.org/info/rfc5226>.
+
+   [RFC6068]  Duerst, M., Masinter, L., and J. Zawinski, "The 'mailto'
+              URI Scheme", RFC 6068, DOI 10.17487/RFC6068, October 2010,
+              <http://www.rfc-editor.org/info/rfc6068>.
 
    [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
               DOI 10.17487/RFC6454, December 2011,
@@ -601,15 +610,6 @@ Internet-Draft             Self Identification                 June 2017
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
 
-8.2.  Informative References
-
-   [API]      Beverloo, P., Thomson, M., van Ouwerkerk, M., Sullivan,
-              B., and E. Fullea, "Push API", May 2017,
-              <https://w3c.github.io/push-api/>.
-
-
-
-
 
 
 
@@ -617,6 +617,12 @@ Thomson & Beverloo      Expires December 20, 2017              [Page 11]
 
 Internet-Draft             Self Identification                 June 2017
 
+
+8.2.  Informative References
+
+   [API]      Beverloo, P., Thomson, M., van Ouwerkerk, M., Sullivan,
+              B., and E. Fullea, "Push API", May 2017,
+              <https://w3c.github.io/push-api/>.
 
    [I-D.ietf-webpush-encryption]
               Thomson, M., "Message Encryption for Web Push", draft-
@@ -643,12 +649,6 @@ Authors' Addresses
    Google
 
    Email: beverloo@google.com
-
-
-
-
-
-
 
 
 
