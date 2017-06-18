@@ -5,7 +5,7 @@
 <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 
-  <title>Voluntary Application Server Identification for Web Push</title>
+  <title>Voluntary Application Server Identification (VAPID) for Web Push</title>
 
   
 <style type="text/css">/*<![CDATA[*/
@@ -307,8 +307,8 @@ address {
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2017-6-18" />
-  <meta name="dct.abstract" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can be used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
-  <meta name="description" content="An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can be used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server." />
+  <meta name="dct.abstract" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription a single application server." />
+  <meta name="description" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription a single application server." />
 
 </head>
 
@@ -342,11 +342,11 @@ address {
     </tbody>
   </table>
 
-  <p class="title">Voluntary Application Server Identification for Web Push<br />
+  <p class="title">Voluntary Application Server Identification (VAPID) for Web Push<br />
   <span class="filename">draft-ietf-webpush-vapid-latest</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>An application server can voluntarily identify itself to a push service using the described technique.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  This can be used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server.  An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server.</p>
+<p>An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription a single application server.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
@@ -478,13 +478,13 @@ Authorization: vapid
 </pre>
 <p class="figure">Figure 1: Requesting Push Message Delivery with JWT</p>
 <p id="rfc.section.2.4.p.2">Note that the example header fields in this document include extra line wrapping to meet formatting constraints.</p>
-<p id="rfc.section.2.4.p.3">The <samp>t</samp> parameter of the Authorization header field contains a JWT; the <samp>k</samp> parameter includes the base64url-encoded key that signed that token.  The JWT input values and the JWK <a href="#RFC7517" class="xref">[RFC7517]</a> corresponding to the signing key are shown in <a href="#ex-decoded" class="xref">Figure 2</a> with additional whitespace added for readability purposes.  This JWT would be valid until 2016-01-21T01:53:25Z <a href="#RFC3339" class="xref">[RFC3339]</a>.</p>
+<p id="rfc.section.2.4.p.3">The <samp>t</samp> parameter of the Authorization header field contains a JWT; the <samp>k</samp> parameter includes the base64url-encoded key that signed that token.  The JWT input values and the JWK <a href="#RFC7517" class="xref">[RFC7517]</a> corresponding to the signing key are shown in <a href="#ex-decoded" class="xref">Figure 2</a> with additional whitespace added for readability purposes.  This JWT would be valid until 2016-01-23T04:36:08Z <a href="#RFC3339" class="xref">[RFC3339]</a>.</p>
 <div id="rfc.figure.2"></div>
 <div id="ex-decoded"></div>
 <pre>
 JWT header = { "typ": "JWT", "alg": "ES256" }
 JWT body = { "aud": "https://push.example.net",
-             "exp": 1453341205,
+             "exp": 1453523768,
              "sub": "mailto:push@example.com" }
 JWK = { "crv":"P-256",
         "kty":"EC",

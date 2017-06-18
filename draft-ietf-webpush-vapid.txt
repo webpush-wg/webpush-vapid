@@ -9,20 +9,19 @@ Expires: December 20, 2017                                        Google
                                                            June 18, 2017
 
 
-        Voluntary Application Server Identification for Web Push
+    Voluntary Application Server Identification (VAPID) for Web Push
                     draft-ietf-webpush-vapid-latest
 
 Abstract
 
-   An application server can voluntarily identify itself to a push
-   service using the described technique.  This identification
-   information can be used by the push service to attribute requests
-   that are made by the same application server to a single entity.
-   This can be used to reduce the secrecy for push subscription URLs by
-   being able to restrict subscriptions to a specific application
-   server.  An application server is further able to include additional
-   information that the operator of a push service can use to contact
-   the operator of the application server.
+   An application server can use the method described to voluntarily
+   identify itself to a push service.  This identification information
+   can be used by the push service to attribute requests that are made
+   by the same application server to a single entity.  An application
+   server can include additional information that the operator of a push
+   service can use to contact the operator of the application server.
+   This identification information can be used to restrict the use of a
+   push subscription a single application server.
 
 Status of This Memo
 
@@ -50,6 +49,7 @@ Copyright Notice
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
 
 
 
@@ -58,7 +58,6 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 1]
 Internet-Draft             Self Identification                 June 2017
 
 
-   carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
@@ -105,7 +104,8 @@ Table of Contents
    the protocol provides.  For these reasons, [RFC8030] does not define
    a mandatory system for authentication of application servers.
 
-
+   An unfortunate consequence of this design is that a push service is
+   exposed to a greater risk of denial of service attack.  While
 
 
 
@@ -114,8 +114,6 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 2]
 Internet-Draft             Self Identification                 June 2017
 
 
-   An unfortunate consequence of this design is that a push service is
-   exposed to a greater risk of denial of service attack.  While
    requests from application servers can be indirectly attributed to
    user agents, this is not always efficient or even sufficient.
    Providing more information about the application server directly to a
@@ -161,7 +159,9 @@ Internet-Draft             Self Identification                 June 2017
    document.  It's not shouting, when they are capitalized, they have
    the special meaning described in [RFC2119].
 
-
+   The terms "push message", "push service", "push subscription",
+   "application server", and "user agent" are used as defined in
+   [RFC8030].
 
 
 
@@ -169,10 +169,6 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 3]
 
 Internet-Draft             Self Identification                 June 2017
 
-
-   The terms "push message", "push service", "push subscription",
-   "application server", and "user agent" are used as defined in
-   [RFC8030].
 
 2.  Application Server Self-Identification
 
@@ -217,6 +213,10 @@ Internet-Draft             Self Identification                 June 2017
 
    An application server MAY include additional claims using public or
    private names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT
+   is in a header field, the size of additional claims SHOULD be kept as
+   small as possible.
+
+
 
 
 
@@ -225,9 +225,6 @@ Thomson & Beverloo      Expires December 20, 2017               [Page 4]
 
 Internet-Draft             Self Identification                 June 2017
 
-
-   is in a header field, the size of additional claims SHOULD be kept as
-   small as possible.
 
 2.3.  Cryptographic Agility
 
@@ -270,7 +267,10 @@ Internet-Draft             Self Identification                 June 2017
    token.  The JWT input values and the JWK [RFC7517] corresponding to
    the signing key are shown in Figure 2 with additional whitespace
    added for readability purposes.  This JWT would be valid until
-   2016-01-21T01:53:25Z [RFC3339].
+   2016-01-23T04:36:08Z [RFC3339].
+
+
+
 
 
 
@@ -284,7 +284,7 @@ Internet-Draft             Self Identification                 June 2017
 
    JWT header = { "typ": "JWT", "alg": "ES256" }
    JWT body = { "aud": "https://push.example.net",
-                "exp": 1453341205,
+                "exp": 1453523768,
                 "sub": "mailto:push@example.com" }
    JWK = { "crv":"P-256",
            "kty":"EC",
