@@ -1,5 +1,5 @@
 ---
-title: Voluntary Application Server Identification for Web Push
+title: Voluntary Application Server Identification (VAPID) for Web Push
 abbrev: Self Identification
 docname: draft-ietf-webpush-vapid-latest
 category: std
@@ -50,14 +50,13 @@ informative:
 
 --- abstract
 
-An application server can voluntarily identify itself to a push service using
-the described technique.  This identification information can be used by the
+An application server can use the method described to voluntarily identify
+itself to a push service.  This identification information can be used by the
 push service to attribute requests that are made by the same application server
-to a single entity.  This can be used to reduce the secrecy for push subscription
-URLs by being able to restrict subscriptions to a specific application server.
-An application server is further able to include additional information that the
-operator of a push service can use to contact the operator of the application
-server.
+to a single entity.  An application server can include additional information
+that the operator of a push service can use to contact the operator of the
+application server.  This identification information can be used to restrict the
+use of a push subscription a single application server.
 
 
 --- middle
@@ -210,12 +209,12 @@ The `t` parameter of the Authorization header field contains a JWT; the `k`
 parameter includes the base64url-encoded key that signed that token.  The JWT
 input values and the JWK {{?RFC7517}} corresponding to the signing key are shown
 in {{ex-decoded}} with additional whitespace added for readability purposes.
-This JWT would be valid until 2016-01-21T01:53:25Z {{?RFC3339}}.
+This JWT would be valid until 2016-01-23T04:36:08Z {{?RFC3339}}.
 
 ~~~
 JWT header = { "typ": "JWT", "alg": "ES256" }
 JWT body = { "aud": "https://push.example.net",
-             "exp": 1453341205,
+             "exp": 1453523768,
              "sub": "mailto:push@example.com" }
 JWK = { "crv":"P-256",
         "kty":"EC",
