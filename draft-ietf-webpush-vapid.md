@@ -446,6 +446,9 @@ This registry initially contains the following entries:
 This document registers the "application/webpush-options+json" media type in the
 "Media Types" registry following the process described in {{!RFC6838}}.
 
+\[\[RFC editor: please replace instances of RFCXXXX in this section with a
+reference to the published RFC.]]
+
 Type name:
 
 : application
@@ -456,15 +459,15 @@ Subtype name:
 
 Required parameters:
 
-: n/a
+: none
 
 Optional parameters:
 
-: n/a
+: none
 
 Encoding considerations:
 
-: binary
+: binary (JSON is UTF-8-encoded text)
 
 Security considerations:
 
@@ -476,7 +479,7 @@ Interoperability considerations:
 
 Published specification:
 
-: This document.
+: \[\[RFCXXXX]].
 
 Applications that use this media type:
 
@@ -518,7 +521,7 @@ Restrictions on usage:
 
 Author:
 
-: See "Authors' Addresses" section of this document.
+: See "Authors' Addresses" section of \[\[RFCXXXX]].
 
 Change controller:
 
