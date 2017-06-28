@@ -142,7 +142,9 @@ number of claims as follows:
 
  * An "exp" (Expiry) claim MUST be included with the time after which the token
    expires.  This limits the time over which a token is valid.  An "exp" claim
-   MUST NOT be more than 24 hours from the time of the request.
+   MUST NOT be more than 24 hours from the time of the request.  Limiting this
+   to 24 hours balances the need for reuse against the potential cost and
+   likelihood of theft of a valid token.
 
 This JWT is included in an Authorization header field, using an auth-scheme of
 "vapid".  A push service MAY reject a request with a 403 (Forbidden) status
@@ -367,8 +369,8 @@ This authentication scheme is vulnerable to replay attacks if an attacker can
 acquire a valid JWT.  Applying narrow limits to the period over which a
 replayable token can be reused limits the potential value of a stolen token to
 an attacker and can increase the difficulty of stealing a token.  Placing a
-hard upper limit of 24 hours on the "exp" claim in the JWT allows a push
-service to reject tokens that have excessively long expiration times.
+hard upper limit on the "exp" claim in the JWT allows a push service to reject
+tokens that have excessively long expiration times.
 
 An application server might offer falsified contact information.  A push service
 operator therefore cannot use the presence of unvalidated contact information as
