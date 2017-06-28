@@ -56,7 +56,7 @@ push service to attribute requests that are made by the same application server
 to a single entity.  An application server can include additional information
 that the operator of a push service can use to contact the operator of the
 application server.  This identification information can be used to restrict the
-use of a push subscription a single application server.
+use of a push subscription to a single application server.
 
 
 --- middle
