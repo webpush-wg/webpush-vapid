@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: December 30, 2017                                        Google
-                                                           June 28, 2017
+Expires: January 1, 2018                                          Google
+                                                           June 30, 2017
 
 
     Voluntary Application Server Identification (VAPID) for Web Push
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 30, 2017.
+   This Internet-Draft will expire on January 1, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 1]
+Thomson & Beverloo       Expires January 1, 2018                [Page 1]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 2]
+Thomson & Beverloo       Expires January 1, 2018                [Page 2]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -165,7 +165,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 3]
+Thomson & Beverloo       Expires January 1, 2018                [Page 3]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -221,7 +221,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 4]
+Thomson & Beverloo       Expires January 1, 2018                [Page 4]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -277,7 +277,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 5]
+Thomson & Beverloo       Expires January 1, 2018                [Page 5]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -333,7 +333,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 6]
+Thomson & Beverloo       Expires January 1, 2018                [Page 6]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -389,7 +389,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 7]
+Thomson & Beverloo       Expires January 1, 2018                [Page 7]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -445,15 +445,15 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 8]
+Thomson & Beverloo       Expires January 1, 2018                [Page 8]
 
 Internet-Draft             Self Identification                 June 2017
 
 
    An application server that needs to replace its signing key needs to
-   create a new subscription that is restricted to the updated key.
-   Application servers need to remember the key that was used when
-   creating a given subscription.
+   request the creation of a new subscription by the user agent that is
+   restricted to the updated key.  Application servers need to remember
+   the key that was used when requesting the creation of a subscription.
 
 5.  Security Considerations
 
@@ -501,7 +501,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 9]
+Thomson & Beverloo       Expires January 1, 2018                [Page 9]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -557,7 +557,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017              [Page 10]
+Thomson & Beverloo       Expires January 1, 2018               [Page 10]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -613,7 +613,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017              [Page 11]
+Thomson & Beverloo       Expires January 1, 2018               [Page 11]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -669,7 +669,7 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017              [Page 12]
+Thomson & Beverloo       Expires January 1, 2018               [Page 12]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -725,7 +725,7 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo      Expires December 30, 2017              [Page 13]
+Thomson & Beverloo       Expires January 1, 2018               [Page 13]
 
 Internet-Draft             Self Identification                 June 2017
 
@@ -781,4 +781,4 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017              [Page 14]
+Thomson & Beverloo       Expires January 1, 2018               [Page 14]
