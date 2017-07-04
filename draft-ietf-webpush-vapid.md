@@ -368,9 +368,7 @@ need to remember the key that was used when creating a given subscription.
 This authentication scheme is vulnerable to replay attacks if an attacker can
 acquire a valid JWT.  Applying narrow limits to the period over which a
 replayable token can be reused limits the potential value of a stolen token to
-an attacker and can increase the difficulty of stealing a token.  Placing a
-hard upper limit on the "exp" claim in the JWT allows a push service to reject
-tokens that have excessively long expiration times.
+an attacker and can increase the difficulty of stealing a token.
 
 An application server might offer falsified contact information.  A push service
 operator therefore cannot use the presence of unvalidated contact information as
