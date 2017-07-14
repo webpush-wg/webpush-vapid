@@ -23,13 +23,12 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    right: calc(50vw - 500px);
+    right: calc(50vw - 525px);
     width: 300px;
-    padding: 0 1em;
     z-index: 1;
   }
   #rfc\.toc {
-    top: 16px;
+    top: 15px;
   }
   ul.toc {
     top: 80px;
@@ -37,8 +36,7 @@
   }
 
   body {
-    padding-left: 1.5em;
-    padding-right: 29em;
+    padding-right: 350px;
   }
 }
 
@@ -47,7 +45,7 @@ body {
   color: #333;
   font-size-adjust: 0.5;
   line-height: 130%;
-  margin: 2.5em auto;
+  margin: 25px auto;
   max-width: 724px;
 }
 
@@ -303,12 +301,12 @@ address {
 <link href="#rfc.authors" rel="Chapter">
 
 
-  <meta name="generator" content="xml2rfc version 2.6.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.7.0 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-6-30" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-7-14" />
   <meta name="dct.abstract" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server." />
   <meta name="description" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server." />
 
@@ -332,12 +330,12 @@ address {
 <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-<td class="left">Expires: January 1, 2018</td>
+<td class="left">Expires: January 15, 2018</td>
 <td class="right">Google</td>
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">June 30, 2017</td>
+<td class="right">July 14, 2017</td>
 </tr>
 
     	
@@ -353,7 +351,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 1, 2018.</p>
+<p>This Internet-Draft will expire on January 15, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -444,7 +442,7 @@ address {
 
 <ul>
 <li>An &#8220;aud&#8221; (Audience) claim in the token MUST include the unicode serialization of the origin (Section 6.1 of <a href="#RFC6454" class="xref">[RFC6454]</a>) of the push resource URL.  This binds the token to a specific push service.  This ensures that the token is reusable for all push resource URLs that share the same origin.</li>
-<li>An &#8220;exp&#8221; (Expiry) claim MUST be included with the time after which the token expires.  This limits the time over which a token is valid.  An &#8220;exp&#8221; claim MUST NOT be more than 24 hours from the time of the request.</li>
+<li>An &#8220;exp&#8221; (Expiry) claim MUST be included with the time after which the token expires.  This limits the time over which a token is valid.  An &#8220;exp&#8221; claim MUST NOT be more than 24 hours from the time of the request.  Limiting this to 24 hours balances the need for reuse against the potential cost and likelihood of theft of a valid token.</li>
 </ul>
 <p id="rfc.section.2.p.4">This JWT is included in an Authorization header field, using an auth-scheme of &#8220;vapid&#8221;.  A push service MAY reject a request with a 403 (Forbidden) status code <a href="#RFC7235" class="xref">[RFC7235]</a> if the JWT signature or its claims are invalid.</p>
 <p id="rfc.section.2.p.5">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515" class="xref">[RFC7515]</a>.  The signature MUST use ECDSA on the NIST P-256 curve <a href="#FIPS186" class="xref">[FIPS186]</a> which is identified as &#8220;ES256&#8221; <a href="#RFC7518" class="xref">[RFC7518]</a>.</p>
