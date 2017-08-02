@@ -318,7 +318,7 @@ The example in {{ex-restrict}} shows a restriction to the key used in
 ~~~
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Content-Type: application/webpush-options+json;charset=utf-8
+Content-Type: application/webpush-options+json
 Content-Length: 104
 
 { "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
