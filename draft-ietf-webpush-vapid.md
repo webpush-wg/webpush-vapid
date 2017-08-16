@@ -83,11 +83,11 @@ efficient or even sufficient.  Providing more information about the application
 server directly to a push service allows the push service to better distinguish
 between legitimate and bogus requests.
 
-Additionally, this design also relies on endpoint secrecy as any application
-server in possession of the endpoint is able to send messages, albeit without
-payloads.  In situations where usage of a subscription can be limited to a
-single application server, the ability to associate a subscription with the
-application server could reduce the impact of a data leak.
+Additionally, the design of RFC 8030 relies on maintaining the secrecy of push
+subscription URIs.  Any application server in possession of this URI is able to
+send messages to the user agent.  If use of a subscription could be limited to
+a single application server, this would reduce the impact of the push
+subscription URI being learned by an unauthorized party.
 
 
 ## Voluntary Identification
@@ -116,8 +116,8 @@ application server when choosing whether to discard a push message.
 ## Notational Conventions
 
 The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this document.
-It's not shouting, when they are capitalized, they have the special meaning
-described in {{!RFC2119}}.
+When they are capitalized, they have the special meaning described in
+{{!RFC2119}}.
 
 The terms "push message", "push service", "push subscription", "application
 server", and "user agent" are used as defined in {{!RFC8030}}.
@@ -288,17 +288,17 @@ server.  This key can be used to restrict a push subscription to a specific
 application server.
 
 Subscription restriction reduces the reliance on endpoint secrecy by requiring
-proof of possession to be demonstrated by an application server when requesting
-delivery of a push message.  This provides an additional level of protection
-against leaking of the details of the push subscription.
+that an application server provide a signed token when requesting delivery of a
+push message.  This provides an additional level of protection against leaking
+of the details of the push subscription.
 
 
 ## Creating a Restricted Push Subscription
 
 The user agent includes the public key of the application server when requesting
 the creation of a push subscription.  This restricts use of the resulting
-subscription to application servers that are able to provide proof of possession
-for the corresponding private key.
+subscription to application servers that are able to provide a valid JWT signed
+by the corresponding private key.
 
 The public key is then added to the request to create a push subscription.  The
 push subscription request is extended to include a body.  The body of the
@@ -333,8 +333,8 @@ a public key.
 ## Using Restricted Subscriptions
 
 When a push subscription has been associated with an application server, the
-request for push message delivery MUST include proof of possession for the
-associated private key that was used when creating the push subscription.
+request for push message delivery MUST include a JWT signed by the private key
+that was used when creating the push subscription.
 
 A push service MUST reject a message that omits mandatory credentials
 with a 401 (Unauthorized) status code.  A push service MAY reject a message
@@ -371,9 +371,11 @@ acquire a valid JWT.  Applying narrow limits to the period over which a
 replayable token can be reused limits the potential value of a stolen token to
 an attacker and can increase the difficulty of stealing a token.
 
-An application server might offer falsified contact information.  A push service
-operator therefore cannot use the presence of unvalidated contact information as
-input to any security-critical decision-making process.
+An application server might offer falsified contact information.  The
+application server asserts its email address or contact URI without any
+evidence to support the claim.  A push service operator cannot use the presence
+of unvalidated contact information as input to any security-critical
+decision-making process.
 
 Validation of a signature on the JWT requires a non-trivial amount of
 computation.  For something that might be used to identify legitimate requests
