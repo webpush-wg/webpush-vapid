@@ -306,7 +306,7 @@ address {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-7-04" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-8-16" />
   <meta name="dct.abstract" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server." />
   <meta name="description" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server." />
 
@@ -330,12 +330,12 @@ address {
 <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-<td class="left">Expires: January 5, 2018</td>
+<td class="left">Expires: February 17, 2018</td>
 <td class="right">Google</td>
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">July 04, 2017</td>
+<td class="right">August 16, 2017</td>
 </tr>
 
     	
@@ -351,7 +351,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 5, 2018.</p>
+<p>This Internet-Draft will expire on February 17, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -537,7 +537,7 @@ JWK = { "crv":"P-256",
 <pre>
 POST /subscribe/ HTTP/1.1
 Host: push.example.net
-Content-Type: application/webpush-options+json;charset=utf-8
+Content-Type: application/webpush-options+json
 Content-Length: 104
 
 { "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
@@ -560,7 +560,7 @@ Content-Length: 104
 <li>the public key used to sign the JWT doesn&#8217;t match the one that was included in the creation of the push subscription.</li>
 </ul>
 <p id="rfc.section.4.2.p.4">A push service MUST NOT forward the JWT or public key to the user agent when delivering the push message.</p>
-<p id="rfc.section.4.2.p.5">An application server that needs to replace its signing key needs to create a new subscription that is restricted to the updated key.  Application servers need to remember the key that was used when creating a given subscription.</p>
+<p id="rfc.section.4.2.p.5">An application server that needs to replace its signing key needs to request the creation of a new subscription by the user agent that is restricted to the updated key.  Application servers need to remember the key that was used when requesting the creation of a subscription.</p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a>
 </h1>
@@ -681,7 +681,7 @@ Content-Length: 104
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> <a href="#ack" id="ack">Acknowledgements</a>
 </h1>
-<p id="rfc.section.7.p.1">This document would have been much worse than it currently is if not for the contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache, Adam Roach, and others.</p>
+<p id="rfc.section.7.p.1">This document would have been much worse than it is if not for the contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache, Adam Roach, and others.</p>
 <h1 id="rfc.references">
 <a href="#rfc.references">8.</a> References</h1>
 <h2 id="rfc.references.1">
