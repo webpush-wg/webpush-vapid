@@ -275,11 +275,12 @@ Note:
 
 Some elliptic curve implementations permit the same P-256 key to be used for
 signing and key exchange.  An application server MUST select a different
-private key for the key exchange {{?I-D.ietf-webpush-encryption}} and signing
-the authentication token.  Though a push service is not obligated to check
-either parameter for every push message, a push service SHOULD reject push
-messages that have identical values for these parameters with a 400 (Bad
-Request) status code.
+private key for the key exchange
+{{!WEBPUSH-ENCRYPTION=I-D.ietf-webpush-encryption}} and signing the
+authentication token.  Though a push service is not obligated to check either
+parameter for every push message, a push service SHOULD reject push messages
+that have identical values for these parameters with a 400 (Bad Request) status
+code.
 
 
 # Subscription Restriction {#restrict}
