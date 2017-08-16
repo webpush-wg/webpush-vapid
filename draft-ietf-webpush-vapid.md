@@ -51,12 +51,13 @@ informative:
 --- abstract
 
 An application server can use the method described to voluntarily identify
-itself to a push service.  This identification information can be used by the
-push service to attribute requests that are made by the same application server
-to a single entity.  An application server can include additional information
-that the operator of a push service can use to contact the operator of the
-application server.  This identification information can be used to restrict the
-use of a push subscription to a single application server.
+itself to a push service.  The "vapid" authentication scheme allows a client to
+include its an identity in a signed token with requests that it makes.  The
+signature can be used by the push service to attribute requests that are made
+by the same application server to a single entity.  The identification
+information can allow the operator of a push service to contact the operator of
+the application server.  The signature can be used to restrict the use of a
+push subscription to a single application server.
 
 
 --- middle
