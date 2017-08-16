@@ -371,9 +371,11 @@ acquire a valid JWT.  Applying narrow limits to the period over which a
 replayable token can be reused limits the potential value of a stolen token to
 an attacker and can increase the difficulty of stealing a token.
 
-An application server might offer falsified contact information.  A push service
-operator therefore cannot use the presence of unvalidated contact information as
-input to any security-critical decision-making process.
+An application server might offer falsified contact information.  The
+application server asserts its email address or contact URI without any
+evidence to support the claim.  A push service operator cannot use the presence
+of unvalidated contact information as input to any security-critical
+decision-making process.
 
 Validation of a signature on the JWT requires a non-trivial amount of
 computation.  For something that might be used to identify legitimate requests
