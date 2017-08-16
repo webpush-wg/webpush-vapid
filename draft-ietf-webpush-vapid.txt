@@ -157,11 +157,11 @@ Internet-Draft             Self Identification               August 2017
 
 1.2.  Notational Conventions
 
-   The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this
-   document.  It's not shouting, when they are capitalized, they have
-   the special meaning described in [RFC2119].
-
-
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 
 
@@ -701,6 +701,10 @@ Internet-Draft             Self Identification               August 2017
               DOI 10.17487/RFC8030, December 2016,
               <http://www.rfc-editor.org/info/rfc8030>.
 
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <http://www.rfc-editor.org/info/rfc8174>.
+
    [X9.62]    ANSI, "Public Key Cryptography For The Financial Services
               Industry: The Elliptic Curve Digital Signature Algorithm
               (ECDSA)", ANSI X9.62 , 1998.
@@ -716,10 +720,6 @@ Internet-Draft             Self Identification               August 2017
               ietf-webpush-encryption-08 (work in progress), February
               2017.
 
-   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
-              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
-              <http://www.rfc-editor.org/info/rfc3339>.
-
 
 
 
@@ -729,6 +729,10 @@ Thomson & Beverloo      Expires February 17, 2018              [Page 13]
 
 Internet-Draft             Self Identification               August 2017
 
+
+   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
+              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
+              <http://www.rfc-editor.org/info/rfc3339>.
 
    [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
               DOI 10.17487/RFC7517, May 2015,
@@ -746,10 +750,6 @@ Authors' Addresses
    Google
 
    Email: beverloo@google.com
-
-
-
-
 
 
 
