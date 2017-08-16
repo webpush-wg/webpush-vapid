@@ -290,32 +290,31 @@ server.  This key can be used to restrict a push subscription to a specific
 application server.
 
 Subscription restriction reduces the reliance on endpoint secrecy by requiring
-proof of possession to be demonstrated by an application server when requesting
-delivery of a push message.  This provides an additional level of protection
-against leaking of the details of the push subscription.
+that an application server provide a signed token when requesting delivery of a
+push message.  This provides an additional level of protection against leaking
+of the details of the push subscription.
 
 
 ## Creating a Restricted Push Subscription
 
-A user agent that wishes to create a restricted subscription includes the
-public key of the application server when requesting the creation of a push
+A user agent that wishes to create a restricted subscription includes the public
+key of the application server when requesting the creation of a push
 subscription.  This restricts use of the resulting subscription to application
-servers that are able to provide proof of possession for the corresponding
-private key.
+servers that are able to provide a valid JWT signed by the corresponding private
+key.
 
 The user agent then adds the public key to the request to create a push
-subscription.  The push subscription request is extended to include a body.
-The body of the request is a JSON object as described in {{!RFC7159}}.  The
-user agent adds a "vapid" member to this JSON object that contains a public key
-on the P-256 curve, encoded in the uncompressed form {{X9.62}} and base64url
+subscription.  The push subscription request is extended to include a body.  The
+body of the request is a JSON object as described in {{!RFC7159}}.  The user
+agent adds a "vapid" member to this JSON object that contains a public key on
+the P-256 curve, encoded in the uncompressed form {{X9.62}} and base64url
 encoded {{!RFC7515}}.  The media type of the body is set to
 "application/webpush-options+json" (see {{mime}} for registration of this media
 type).
 
-A push service can ignore the body of a request to create a subscription that
-uses a different media type.  For the "application/webpush-options+json" media
-type, a push service MUST ignore any members on this object that it does not
-understand.
+A push service MUST ignore the body of a request that uses a different media
+type.  For the "application/webpush-options+json" media type, a push service
+MUST ignore any members on this object that it does not understand.
 
 The example in {{ex-restrict}} shows a restriction to the key used in
 {{ex-push}}.  Extra whitespace is added to meet formatting constraints.
@@ -338,8 +337,8 @@ a public key.
 ## Using Restricted Subscriptions
 
 When a push subscription has been associated with an application server, the
-request for push message delivery MUST include proof of possession for the
-associated private key that was used when creating the push subscription.
+request for push message delivery MUST include a JWT signed by the private key
+that was used when creating the push subscription.
 
 A push service MUST reject a message sent to a restricted push subscription if
 that message includes no "vapid" authentication or invalid "vapid"
