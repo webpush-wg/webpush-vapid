@@ -83,7 +83,7 @@ efficient or even sufficient.  Providing more information about the application
 server directly to a push service allows the push service to better distinguish
 between legitimate and bogus requests.
 
-Additionally, the design of RFC 8030 relies considerably on the secrecy of push
+Additionally, the design of RFC 8030 relies on maintaining the secrecy of push
 subscription URIs.  Any application server in possession of this URI is able to
 send messages to the user agent.  If use of a subscription could be limited to
 a single application server, this would reduce the impact of the push
