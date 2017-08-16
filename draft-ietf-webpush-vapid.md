@@ -77,12 +77,12 @@ service.  That constraint would also degrade the privacy-preserving properties
 the protocol provides.  For these reasons, {{!RFC8030}} does not
 define a mandatory system for authentication of application servers.
 
-An unfortunate consequence of this design is that a push service is exposed to a
-greater risk of denial of service attack.  While requests from application
-servers can be indirectly attributed to user agents, this is not always
-efficient or even sufficient.  Providing more information about the application
-server directly to a push service allows the push service to better distinguish
-between legitimate and bogus requests.
+An unfortunate consequence of the design of {{!RFC8030}} is that a push service
+is exposed to a greater risk of denial of service attack.  While requests from
+application servers can be indirectly attributed to user agents, this is not
+always efficient or even sufficient.  Providing more information about the
+application server directly to a push service allows the push service to better
+distinguish between legitimate and bogus requests.
 
 Additionally, this design also relies on endpoint secrecy as any application
 server in possession of the endpoint is able to send messages, albeit without
