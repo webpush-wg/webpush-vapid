@@ -533,6 +533,6 @@ Change controller:
 
 # Acknowledgements {#ack}
 
-This document would have been much worse than it currently is if not for the
-contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache,
-Adam Roach, and others.
+This document would have been much worse than it is if not for the contributions
+of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache, Adam Roach, and
+others.
