@@ -298,10 +298,11 @@ against leaking of the details of the push subscription.
 
 ## Creating a Restricted Push Subscription
 
-The user agent includes the public key of the application server when requesting
-the creation of a push subscription.  This restricts use of the resulting
-subscription to application servers that are able to provide proof of possession
-for the corresponding private key.
+A user agent that wishes to create a restricted subscription includes the
+public key of the application server when requesting the creation of a push
+subscription.  This restricts use of the resulting subscription to application
+servers that are able to provide proof of possession for the corresponding
+private key.
 
 The public key is then added to the request to create a push subscription.  The
 push subscription request is extended to include a body.  The body of the
