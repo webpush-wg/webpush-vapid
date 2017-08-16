@@ -116,8 +116,8 @@ application server when choosing whether to discard a push message.
 ## Notational Conventions
 
 The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this document.
-It's not shouting, when they are capitalized, they have the special meaning
-described in {{!RFC2119}}.
+When they are capitalized, they have the special meaning described in
+{{!RFC2119}}.
 
 The terms "push message", "push service", "push subscription", "application
 server", and "user agent" are used as defined in {{!RFC8030}}.
