@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: December 30, 2017                                        Google
-                                                           June 28, 2017
+Expires: February 17, 2018                                        Google
+                                                         August 16, 2017
 
 
     Voluntary Application Server Identification (VAPID) for Web Push
@@ -21,7 +21,7 @@ Abstract
    server can include additional information that the operator of a push
    service can use to contact the operator of the application server.
    This identification information can be used to restrict the use of a
-   push subscription a single application server.
+   push subscription to a single application server.
 
 Status of This Memo
 
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 30, 2017.
+   This Internet-Draft will expire on February 17, 2018.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 1]
+Thomson & Beverloo      Expires February 17, 2018               [Page 1]
 
-Internet-Draft             Self Identification                 June 2017
+Internet-Draft             Self Identification               August 2017
 
 
    to this document.  Code Components extracted from this document must
@@ -70,25 +70,25 @@ Table of Contents
      1.2.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
    2.  Application Server Self-Identification  . . . . . . . . . . .   4
      2.1.  Application Server Contact Information  . . . . . . . . .   4
-     2.2.  Additional Claims . . . . . . . . . . . . . . . . . . . .   4
+     2.2.  Additional Claims . . . . . . . . . . . . . . . . . . . .   5
      2.3.  Cryptographic Agility . . . . . . . . . . . . . . . . . .   5
      2.4.  Example . . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Vapid Authentication Scheme . . . . . . . . . . . . . . . . .   6
      3.1.  Token Parameter (t) . . . . . . . . . . . . . . . . . . .   6
-     3.2.  Public Key Parameter (k)  . . . . . . . . . . . . . . . .   6
+     3.2.  Public Key Parameter (k)  . . . . . . . . . . . . . . . .   7
    4.  Subscription Restriction  . . . . . . . . . . . . . . . . . .   7
      4.1.  Creating a Restricted Push Subscription . . . . . . . . .   7
      4.2.  Using Restricted Subscriptions  . . . . . . . . . . . . .   8
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-     6.1.  Vapid Authentication Scheme Registration  . . . . . . . .   9
+     6.1.  Vapid Authentication Scheme Registration  . . . . . . . .  10
      6.2.  Vapid Authentication Scheme Parameters  . . . . . . . . .  10
-     6.3.  application/webpush-options+json Media Type Registration   10
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
+     6.3.  application/webpush-options+json Media Type Registration   11
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  12
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  12
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  13
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 2]
+Thomson & Beverloo      Expires February 17, 2018               [Page 2]
 
-Internet-Draft             Self Identification                 June 2017
+Internet-Draft             Self Identification               August 2017
 
 
    An unfortunate consequence of this design is that a push service is
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-Thomson & Beverloo      Expires December 30, 2017               [Page 3]
+Thomson & Beverloo      Expires February 17, 2018               [Page 3]
 
-Internet-Draft             Self Identification                 June 2017
+Internet-Draft             Self Identification               August 2017
 
 
    The terms "push message", "push service", "push subscription",
@@ -195,7 +195,9 @@ Internet-Draft             Self Identification                 June 2017
    o  An "exp" (Expiry) claim MUST be included with the time after which
       the token expires.  This limits the time over which a token is
       valid.  An "exp" claim MUST NOT be more than 24 hours from the
-      time of the request.
+      time of the request.  Limiting this to 24 hours balances the need
+      for reuse against the potential cost and likelihood of theft of a
+      valid token.
 
    This JWT is included in an Authorization header field, using an auth-
    scheme of "vapid".  A push service MAY reject a request with a 403
@@ -213,19 +215,21 @@ Internet-Draft             Self Identification                 June 2017
    include a contact URI for the application server as either a
    "mailto:" (email) [RFC6068] or an "https:" [RFC2818] URI.
 
+
+
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018               [Page 4]
+
+Internet-Draft             Self Identification               August 2017
+
+
 2.2.  Additional Claims
 
    An application server MAY include additional claims using public or
    private names (see Sections 4.2 and 4.3 of [RFC7519]).  Since the JWT
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017               [Page 4]
-
-Internet-Draft             Self Identification                 June 2017
-
-
    is in a header field, the size of additional claims SHOULD be kept as
    small as possible.
 
@@ -269,18 +273,17 @@ Internet-Draft             Self Identification                 June 2017
    the "k" parameter includes the base64url-encoded key that signed that
    token.  The JWT input values and the JWK [RFC7517] corresponding to
    the signing key are shown in Figure 2 with additional whitespace
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018               [Page 5]
+
+Internet-Draft             Self Identification               August 2017
+
+
    added for readability purposes.  This JWT would be valid until
    2016-01-23T04:36:08Z [RFC3339].
-
-
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017               [Page 5]
-
-Internet-Draft             Self Identification                 June 2017
-
 
    JWT header = { "typ": "JWT", "alg": "ES256" }
    JWT body = { "aud": "https://push.example.net",
@@ -323,20 +326,24 @@ Internet-Draft             Self Identification                 June 2017
    The "t" parameter of the "vapid" authentication scheme carries a JWT
    as described in Section 2.
 
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018               [Page 6]
+
+Internet-Draft             Self Identification               August 2017
+
+
 3.2.  Public Key Parameter (k)
 
    In order for the push service to be able to validate the JWT, it
    needs to learn the public key of the application server.  A "k"
    parameter is defined for the "vapid" authentication scheme to carry
    this information.
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017               [Page 6]
-
-Internet-Draft             Self Identification                 June 2017
-
 
    The "k" parameter includes an elliptic curve digital signature
    algorithm (ECDSA) public key [FIPS186] in uncompressed form [X9.62]
@@ -379,6 +386,14 @@ Internet-Draft             Self Identification                 June 2017
    subscription.  The push subscription request is extended to include a
    body.  The body of the request is a JSON object as described in
    [RFC7159].  A "vapid" member is added to this JSON object, containing
+
+
+
+Thomson & Beverloo      Expires February 17, 2018               [Page 7]
+
+Internet-Draft             Self Identification               August 2017
+
+
    the public key on the P-256 curve, encoded in the uncompressed form
    [X9.62] and base64url encoded [RFC7515].  The media type of the body
    is set to "application/webpush-options+json" (see Section 6.3 for
@@ -386,14 +401,6 @@ Internet-Draft             Self Identification                 June 2017
 
    A push service MUST ignore the body of a request that uses a
    different media type.  For the "application/webpush-options+json"
-
-
-
-Thomson & Beverloo      Expires December 30, 2017               [Page 7]
-
-Internet-Draft             Self Identification                 June 2017
-
-
    media type, a push service MUST ignore any members on this object
    that it does not understand.
 
@@ -402,7 +409,7 @@ Internet-Draft             Self Identification                 June 2017
 
    POST /subscribe/ HTTP/1.1
    Host: push.example.net
-   Content-Type: application/webpush-options+json;charset=utf-8
+   Content-Type: application/webpush-options+json
    Content-Length: 104
 
    { "vapid": "BA1Hxzyi1RUM1b5wjxsn7nGxAszw2u61m164i3MrAIxH
@@ -434,6 +441,15 @@ Internet-Draft             Self Identification                 June 2017
    o  the current time is later than the time identified in the "exp"
       (Expiry) claim or more than 24 hours before the expiry time,
 
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018               [Page 8]
+
+Internet-Draft             Self Identification               August 2017
+
+
    o  the origin of the push resource is not included in the "aud"
       (Audience) claim, or
 
@@ -443,13 +459,6 @@ Internet-Draft             Self Identification                 June 2017
    A push service MUST NOT forward the JWT or public key to the user
    agent when delivering the push message.
 
-
-
-Thomson & Beverloo      Expires December 30, 2017               [Page 8]
-
-Internet-Draft             Self Identification                 June 2017
-
-
    An application server that needs to replace its signing key needs to
    request the creation of a new subscription by the user agent that is
    restricted to the updated key.  Application servers need to remember
@@ -458,10 +467,11 @@ Internet-Draft             Self Identification                 June 2017
 5.  Security Considerations
 
    This authentication scheme is vulnerable to replay attacks if an
-   attacker can acquire a valid JWT.  Applying narrow limits to the
-   period over which a replayable token can be reused limits the
-   potential value of a stolen token to an attacker and can increase the
-   difficulty of stealing a token.
+   attacker can acquire a valid JWT.  Sending requests using HTTPS as
+   required by [RFC8030] provides confidentiality.  Additionally,
+   applying narrow limits to the period over which a replayable token
+   can be reused limits the potential value of a stolen token to an
+   attacker and can increase the difficulty of stealing a token.
 
    An application server might offer falsified contact information.  A
    push service operator therefore cannot use the presence of
@@ -487,6 +497,15 @@ Internet-Draft             Self Identification                 June 2017
    This document registers a new authentication scheme, a registry for
    parameters of that scheme, and media type for push options.
 
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018               [Page 9]
+
+Internet-Draft             Self Identification               August 2017
+
+
 6.1.  Vapid Authentication Scheme Registration
 
    This document registers the "vapid" authentication scheme in the
@@ -496,15 +515,6 @@ Internet-Draft             Self Identification                 June 2017
    Authentication Scheme Name:  vapid
 
    Pointer to specification text:  Section 3 of this document
-
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017               [Page 9]
-
-Internet-Draft             Self Identification                 June 2017
-
 
    Notes:  This scheme is origin-server only and does not define a
       challenge.
@@ -540,6 +550,18 @@ Internet-Draft             Self Identification                 June 2017
    |               |                         | 3.2                     |
    +---------------+-------------------------+-------------------------+
 
+
+
+
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018              [Page 10]
+
+Internet-Draft             Self Identification               August 2017
+
+
 6.3.  application/webpush-options+json Media Type Registration
 
    This document registers the "application/webpush-options+json" media
@@ -554,13 +576,6 @@ Internet-Draft             Self Identification                 June 2017
    Subtype name:  webpush-options+json
 
    Required parameters:  none
-
-
-
-Thomson & Beverloo      Expires December 30, 2017              [Page 10]
-
-Internet-Draft             Self Identification                 June 2017
-
 
    Optional parameters:  none
 
@@ -596,27 +611,22 @@ Internet-Draft             Self Identification                 June 2017
 
    Restrictions on usage:  For use with the Web Push Protocol [RFC8030].
 
+
+
+Thomson & Beverloo      Expires February 17, 2018              [Page 11]
+
+Internet-Draft             Self Identification               August 2017
+
+
    Author:  See "Authors' Addresses" section of [[RFCXXXX]].
 
    Change controller:  Internet Engineering Task Force
 
 7.  Acknowledgements
 
-   This document would have been much worse than it currently is if not
-   for the contributions of Benjamin Bangert, JR Conlin, Chris Karlof,
-   Costin Manolache, Adam Roach, and others.
-
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017              [Page 11]
-
-Internet-Draft             Self Identification                 June 2017
-
+   This document would have been much worse than it is if not for the
+   contributions of Benjamin Bangert, JR Conlin, Chris Karlof, Costin
+   Manolache, Adam Roach, and others.
 
 8.  References
 
@@ -657,6 +667,13 @@ Internet-Draft             Self Identification                 June 2017
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
               2014, <http://www.rfc-editor.org/info/rfc7159>.
 
+
+
+Thomson & Beverloo      Expires February 17, 2018              [Page 12]
+
+Internet-Draft             Self Identification               August 2017
+
+
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
@@ -666,13 +683,6 @@ Internet-Draft             Self Identification                 June 2017
               Protocol (HTTP/1.1): Authentication", RFC 7235,
               DOI 10.17487/RFC7235, June 2014,
               <http://www.rfc-editor.org/info/rfc7235>.
-
-
-
-Thomson & Beverloo      Expires December 30, 2017              [Page 12]
-
-Internet-Draft             Self Identification                 June 2017
-
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
@@ -710,6 +720,16 @@ Internet-Draft             Self Identification                 June 2017
               Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
               <http://www.rfc-editor.org/info/rfc3339>.
 
+
+
+
+
+
+Thomson & Beverloo      Expires February 17, 2018              [Page 13]
+
+Internet-Draft             Self Identification               August 2017
+
+
    [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
               DOI 10.17487/RFC7517, May 2015,
               <http://www.rfc-editor.org/info/rfc7517>.
@@ -720,14 +740,6 @@ Authors' Addresses
    Mozilla
 
    Email: martin.thomson@gmail.com
-
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017              [Page 13]
-
-Internet-Draft             Self Identification                 June 2017
 
 
    Peter Beverloo
@@ -769,16 +781,4 @@ Internet-Draft             Self Identification                 June 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Thomson & Beverloo      Expires December 30, 2017              [Page 14]
+Thomson & Beverloo      Expires February 17, 2018              [Page 14]
