@@ -247,8 +247,7 @@ unknown or unsupported parameters to "vapid" authentication credentials MUST
 be ignored.  The `realm` parameter is ignored for this authentication scheme.
 
 This authentication scheme is intended for use by an application server when
-using the Web Push protocol {{?RFC8030}}, but it could be
-used in other contexts if applicable.
+using the Web Push protocol {{?RFC8030}}.
 
 
 ## Token Parameter (t) {#token}
