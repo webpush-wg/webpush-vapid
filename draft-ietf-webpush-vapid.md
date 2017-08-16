@@ -83,11 +83,11 @@ efficient or even sufficient.  Providing more information about the application
 server directly to a push service allows the push service to better distinguish
 between legitimate and bogus requests.
 
-Additionally, this design also relies on endpoint secrecy as any application
-server in possession of the endpoint is able to send messages, albeit without
-payloads.  In situations where usage of a subscription can be limited to a
-single application server, the ability to associate a subscription with the
-application server could reduce the impact of a data leak.
+Additionally, the design of RFC 8030 relies considerably on the secrecy of push
+subscription URIs.  Any application server in possession of this URI is able to
+send messages to the user agent.  If usage of a subscription could be limited to
+a single application server, this would reduce the impact of the push
+subscription URI being learned by an unauthorized party.
 
 
 ## Voluntary Identification
