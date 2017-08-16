@@ -338,10 +338,13 @@ When a push subscription has been associated with an application server, the
 request for push message delivery MUST include proof of possession for the
 associated private key that was used when creating the push subscription.
 
-A push service MUST reject a message that omits mandatory credentials
-with a 401 (Unauthorized) status code.  A push service MAY reject a message
-that includes invalid credentials with a 403 (Forbidden) status code.
-Credentials are invalid if:
+A push service MUST reject a message sent to a restricted push subscription if
+that message includes no "vapid" authentication or invalid "vapid"
+authentication.  A 401 (Unauthorized) status code might be used if the
+authentication is absent; a 403 (Forbidden) status code might be used if
+authentication is invalid.
+
+"vapid" authentication is invalid if:
 
 * either the authentication token or public key are not included in the request,
 
