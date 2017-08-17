@@ -377,9 +377,11 @@ requesting the creation of a subscription.
 # Security Considerations {#security}
 
 This authentication scheme is vulnerable to replay attacks if an attacker can
-acquire a valid JWT.  Applying narrow limits to the period over which a
-replayable token can be reused limits the potential value of a stolen token to
-an attacker and can increase the difficulty of stealing a token.
+acquire a valid JWT.  Sending requests using HTTPS as required by {{!RFC8030}}
+provides confidentiality.  Additionally, applying narrow limits to the period
+over which a replayable token can be reused limits the potential value of a
+stolen token to an attacker and can increase the difficulty of stealing a
+token.
 
 An application server might offer falsified contact information.  A push service
 operator therefore cannot use the presence of unvalidated contact information as
