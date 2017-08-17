@@ -306,9 +306,9 @@ address {
 
   <meta name="dct.creator" content="Thomson, M. and P. Beverloo" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-webpush-vapid-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-8-16" />
-  <meta name="dct.abstract" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server." />
-  <meta name="description" content="An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server." />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-8-17" />
+  <meta name="dct.abstract" content="An application server can use the method described to voluntarily identify itself to a push service.  The &#8220;vapid&#8221; authentication scheme allows a client to include its an identity in a signed token with requests that it makes.  The signature can be used by the push service to attribute requests that are made by the same application server to a single entity.  The identification information can allow the operator of a push service to contact the operator of the application server.  The signature can be used to restrict the use of a push subscription to a single application server." />
+  <meta name="description" content="An application server can use the method described to voluntarily identify itself to a push service.  The &#8220;vapid&#8221; authentication scheme allows a client to include its an identity in a signed token with requests that it makes.  The signature can be used by the push service to attribute requests that are made by the same application server to a single entity.  The identification information can allow the operator of a push service to contact the operator of the application server.  The signature can be used to restrict the use of a push subscription to a single application server." />
 
 </head>
 
@@ -330,12 +330,12 @@ address {
 <td class="right">P. Beverloo</td>
 </tr>
 <tr>
-<td class="left">Expires: February 17, 2018</td>
+<td class="left">Expires: February 18, 2018</td>
 <td class="right">Google</td>
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">August 16, 2017</td>
+<td class="right">August 17, 2017</td>
 </tr>
 
     	
@@ -346,12 +346,12 @@ address {
   <span class="filename">draft-ietf-webpush-vapid-latest</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>An application server can use the method described to voluntarily identify itself to a push service.  This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity.  An application server can include additional information that the operator of a push service can use to contact the operator of the application server.  This identification information can be used to restrict the use of a push subscription to a single application server.</p>
+<p>An application server can use the method described to voluntarily identify itself to a push service.  The &#8220;vapid&#8221; authentication scheme allows a client to include its an identity in a signed token with requests that it makes.  The signature can be used by the push service to attribute requests that are made by the same application server to a single entity.  The identification information can allow the operator of a push service to contact the operator of the application server.  The signature can be used to restrict the use of a push subscription to a single application server.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on February 17, 2018.</p>
+<p>This Internet-Draft will expire on February 18, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -418,7 +418,7 @@ address {
 </h1>
 <p id="rfc.section.1.p.1">The Web Push protocol <a href="#RFC8030" class="xref">[RFC8030]</a> describes how an application server is able to request that a push service deliver a push message to a user agent.</p>
 <p id="rfc.section.1.p.2">As a consequence of the expected deployment architecture, there is no basis for an application server to be known to a push service prior to requesting delivery of a push message.  Requiring that the push service be able to authenticate application servers places an unwanted constraint on the interactions between user agents and application servers, who are the ultimate users of a push service.  That constraint would also degrade the privacy-preserving properties the protocol provides.  For these reasons, <a href="#RFC8030" class="xref">[RFC8030]</a> does not define a mandatory system for authentication of application servers.</p>
-<p id="rfc.section.1.p.3">An unfortunate consequence of this design is that a push service is exposed to a greater risk of denial of service attack.  While requests from application servers can be indirectly attributed to user agents, this is not always efficient or even sufficient.  Providing more information about the application server directly to a push service allows the push service to better distinguish between legitimate and bogus requests.</p>
+<p id="rfc.section.1.p.3">An unfortunate consequence of the design of <a href="#RFC8030" class="xref">[RFC8030]</a> is that a push service is exposed to a greater risk of denial of service attack.  While requests from application servers can be indirectly attributed to user agents, this is not always efficient or even sufficient.  Providing more information about the application server directly to a push service allows the push service to better distinguish between legitimate and bogus requests.</p>
 <p id="rfc.section.1.p.4">Additionally, this design also relies on endpoint secrecy as any application server in possession of the endpoint is able to send messages, albeit without payloads.  In situations where usage of a subscription can be limited to a single application server, the ability to associate a subscription with the application server could reduce the impact of a data leak.</p>
 <h2 id="rfc.section.1.1">
 <a href="#rfc.section.1.1">1.1.</a> <a href="#voluntary-identification" id="voluntary-identification">Voluntary Identification</a>
@@ -444,7 +444,7 @@ address {
 <li>An &#8220;aud&#8221; (Audience) claim in the token MUST include the unicode serialization of the origin (Section 6.1 of <a href="#RFC6454" class="xref">[RFC6454]</a>) of the push resource URL.  This binds the token to a specific push service.  This ensures that the token is reusable for all push resource URLs that share the same origin.</li>
 <li>An &#8220;exp&#8221; (Expiry) claim MUST be included with the time after which the token expires.  This limits the time over which a token is valid.  An &#8220;exp&#8221; claim MUST NOT be more than 24 hours from the time of the request.  Limiting this to 24 hours balances the need for reuse against the potential cost and likelihood of theft of a valid token.</li>
 </ul>
-<p id="rfc.section.2.p.4">This JWT is included in an Authorization header field, using an auth-scheme of &#8220;vapid&#8221;.  A push service MAY reject a request with a 403 (Forbidden) status code <a href="#RFC7235" class="xref">[RFC7235]</a> if the JWT signature or its claims are invalid.</p>
+<p id="rfc.section.2.p.4">This JWT is included in an Authorization header field, using an auth-scheme of &#8220;vapid&#8221;.  A push service MAY reject a request with a 403 (Forbidden) status code <a href="#RFC7235" class="xref">[RFC7235]</a> if the JWT signature or its claims are invalid.  A push service MUST NOT use information from an invalid token.</p>
 <p id="rfc.section.2.p.5">The JWT MUST use a JSON Web Signature (JWS) <a href="#RFC7515" class="xref">[RFC7515]</a>.  The signature MUST use ECDSA on the NIST P-256 curve <a href="#FIPS186" class="xref">[FIPS186]</a> which is identified as &#8220;ES256&#8221; <a href="#RFC7518" class="xref">[RFC7518]</a>.</p>
 <h2 id="rfc.section.2.1">
 <a href="#rfc.section.2.1">2.1.</a> <a href="#application-server-contact-information" id="application-server-contact-information">Application Server Contact Information</a>
@@ -503,7 +503,7 @@ JWK = { "crv":"P-256",
 <p id="rfc.section.3.p.2">This authentication scheme is for origin-server authentication only.  Therefore, this authentication scheme MUST NOT be used with the Proxy-Authenticate or Proxy-Authorization header fields.</p>
 <p id="rfc.section.3.p.3">This authentication scheme does not require a challenge.  Clients are able to generate the Authorization header field without any additional information from a server.  Therefore, a challenge for this authentication scheme MUST NOT be sent in a WWW-Authenticate header field.</p>
 <p id="rfc.section.3.p.4">Two parameters are defined for this authentication scheme: <samp>t</samp> and <samp>k</samp>.  All unknown or unsupported parameters to &#8220;vapid&#8221; authentication credentials MUST be ignored.  The <samp>realm</samp> parameter is ignored for this authentication scheme.</p>
-<p id="rfc.section.3.p.5">This authentication scheme is intended for use by an application server when using the Web Push protocol <a href="#RFC8030" class="xref">[RFC8030]</a>, but it could be used in other contexts if applicable.</p>
+<p id="rfc.section.3.p.5">This authentication scheme is intended for use by an application server when using the Web Push protocol <a href="#RFC8030" class="xref">[RFC8030]</a>.</p>
 <h2 id="rfc.section.3.1">
 <a href="#rfc.section.3.1">3.1.</a> <a href="#token" id="token">Token Parameter (t)</a>
 </h2>
@@ -519,7 +519,7 @@ JWK = { "crv":"P-256",
 <dt>Note:</dt>
 <dd style="margin-left: 8">X9.62 encoding is used over JWK <a href="#RFC7517" class="xref">[RFC7517]</a> for two reasons.  A JWK does not have a canonical form, so X9.62 encoding makes it easier for the push service to handle comparison of keys from different sources.  Secondarily, the X9.62 encoding is also considerably smaller.</dd>
 </dl>
-<p id="rfc.section.3.2.p.4">Some implementations permit the same P-256 key to be used for signing and key exchange.  An application server MUST select a different private key for the key exchange <a href="#I-D.ietf-webpush-encryption" class="xref">[I-D.ietf-webpush-encryption]</a> and signing the authentication token.  Though a push service is not obligated to check either parameter for every push message, a push service SHOULD reject push messages that have identical values for these parameters with a 400 (Bad Request) status code.</p>
+<p id="rfc.section.3.2.p.4">Some elliptic curve implementations permit the same P-256 key to be used for signing and key exchange.  An application server MUST select a different private key for the key exchange <a href="#WEBPUSH-ENCRYPTION" class="xref">[WEBPUSH-ENCRYPTION]</a> and signing the authentication token.  Though a push service is not obligated to check either parameter for every push message, a push service SHOULD reject push messages that have identical values for these parameters with a 400 (Bad Request) status code.</p>
 <h1 id="rfc.section.4">
 <a href="#rfc.section.4">4.</a> <a href="#restrict" id="restrict">Subscription Restriction</a>
 </h1>
@@ -528,9 +528,9 @@ JWK = { "crv":"P-256",
 <h2 id="rfc.section.4.1">
 <a href="#rfc.section.4.1">4.1.</a> <a href="#creating-a-restricted-push-subscription" id="creating-a-restricted-push-subscription">Creating a Restricted Push Subscription</a>
 </h2>
-<p id="rfc.section.4.1.p.1">The user agent includes the public key of the application server when requesting the creation of a push subscription.  This restricts use of the resulting subscription to application servers that are able to provide proof of possession for the corresponding private key.</p>
-<p id="rfc.section.4.1.p.2">The public key is then added to the request to create a push subscription.  The push subscription request is extended to include a body.  The body of the request is a JSON object as described in <a href="#RFC7159" class="xref">[RFC7159]</a>.  A &#8220;vapid&#8221; member is added to this JSON object, containing the public key on the P-256 curve, encoded in the uncompressed form <a href="#X9.62" class="xref">[X9.62]</a> and base64url encoded <a href="#RFC7515" class="xref">[RFC7515]</a>.  The media type of the body is set to &#8220;application/webpush-options+json&#8221; (see <a href="#mime" class="xref">Section 6.3</a> for registration of this media type).</p>
-<p id="rfc.section.4.1.p.3">A push service MUST ignore the body of a request that uses a different media type.  For the &#8220;application/webpush-options+json&#8221; media type, a push service MUST ignore any members on this object that it does not understand.</p>
+<p id="rfc.section.4.1.p.1">A user agent that wishes to create a restricted subscription includes the public key of the application server when requesting the creation of a push subscription.  This restricts use of the resulting subscription to application servers that are able to provide proof of possession for the corresponding private key.</p>
+<p id="rfc.section.4.1.p.2">The user agent then adds the public key to the request to create a push subscription.  The push subscription request is extended to include a body.  The body of the request is a JSON object as described in <a href="#RFC7159" class="xref">[RFC7159]</a>.  The user agent adds a &#8220;vapid&#8221; member to this JSON object that contains a public key on the P-256 curve, encoded in the uncompressed form <a href="#X9.62" class="xref">[X9.62]</a> and base64url encoded <a href="#RFC7515" class="xref">[RFC7515]</a>.  The media type of the body is set to &#8220;application/webpush-options+json&#8221; (see <a href="#mime" class="xref">Section 6.3</a> for registration of this media type).</p>
+<p id="rfc.section.4.1.p.3">A push service can ignore the body of a request to create a subscription that uses a different media type.  For the &#8220;application/webpush-options+json&#8221; media type, a push service MUST ignore any members on this object that it does not understand.</p>
 <p id="rfc.section.4.1.p.4">The example in <a href="#ex-restrict" class="xref">Figure 3</a> shows a restriction to the key used in <a href="#ex-push" class="xref">Figure 1</a>.  Extra whitespace is added to meet formatting constraints.</p>
 <div id="rfc.figure.3"></div>
 <div id="ex-restrict"></div>
@@ -549,7 +549,8 @@ Content-Length: 104
 <a href="#rfc.section.4.2">4.2.</a> <a href="#using-restricted-subscriptions" id="using-restricted-subscriptions">Using Restricted Subscriptions</a>
 </h2>
 <p id="rfc.section.4.2.p.1">When a push subscription has been associated with an application server, the request for push message delivery MUST include proof of possession for the associated private key that was used when creating the push subscription.</p>
-<p id="rfc.section.4.2.p.2">A push service MUST reject a message that omits mandatory credentials with a 401 (Unauthorized) status code.  A push service MAY reject a message that includes invalid credentials with a 403 (Forbidden) status code.  Credentials are invalid if:</p>
+<p id="rfc.section.4.2.p.2">A push service MUST reject a message sent to a restricted push subscription if that message includes no &#8220;vapid&#8221; authentication or invalid &#8220;vapid&#8221; authentication.  A 401 (Unauthorized) status code might be used if the authentication is absent; a 403 (Forbidden) status code might be used if authentication is invalid.</p>
+<p id="rfc.section.4.2.p.3">&#8220;vapid&#8221; authentication is invalid if:</p>
 <p></p>
 
 <ul>
@@ -559,12 +560,12 @@ Content-Length: 104
 <li>the origin of the push resource is not included in the &#8220;aud&#8221; (Audience) claim, or</li>
 <li>the public key used to sign the JWT doesn&#8217;t match the one that was included in the creation of the push subscription.</li>
 </ul>
-<p id="rfc.section.4.2.p.4">A push service MUST NOT forward the JWT or public key to the user agent when delivering the push message.</p>
-<p id="rfc.section.4.2.p.5">An application server that needs to replace its signing key needs to request the creation of a new subscription by the user agent that is restricted to the updated key.  Application servers need to remember the key that was used when requesting the creation of a subscription.</p>
+<p id="rfc.section.4.2.p.5">A push service MUST NOT forward the JWT or public key to the user agent when delivering the push message.</p>
+<p id="rfc.section.4.2.p.6">An application server that needs to replace its signing key needs to request the creation of a new subscription by the user agent that is restricted to the updated key.  Application servers need to remember the key that was used when requesting the creation of a subscription.</p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a>
 </h1>
-<p id="rfc.section.5.p.1">This authentication scheme is vulnerable to replay attacks if an attacker can acquire a valid JWT.  Applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.</p>
+<p id="rfc.section.5.p.1">This authentication scheme is vulnerable to replay attacks if an attacker can acquire a valid JWT.  Sending requests using HTTPS as required by <a href="#RFC8030" class="xref">[RFC8030]</a> provides confidentiality.  Additionally, applying narrow limits to the period over which a replayable token can be reused limits the potential value of a stolen token to an attacker and can increase the difficulty of stealing a token.</p>
 <p id="rfc.section.5.p.2">An application server might offer falsified contact information.  A push service operator therefore cannot use the presence of unvalidated contact information as input to any security-critical decision-making process.</p>
 <p id="rfc.section.5.p.3">Validation of a signature on the JWT requires a non-trivial amount of computation.  For something that might be used to identify legitimate requests under denial of service attack conditions, this is not ideal.  Application servers are therefore encouraged to reuse tokens, which permits the push service to cache the results of signature validation.</p>
 <p id="rfc.section.5.p.4">An application server that changes its signing key breaks linkability between push messages that it sends under the different keys.  A push service that relies on a consistent identity for application servers might categorize requests made with new keys differently.  Gradual migration to a new signing key reduces the chances that requests that use the new key will be categorized as abusive.</p>
@@ -763,6 +764,11 @@ Content-Length: 104
 <a>Leiba, B.</a>, "<a href="http://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
 </tr>
 <tr>
+<td class="reference"><b id="WEBPUSH-ENCRYPTION">[WEBPUSH-ENCRYPTION]</b></td>
+<td class="top">
+<a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-encryption-08">Message Encryption for Web Push</a>", Internet-Draft draft-ietf-webpush-encryption-08, February 2017.</td>
+</tr>
+<tr>
 <td class="reference"><b id="X9.62">[X9.62]</b></td>
 <td class="top">
 <a>ANSI</a>, "<a>Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA)</a>", ANSI X9.62 , 1998.</td>
@@ -775,11 +781,6 @@ Content-Length: 104
 <td class="reference"><b id="API">[API]</b></td>
 <td class="top">
 <a>Beverloo, P.</a>, <a>Thomson, M.</a>, <a>van Ouwerkerk, M.</a>, <a>Sullivan, B.</a> and <a>E. Fullea</a>, "<a href="https://w3c.github.io/push-api/">Push API</a>", May 2017.</td>
-</tr>
-<tr>
-<td class="reference"><b id="I-D.ietf-webpush-encryption">[I-D.ietf-webpush-encryption]</b></td>
-<td class="top">
-<a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-webpush-encryption-08">Message Encryption for Web Push</a>", Internet-Draft draft-ietf-webpush-encryption-08, February 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC3339">[RFC3339]</b></td>
