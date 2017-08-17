@@ -51,12 +51,13 @@ informative:
 --- abstract
 
 An application server can use the method described to voluntarily identify
-itself to a push service.  This identification information can be used by the
-push service to attribute requests that are made by the same application server
-to a single entity.  An application server can include additional information
-that the operator of a push service can use to contact the operator of the
-application server.  This identification information can be used to restrict the
-use of a push subscription to a single application server.
+itself to a push service.  The "vapid" authentication scheme allows a client to
+include its an identity in a signed token with requests that it makes.  The
+signature can be used by the push service to attribute requests that are made
+by the same application server to a single entity.  The identification
+information can allow the operator of a push service to contact the operator of
+the application server.  The signature can be used to restrict the use of a
+push subscription to a single application server.
 
 
 --- middle
@@ -76,12 +77,12 @@ service.  That constraint would also degrade the privacy-preserving properties
 the protocol provides.  For these reasons, {{!RFC8030}} does not
 define a mandatory system for authentication of application servers.
 
-An unfortunate consequence of this design is that a push service is exposed to a
-greater risk of denial of service attack.  While requests from application
-servers can be indirectly attributed to user agents, this is not always
-efficient or even sufficient.  Providing more information about the application
-server directly to a push service allows the push service to better distinguish
-between legitimate and bogus requests.
+An unfortunate consequence of the design of {{!RFC8030}} is that a push service
+is exposed to a greater risk of denial of service attack.  While requests from
+application servers can be indirectly attributed to user agents, this is not
+always efficient or even sufficient.  Providing more information about the
+application server directly to a push service allows the push service to better
+distinguish between legitimate and bogus requests.
 
 Additionally, this design also relies on endpoint secrecy as any application
 server in possession of the endpoint is able to send messages, albeit without
@@ -149,7 +150,8 @@ number of claims as follows:
 
 This JWT is included in an Authorization header field, using an auth-scheme of
 "vapid".  A push service MAY reject a request with a 403 (Forbidden) status
-code {{!RFC7235}} if the JWT signature or its claims are invalid.
+code {{!RFC7235}} if the JWT signature or its claims are invalid.  A push
+service MUST NOT use information from an invalid token.
 
 The JWT MUST use a JSON Web Signature (JWS) {{!RFC7515}}.  The signature MUST
 use ECDSA on the NIST P-256 curve {{FIPS186}} which is identified as "ES256"
@@ -247,8 +249,7 @@ unknown or unsupported parameters to "vapid" authentication credentials MUST
 be ignored.  The `realm` parameter is ignored for this authentication scheme.
 
 This authentication scheme is intended for use by an application server when
-using the Web Push protocol {{?RFC8030}}, but it could be
-used in other contexts if applicable.
+using the Web Push protocol {{?RFC8030}}.
 
 
 ## Token Parameter (t) {#token}
@@ -274,12 +275,14 @@ Note:
   to handle comparison of keys from different sources.  Secondarily, the X9.62
   encoding is also considerably smaller.
 
-Some implementations permit the same P-256 key to be used for signing and key
-exchange.  An application server MUST select a different private key for the key
-exchange {{?I-D.ietf-webpush-encryption}} and signing the authentication token.
-Though a push service is not obligated to check either parameter for every push
-message, a push service SHOULD reject push messages that have identical values
-for these parameters with a 400 (Bad Request) status code.
+Some elliptic curve implementations permit the same P-256 key to be used for
+signing and key exchange.  An application server MUST select a different
+private key for the key exchange
+{{!WEBPUSH-ENCRYPTION=I-D.ietf-webpush-encryption}} and signing the
+authentication token.  Though a push service is not obligated to check either
+parameter for every push message, a push service SHOULD reject push messages
+that have identical values for these parameters with a 400 (Bad Request) status
+code.
 
 
 # Subscription Restriction {#restrict}
@@ -296,22 +299,25 @@ against leaking of the details of the push subscription.
 
 ## Creating a Restricted Push Subscription
 
-The user agent includes the public key of the application server when requesting
-the creation of a push subscription.  This restricts use of the resulting
-subscription to application servers that are able to provide proof of possession
-for the corresponding private key.
+A user agent that wishes to create a restricted subscription includes the
+public key of the application server when requesting the creation of a push
+subscription.  This restricts use of the resulting subscription to application
+servers that are able to provide proof of possession for the corresponding
+private key.
 
-The public key is then added to the request to create a push subscription.  The
-push subscription request is extended to include a body.  The body of the
-request is a JSON object as described in {{!RFC7159}}.  A "vapid" member is
-added to this JSON object, containing the public key on the P-256 curve, encoded
-in the uncompressed form {{X9.62}} and base64url encoded {{!RFC7515}}.  The
-media type of the body is set to "application/webpush-options+json" (see
-{{mime}} for registration of this media type).
+The user agent then adds the public key to the request to create a push
+subscription.  The push subscription request is extended to include a body.
+The body of the request is a JSON object as described in {{!RFC7159}}.  The
+user agent adds a "vapid" member to this JSON object that contains a public key
+on the P-256 curve, encoded in the uncompressed form {{X9.62}} and base64url
+encoded {{!RFC7515}}.  The media type of the body is set to
+"application/webpush-options+json" (see {{mime}} for registration of this media
+type).
 
-A push service MUST ignore the body of a request that uses a different media
-type.  For the "application/webpush-options+json" media type, a push service
-MUST ignore any members on this object that it does not understand.
+A push service can ignore the body of a request to create a subscription that
+uses a different media type.  For the "application/webpush-options+json" media
+type, a push service MUST ignore any members on this object that it does not
+understand.
 
 The example in {{ex-restrict}} shows a restriction to the key used in
 {{ex-push}}.  Extra whitespace is added to meet formatting constraints.
@@ -337,10 +343,13 @@ When a push subscription has been associated with an application server, the
 request for push message delivery MUST include proof of possession for the
 associated private key that was used when creating the push subscription.
 
-A push service MUST reject a message that omits mandatory credentials
-with a 401 (Unauthorized) status code.  A push service MAY reject a message
-that includes invalid credentials with a 403 (Forbidden) status code.
-Credentials are invalid if:
+A push service MUST reject a message sent to a restricted push subscription if
+that message includes no "vapid" authentication or invalid "vapid"
+authentication.  A 401 (Unauthorized) status code might be used if the
+authentication is absent; a 403 (Forbidden) status code might be used if
+authentication is invalid.
+
+"vapid" authentication is invalid if:
 
 * either the authentication token or public key are not included in the request,
 
