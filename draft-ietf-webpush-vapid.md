@@ -150,7 +150,8 @@ number of claims as follows:
 
 This JWT is included in an Authorization header field, using an auth-scheme of
 "vapid".  A push service MAY reject a request with a 403 (Forbidden) status
-code {{!RFC7235}} if the JWT signature or its claims are invalid.
+code {{!RFC7235}} if the JWT signature or its claims are invalid.  A push
+service MUST NOT use information from an invalid token.
 
 The JWT MUST use a JSON Web Signature (JWS) {{!RFC7515}}.  The signature MUST
 use ECDSA on the NIST P-256 curve {{FIPS186}} which is identified as "ES256"
