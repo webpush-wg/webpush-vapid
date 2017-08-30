@@ -175,11 +175,11 @@ field, the size of additional claims SHOULD be kept as small as possible.
 
 ## Cryptographic Agility
 
-The "vapid" authentication scheme is used to identify the specific profile of
-JWT defined in this document.  A different authentication scheme is needed to
-update the signature algorithm or other parameters.  This ensures that existing
-mechanisms for negotiating authentication scheme can be used rather than
-defining new parameter negotiation mechanisms.
+The "vapid" HTTP authentication scheme ({{auth}}) is used to identify the
+specific profile of JWT defined in this document.  A different authentication
+scheme is needed to update the signature algorithm or other parameters.  This
+ensures that existing mechanisms for negotiating authentication scheme can be
+used rather than defining new parameter negotiation mechanisms.
 
 
 ## Example
@@ -187,7 +187,7 @@ defining new parameter negotiation mechanisms.
 An application server requests the delivery of a push message as described in
 {{!RFC8030}}.  If the application server wishes to self-identify,
 it includes an Authorization header field with credentials that use the
-"vapid" authentication scheme ({{auth}}).
+"vapid" authentication scheme.
 
 ~~~
 POST /p/JzLQ3raZJfFBR0aqvOMsLrt54w4rJUsV HTTP/1.1
@@ -239,10 +239,8 @@ This authentication scheme is for origin-server authentication only.  Therefore,
 this authentication scheme MUST NOT be used with the Proxy-Authenticate or
 Proxy-Authorization header fields.
 
-This authentication scheme does not require a challenge.  Clients are able to
-generate the Authorization header field without any additional information from
-a server.  Therefore, a challenge for this authentication scheme MUST NOT be
-sent in a WWW-Authenticate header field.
+The challenge for the "vapid" authentication scheme contains only the
+`auth-scheme` production.  No parameters are currently defined.
 
 Two parameters are defined for this authentication scheme: `t` and `k`.  All
 unknown or unsupported parameters to "vapid" authentication credentials MUST
@@ -429,9 +427,11 @@ Notes:
 ## Vapid Authentication Scheme Parameters
 
 This document creates a "Vapid Authentication Scheme Parameters" registry for
-parameters to the "vapid" authentication scheme.  This registry is under the
-"WebPush Parameters" grouping.  The registry operates on the "Specification
-Required" policy {{!RFC5226}}.
+parameters to the "vapid" authentication scheme.  These parameters are defined
+for use in requests (in the Authorization header field) and for challenges (in
+the WWW-Authenticate header field).  This registry is under the "WebPush
+Parameters" grouping.  The registry operates on the "Specification Required"
+policy {{!RFC5226}}.
 
 Registrations MUST include the following information:
 
@@ -443,6 +443,10 @@ Purpose (optional):
 
 : A brief identifying the purpose of the parameter.
 
+Header Fields:
+
+: The header field or header fields where the parameter can be used.
+
 Specification:
 
 : A link to the specification that defines the format and semantics of the
@@ -450,10 +454,10 @@ Specification:
 
 This registry initially contains the following entries:
 
-| Parameter Name | Purpose | Specification |
-|:-|:-|:-|
-| t | JWT authentication token | \[\[RFC-to-be]], {{token}} |
-| k | signing key | \[\[RFC-to-be]], {{key}} |
+| Parameter Name | Purpose | Header Fields | Specification |
+|:-|:-|:-|:-|
+| t | JWT authentication token | Authorization | \[\[RFC-to-be]], {{token}} |
+| k | signing key | Authorization | \[\[RFC-to-be]], {{key}} |
 
 
 ## application/webpush-options+json Media Type Registration {#mime}
