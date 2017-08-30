@@ -336,9 +336,9 @@ a public key.
 
 ## Using Restricted Subscriptions
 
-When a push subscription has been associated with an application server, the
+When a push subscription has been restricted to an application server, the
 request for push message delivery MUST include a JWT signed by the private key
-that was used when creating the push subscription.
+that corresponds to the public key used when creating the subscription.
 
 A push service MUST reject a message sent to a restricted push subscription if
 that message includes no "vapid" authentication or invalid "vapid"
