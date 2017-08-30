@@ -122,12 +122,12 @@ Internet-Draft             Self Identification               August 2017
    push service allows the push service to better distinguish between
    legitimate and bogus requests.
 
-   Additionally, this design also relies on endpoint secrecy as any
-   application server in possession of the endpoint is able to send
-   messages, albeit without payloads.  In situations where usage of a
-   subscription can be limited to a single application server, the
-   ability to associate a subscription with the application server could
-   reduce the impact of a data leak.
+   Additionally, the design of RFC 8030 relies on maintaining the
+   secrecy of push subscription URIs.  Any application server in
+   possession of this URI is able to send messages to the user agent.
+   If use of a subscription could be limited to a single application
+   server, this would reduce the impact of the push subscription URI
+   being learned by an unauthorized party.
 
 1.1.  Voluntary Identification
 
@@ -363,18 +363,18 @@ Internet-Draft             Self Identification               August 2017
    subscription to a specific application server.
 
    Subscription restriction reduces the reliance on endpoint secrecy by
-   requiring proof of possession to be demonstrated by an application
-   server when requesting delivery of a push message.  This provides an
-   additional level of protection against leaking of the details of the
-   push subscription.
+   requiring that an application server provide a signed token when
+   requesting delivery of a push message.  This provides an additional
+   level of protection against leaking of the details of the push
+   subscription.
 
 4.1.  Creating a Restricted Push Subscription
 
    A user agent that wishes to create a restricted subscription includes
    the public key of the application server when requesting the creation
    of a push subscription.  This restricts use of the resulting
-   subscription to application servers that are able to provide proof of
-   possession for the corresponding private key.
+   subscription to application servers that are able to provide a valid
+   JWT signed by the corresponding private key.
 
    The user agent then adds the public key to the request to create a
    push subscription.  The push subscription request is extended to
@@ -394,10 +394,10 @@ Thomson & Beverloo        Expires March 3, 2018                 [Page 7]
 Internet-Draft             Self Identification               August 2017
 
 
-   A push service can ignore the body of a request to create a
-   subscription that uses a different media type.  For the "application/
-   webpush-options+json" media type, a push service MUST ignore any
-   members on this object that it does not understand.
+   A push service MUST ignore the body of a request that uses a
+   different media type.  For the "application/webpush-options+json"
+   media type, a push service MUST ignore any members on this object
+   that it does not understand.
 
    The example in Figure 3 shows a restriction to the key used in
    Figure 1.  Extra whitespace is added to meet formatting constraints.
@@ -417,10 +417,10 @@ Internet-Draft             Self Identification               August 2017
 
 4.2.  Using Restricted Subscriptions
 
-   When a push subscription has been associated with an application
-   server, the request for push message delivery MUST include proof of
-   possession for the associated private key that was used when creating
-   the push subscription.
+   When a push subscription has been restricted to an application
+   server, the request for push message delivery MUST include a JWT
+   signed by the private key that corresponds to the public key used
+   when creating the subscription.
 
    A push service MUST reject a message sent to a restricted push
    subscription if that message includes no "vapid" authentication or
@@ -470,10 +470,11 @@ Internet-Draft             Self Identification               August 2017
    can be reused limits the potential value of a stolen token to an
    attacker and can increase the difficulty of stealing a token.
 
-   An application server might offer falsified contact information.  A
-   push service operator therefore cannot use the presence of
-   unvalidated contact information as input to any security-critical
-   decision-making process.
+   An application server might offer falsified contact information.  The
+   application server asserts its email address or contact URI without
+   any evidence to support the claim.  A push service operator cannot
+   use the presence of unvalidated contact information as input to any
+   security-critical decision-making process.
 
    Validation of a signature on the JWT requires a non-trivial amount of
    computation.  For something that might be used to identify legitimate
@@ -493,7 +494,6 @@ Internet-Draft             Self Identification               August 2017
 
    This document registers a new authentication scheme, a registry for
    parameters of that scheme, and media type for push options.
-
 
 
 
