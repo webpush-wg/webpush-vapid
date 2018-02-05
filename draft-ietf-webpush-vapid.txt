@@ -5,8 +5,8 @@
 Network Working Group                                         M. Thomson
 Internet-Draft                                                   Mozilla
 Intended status: Standards Track                             P. Beverloo
-Expires: March 3, 2018                                            Google
-                                                         August 30, 2017
+Expires: August 9, 2018                                           Google
+                                                       February 05, 2018
 
 
     Voluntary Application Server Identification (VAPID) for Web Push
@@ -32,30 +32,30 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 3, 2018.
+   This Internet-Draft will expire on August 9, 2018.
 
 Copyright Notice
 
-   Copyright (c) 2017 IETF Trust and the persons identified as the
+   Copyright (c) 2018 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 1]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 1]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    carefully, as they describe your rights and restrictions with respect
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 2]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 2]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    An unfortunate consequence of the design of [RFC8030] is that a push
@@ -165,9 +165,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 3]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 3]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    The terms "push message", "push service", "push subscription",
@@ -221,9 +221,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 4]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 4]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
 2.2.  Additional Claims
@@ -277,9 +277,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 5]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 5]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    added for readability purposes.  This JWT would be valid until
@@ -333,9 +333,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 6]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 6]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    The "k" parameter includes an elliptic curve digital signature
@@ -389,9 +389,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 7]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 7]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    A push service MUST ignore the body of a request that uses a
@@ -445,9 +445,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 8]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 8]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    o  the public key used to sign the JWT doesn't match the one that was
@@ -501,9 +501,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                 [Page 9]
+Thomson & Beverloo       Expires August 9, 2018                 [Page 9]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
 6.1.  Vapid Authentication Scheme Registration
@@ -557,9 +557,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                [Page 10]
+Thomson & Beverloo       Expires August 9, 2018                [Page 10]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    +------------+------------------+---------------+-------------------+
@@ -613,9 +613,9 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                [Page 11]
+Thomson & Beverloo       Expires August 9, 2018                [Page 11]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
       Magic number(s):  n/a
@@ -651,17 +651,17 @@ Internet-Draft             Self Identification               August 2017
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
-              editor.org/info/rfc2119>.
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
-              DOI 10.17487/RFC2818, May 2000, <https://www.rfc-
-              editor.org/info/rfc2818>.
+              DOI 10.17487/RFC2818, May 2000,
+              <https://www.rfc-editor.org/info/rfc2818>.
 
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", RFC 5226,
-              DOI 10.17487/RFC5226, May 2008, <https://www.rfc-
-              editor.org/info/rfc5226>.
+              DOI 10.17487/RFC5226, May 2008,
+              <https://www.rfc-editor.org/info/rfc5226>.
 
    [RFC6068]  Duerst, M., Masinter, L., and J. Zawinski, "The 'mailto'
               URI Scheme", RFC 6068, DOI 10.17487/RFC6068, October 2010,
@@ -669,14 +669,14 @@ Internet-Draft             Self Identification               August 2017
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                [Page 12]
+Thomson & Beverloo       Expires August 9, 2018                [Page 12]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
-              DOI 10.17487/RFC6454, December 2011, <https://www.rfc-
-              editor.org/info/rfc6454>.
+              DOI 10.17487/RFC6454, December 2011,
+              <https://www.rfc-editor.org/info/rfc6454>.
 
    [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
               Specifications and Registration Procedures", BCP 13,
@@ -694,16 +694,16 @@ Internet-Draft             Self Identification               August 2017
 
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
-              DOI 10.17487/RFC7235, June 2014, <https://www.rfc-
-              editor.org/info/rfc7235>.
+              DOI 10.17487/RFC7235, June 2014,
+              <https://www.rfc-editor.org/info/rfc7235>.
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <https://www.rfc-editor.org/info/rfc7515>.
 
    [RFC7518]  Jones, M., "JSON Web Algorithms (JWA)", RFC 7518,
-              DOI 10.17487/RFC7518, May 2015, <https://www.rfc-
-              editor.org/info/rfc7518>.
+              DOI 10.17487/RFC7518, May 2015,
+              <https://www.rfc-editor.org/info/rfc7518>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
@@ -711,8 +711,8 @@ Internet-Draft             Self Identification               August 2017
 
    [RFC8030]  Thomson, M., Damaggio, E., and B. Raymor, Ed., "Generic
               Event Delivery Using HTTP Push", RFC 8030,
-              DOI 10.17487/RFC8030, December 2016, <https://www.rfc-
-              editor.org/info/rfc8030>.
+              DOI 10.17487/RFC8030, December 2016,
+              <https://www.rfc-editor.org/info/rfc8030>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -720,14 +720,14 @@ Internet-Draft             Self Identification               August 2017
 
    [WEBPUSH-ENCRYPTION]
               Thomson, M., "Message Encryption for Web Push", draft-
-              ietf-webpush-encryption-08 (work in progress), February
+              ietf-webpush-encryption-09 (work in progress), September
               2017.
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                [Page 13]
+Thomson & Beverloo       Expires August 9, 2018                [Page 13]
 
-Internet-Draft             Self Identification               August 2017
+Internet-Draft             Self Identification             February 2018
 
 
    [X9.62]    ANSI, "Public Key Cryptography For The Financial Services
@@ -745,8 +745,8 @@ Internet-Draft             Self Identification               August 2017
               <https://www.rfc-editor.org/info/rfc3339>.
 
    [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
-              DOI 10.17487/RFC7517, May 2015, <https://www.rfc-
-              editor.org/info/rfc7517>.
+              DOI 10.17487/RFC7517, May 2015,
+              <https://www.rfc-editor.org/info/rfc7517>.
 
 Authors' Addresses
 
@@ -781,4 +781,4 @@ Authors' Addresses
 
 
 
-Thomson & Beverloo        Expires March 3, 2018                [Page 14]
+Thomson & Beverloo       Expires August 9, 2018                [Page 14]
