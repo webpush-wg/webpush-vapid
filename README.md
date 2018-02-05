@@ -1,5 +1,7 @@
 # Voluntary Application Server Identification for Web Push
 
+This document has been published as [RFC 8292](https://tools.ietf.org/html/rfc8292).
+
 This is the working area for the webpush working group internet-draft, "Voluntary Application Server Identification for Web Push".
 
 * [Editor's copy](https://webpush-wg.github.io/webpush-vapid/)
